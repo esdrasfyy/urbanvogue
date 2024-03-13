@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { AddressReadApi, AddressReadResponse } from "./types";
 
-async function AddressReadApi(search: string): Promise<AddressReadResponse> {
+async function AddressReadApi(id: number): Promise<AddressReadResponse> {
   const api = process.env.API;
   try {
     const response: AxiosResponse<AddressReadApi | null> = await axios.get(
-      `${api}product/search?query=${search}`
+      `${api}address/${id}`
     );
 
     if (response.status === 200) {

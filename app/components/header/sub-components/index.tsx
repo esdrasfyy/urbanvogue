@@ -19,7 +19,7 @@ function ButtonsHeader() {
     
     const { disclosure: { onOpen: onOpenCart }, cartSummary } = cart;
     const { user } = contextUser;
-    
+
   return (
     <ul className="flex gap-6 items-center justify-center mt-1">
           <li className=" text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 hover:text-custom-pink cursor-pointer max-md:text-[28px]">
@@ -34,8 +34,8 @@ function ButtonsHeader() {
           {cartSummary && cartSummary?.totalQuantity > 0 && ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartSummary?.totalQuantity}</span>)}
           </li>
           <li className=" text-[30px] text-white duration-200 transition-all  -translate-y-1 ease-linear hover:-translate-y-2.5 hover:text-custom-pink cursor-pointer max-md:text-[28px] mt-1">
-            <Link href={user?.status === 200 ? "/account" : "/login"}>
-              {user?.status === 200 ? <LiaUserCircle /> :  <PiUserCirclePlus />}
+            <Link href={user ? "/account" : "/login"}>
+              {user ? <LiaUserCircle /> :  <PiUserCirclePlus />}
             </Link>
           </li>
         </ul>

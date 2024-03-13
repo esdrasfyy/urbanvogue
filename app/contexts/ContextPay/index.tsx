@@ -29,49 +29,44 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const context = useContext(ContextCart);
   const contextUser = useContext(ContextUser);
 
- 
-
-
-useEffect(() => {
-
-  if (!context || !contextUser) {
-    return;
-  }
-  
-  const { cartSummary } = context;
-  const { setUser, user } = contextUser;
-
-  const fetchData2 = async () => {
-    if (user?.user?.user_id) {
-      const res = await AddressReadApi(user?.user?.user_id);
-      if (res.data?.address && res.data?.address?.length > 0) {
-        setAddress(res.data.address[0]?.address_id);
-        setDataAddress(res.data.address);
-      }
+  useEffect(() => {
+    if (!context || !contextUser) {
+      return;
     }
-  };
 
-  const fetchData = async (): Promise<void> => {
-    const ids =
-      cartSummary?.products.map((product: Product) => product.id).join("&") ??
-      "";
+    const { cartSummary } = context;
+    const { setUser, user } = contextUser;
 
-    try {
-      const res = await ProductsByIdsApi({ids});
-      if (res?.status === 200 && res.data?.products) {
-        setDataProducts([res?.data?.products]);
-      } else {
-        console.error("Resposta da requisição não contém dados esperados.");
+    const fetchData2 = async () => {
+      if (user?.user?.user_id) {
+        const res = await AddressReadApi(user?.user?.user_id);
+        if (res.data?.address && res.data?.address?.length > 0) {
+          setAddress(res.data.address[0]?.address_id);
+          setDataAddress(res.data.address);
+        }
       }
-    } catch (error: any) {
-      console.error("Erro na requisição do produto:", error);
-    }
-  };
+    };
 
-  fetchData2();
-  fetchData();
-}, []);
+    const fetchData = async (): Promise<void> => {
+      const ids =
+        cartSummary?.products.map((product: Product) => product.id).join("&") ??
+        "";
 
+      try {
+        const res = await ProductsByIdsApi({ ids });
+        if (res?.status === 200 && res.data?.products) {
+          setDataProducts([res?.data?.products]);
+        } else {
+          console.error("Resposta da requisição não contém dados esperados.");
+        }
+      } catch (error: any) {
+        console.error("Erro na requisição do produto:", error);
+      }
+    };
+
+    fetchData2();
+    fetchData();
+  }, [context, contextUser]);
 
   const handleDataAddress = (data: AddressI) => {
     const old = dataAddress;

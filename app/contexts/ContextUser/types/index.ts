@@ -1,4 +1,4 @@
-import { UserI } from "@/app/types/user";
+import { UserI } from "@/interfaces/user";
 
 export interface ContextUserProps{
     user: UserI | null;

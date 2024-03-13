@@ -7,11 +7,7 @@ import React, {
   useContext,
 } from "react";
 
-import {
-  ContextPayProps,
-  ApiResponse,
-  Product,
-} from "@/contexts/ContextPay/types/index";
+import { ContextPayProps, Product } from "@/contexts/ContextPay/types/index";
 import { AddressReadApi } from "@/services/user/address/read";
 import { AddressI } from "@/interfaces/address";
 import { ContextCart } from "../ContextCart";
@@ -28,16 +24,15 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [method, setMethod] = useState<string>("pix");
   const [total, setTotal] = useState<number>(0);
   const [discount, setDiscount] = useState<number | null>(null);
-
   const [dataProducts, setDataProducts] = useState<ProductI[] | null>(null);
 
   const context = useContext(ContextCart);
   const contextUser = useContext(ContextUser);
-  
+
   if (!context || !contextUser) {
     return null;
   }
-  
+
   const { cartSummary } = context;
   const { setUser, user } = contextUser;
 
@@ -58,7 +53,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         "";
 
       try {
-        const res = await ProductsByIdsApi({ids});
+        const res = await ProductsByIdsApi({ ids });
         if (res?.status === 200 && res.data?.products) {
           setDataProducts([res?.data?.products]);
         } else {
@@ -72,7 +67,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     fetchData2();
     fetchData();
   }, [cartSummary?.products, setUser, user?.user?.user_id]);
-    
 
   const handleDataAddress = (data: AddressI) => {
     const old = dataAddress;
@@ -109,6 +103,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     discount,
     setDiscount,
   };
+
   return (
     <ContextPay.Provider value={contextValue}>{children}</ContextPay.Provider>
   );

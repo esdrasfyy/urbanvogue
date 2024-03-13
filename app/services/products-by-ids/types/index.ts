@@ -3,12 +3,12 @@ import { ProductI, ProductPageI } from "@/interfaces/product/card";
 export interface ProductsByIdsProps {
     ids: string;
   }
-  export interface ProductsByIdsApi {
+  export interface ProductsByIdsApiReq {
     products: ProductI | null;
     msg: string | null;
   }
   export interface ProductsByIdsResponse {
-    data: ProductsByIdsApi | null;
+    data: ProductsByIdsApiReq | null;
     error: string | null;
     status: number;
   }
@@ -17,12 +17,12 @@ export interface ProductsByIdsProps {
   export interface ProductByIdProps {
     id: string;
   }
-  export interface ProductByIdApi {
+  export interface ProductByIdApiReq {
     product: ProductPageI | null;
     msg: string | null;
   }
   export interface ProductByIdResponse {
-      data: ProductsByIdsApi | null;
+      data: ProductByIdApiReq | null;
       error: string | null;
       status: number;
     }

@@ -1,11 +1,11 @@
 import { AddressI } from "@/interfaces/address";
 
-export interface AddressReadApi {
+export interface AddressReadApiReq {
   address: AddressI[] | null;
   msg: string | null;
 }
 export interface AddressReadResponse {
-  data: AddressReadApi | null;
+  data: AddressReadApiReq | null;
   error: string | null;
   status: number;
 }

@@ -4,12 +4,12 @@ export interface LoginApiProps {
     credential: string | null;
     password: string | null
   }
-export interface LoginApi {
+export interface LoginApiReq {
     user: UserI | null;
     msg: string | null
   }
   export interface LoginApiResponse {
-    data: LoginApi | null;
+    data: LoginApiReq | null;
     error: string | null;
     status: number;
   }

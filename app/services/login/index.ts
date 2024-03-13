@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { LoginApi, LoginApiResponse,LoginApiProps } from "@/services/login/types/index";
+import { LoginApiReq, LoginApiResponse,LoginApiProps } from "@/services/login/types/index";
 
 async function LoginApi({credential,  password}:LoginApiProps): Promise<LoginApiResponse> {
   const api = process.env.API;
   try {
-    const response: AxiosResponse<LoginApi | null> = await axios.post(
+    const response: AxiosResponse<LoginApiReq | null> = await axios.post(
       `${api}login`,{
         credential,
         password,

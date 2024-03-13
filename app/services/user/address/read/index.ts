@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { AddressReadApi, AddressReadResponse } from "./types";
+import { AddressReadApiReq, AddressReadResponse } from "./types";
 
 async function AddressReadApi(id: number): Promise<AddressReadResponse> {
   const api = process.env.API;
   try {
-    const response: AxiosResponse<AddressReadApi | null> = await axios.get(
+    const response: AxiosResponse<AddressReadApiReq | null> = await axios.get(
       `${api}address/${id}`
     );
 

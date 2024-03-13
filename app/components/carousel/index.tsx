@@ -40,7 +40,7 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
     };
 
     fetchData();
-  }, []);
+  }, [query]);
 
   return (
     <section className={`relative w-full ${classname}`}>

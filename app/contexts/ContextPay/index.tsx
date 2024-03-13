@@ -32,15 +32,13 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [dataProducts, setDataProducts] = useState<ProductI[] | null>(null);
 
   const context = useContext(ContextCart);
-  if (!context) {
-    return null;
-  }
-
-  const { cartSummary } = context;
   const contextUser = useContext(ContextUser);
-  if (!contextUser) {
+  
+  if (!context || !contextUser) {
     return null;
   }
+  
+  const { cartSummary } = context;
   const { setUser, user } = contextUser;
 
   const fetchData2 = async () => {
@@ -74,7 +72,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     fetchData2();
     fetchData();
-  }, [cartSummary?.products, user?.user?.user_id]);
+  }, [fetchData, fetchData2, cartSummary?.products, user?.user?.user_id]);  
 
   const handleDataAddress = (data: AddressI) => {
     const old = dataAddress;

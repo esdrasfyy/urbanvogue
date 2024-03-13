@@ -10,20 +10,16 @@ import { LiaUserCircle } from 'react-icons/lia';
 
 
 function ButtonsHeader() {
-  const cart = useContext(ContextCart);
-
-
-  if (!cart) {
-    return null;
- }
-  const {onOpen: onOpenCart } = cart.disclosure;
-   const { cartSummary } = cart;
-
-   const contextUser = useContext(ContextUser);
-   if (!contextUser) {
-     return null;
-   }
-   const { user } = contextUser;
+    const cart = useContext(ContextCart);
+    const contextUser = useContext(ContextUser);
+    
+    if (!cart || !contextUser) {
+      return null;
+    }
+    
+    const { disclosure: { onOpen: onOpenCart }, cartSummary } = cart;
+    const { user } = contextUser;
+    
   return (
     <ul className="flex gap-6 items-center justify-center mt-1">
           <li className=" text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 hover:text-custom-pink cursor-pointer max-md:text-[28px]">

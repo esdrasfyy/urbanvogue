@@ -18,38 +18,39 @@ async function ProductsByIdsApi({
       `${api}products/${ids}`
     );
 
-    if (response.status === 200) {
+    if (response.status === 200 && response.data && response.data.products) {
+      console.log(response.data.products);
+      
       return {
         data: {
-          products: response?.data?.products || null,
-          msg: response?.data?.msg || null,
+          products: response.data.products,
+          msg: response.data.msg || null,
         },
         error: null,
         status: response.status,
       };
-    }
-    if (response.status !== 200 && response.status !== 500) {
+    } else {
       return {
         data: {
           products: null,
-          msg: response?.data?.msg || null,
+          msg: response.data ? response.data.msg || null : "Unknown error.",
         },
-        error: response?.data?.msg || "Unknown error.",
+        error: response.data ? response.data.msg || "Unknown error." : "Unknown error.",
         status: response.status,
       };
     }
-    throw new Error(response?.data?.msg || "Unknown error.");
   } catch (error: any) {
     return {
       data: {
         products: null,
-        msg: error.response.data.msg || null,
+        msg: error.response?.data?.msg || null,
       },
-      error: error.response.data.msg || "Unknown error.",
-      status: error.response.status,
+      error: error.response?.data?.msg || "Unknown error.",
+      status: error.response?.status || 500,
     };
   }
 }
+
 async function ProductByIdApi({
   id,
 }: ProductByIdProps): Promise<ProductByIdResponse> {
@@ -61,32 +62,30 @@ async function ProductByIdApi({
     if (response.status === 200) {
       return {
         data: {
-          product: response?.data?.product || null,
-          msg: response?.data?.msg || null,
+          product: response.data ? response.data.product || null : null,
+          msg: response.data ? response.data.msg || null : null,
         },
         error: null,
         status: response.status,
       };
-    }
-    if (response.status !== 200 && response.status !== 500) {
+    } else {
       return {
         data: {
           product: null,
-          msg: response?.data?.msg || null,
+          msg: response.data ? response.data.msg || null : "Unknown error.",
         },
-        error: response?.data?.msg || "Unknown error.",
+        error: response.data ? response.data.msg || "Unknown error." : "Unknown error.",
         status: response.status,
       };
     }
-    throw new Error(response?.data?.msg || "Unknown error.");
   } catch (error: any) {
     return {
       data: {
         product: null,
-        msg: error.response.data.msg || null,
+        msg: error.response?.data?.msg || null,
       },
-      error: error.response.data.msg || "Unknown error.",
-      status: error.response.status,
+      error: error.response?.data?.msg || "Unknown error.",
+      status: error.response?.status || 500,
     };
   }
 }

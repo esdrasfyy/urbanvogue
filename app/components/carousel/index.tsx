@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {Card} from "@/components/card/vertical/index";
+import {CardV} from "@/components/card/vertical/index";
 import {ProductQueryApi} from "@/services/product-query/index";
 import {ProductI} from "@/interfaces/product/card/index";
 import Loading from "./sub-components/loading";
@@ -93,7 +93,7 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
                 key={card.id}
                 className="shadow-snipped custom-slide flex flex-col bg-custom-grayTwo"
               >
-                <Card data={card} />
+                <CardV data={card} />
               </SplideSlide>
             ))
           )}

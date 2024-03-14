@@ -15,7 +15,7 @@ interface ProductCart {
   size?: string;
   color?: string;
 }
-function Card({ data }: CardProps) {
+function CardV({ data }: CardProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
@@ -106,4 +106,4 @@ function Card({ data }: CardProps) {
   );
 }
 
-export  {Card};
+export  {CardV};

@@ -4,7 +4,7 @@ export interface ProductsByIdsProps {
     ids: string;
   }
   export interface ProductsByIdsApiReq {
-    products: ProductI | null;
+    products: ProductI[] | null;
     msg: string | null;
   }
   export interface ProductsByIdsResponse {

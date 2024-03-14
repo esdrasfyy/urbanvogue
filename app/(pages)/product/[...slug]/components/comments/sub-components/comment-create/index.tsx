@@ -5,23 +5,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { TbArrowBadgeRight } from "react-icons/tb";
 import {
   Modal,
-
   ModalCloseButton,
   ModalContent,
-
   ModalHeader,
   ModalOverlay,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {TextAreaUi} from "@/components/ui/inputs/textarea/index";
-import {RatingUi} from "@/components/ui/rating/rating-ui/index";
+import { TextAreaUi } from "@/components/ui/inputs/textarea/index";
+import { RatingUi } from "@/components/ui/rating/rating-ui/index";
 import Image from "next/image";
 import { FaAngry, FaGrinHearts } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/services/firebase/index";
 import { CreateCommentApi } from "@/services/comments/create/index";
-import {LoadingSpinner} from "@/components/ui/loading/index";
+import { LoadingSpinner } from "@/components/ui/loading/index";
 import { ContextUser } from "@/contexts/ContextUser";
 
 type Inputs = {
@@ -45,12 +43,7 @@ interface CreateCommentProps {
   id: number;
 }
 function CreateComment({ img, title, id }: CreateCommentProps) {
-
   const context = useContext(ContextUser);
-  if (!context) {
-    return null;
-  }
-  const { user } = context;
 
   const [loading, setLoading] = useState(false);
   const [recommendValue, setRecommendValue] = useState(true);
@@ -67,6 +60,10 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!context) {
+      return;
+    }
+    const { user } = context;
     const { comment, recommend, file } = data;
     try {
       setLoading(true);
@@ -133,7 +130,12 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
   const finalRef = React.useRef(null);
 
   const verifyUser = () => {
-    if ((!user || !user.user)) {
+    if (!context) {
+      return;
+    }
+    const { user } = context;
+
+    if (!user || !user.user) {
       return alert("necessario fazer login");
     }
     onOpen();

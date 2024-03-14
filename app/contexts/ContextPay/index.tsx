@@ -55,7 +55,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       try {
         const res = await ProductsByIdsApi({ ids });
         if (res?.status === 200 && res.data?.products) {
-          setDataProducts([res?.data?.products]);
+          setDataProducts(res?.data?.products);
         } else {
           console.error("Resposta da requisição não contém dados esperados.");
         }

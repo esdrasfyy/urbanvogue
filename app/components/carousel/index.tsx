@@ -82,7 +82,7 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
         className="w-full relative"
       >
         <SplideTrack>
-          {(loading && !data) || data === null
+          {(loading && !data || data === null)
             ? [...Array(10)].map((_, index) => (
                 <SplideSlide
                   key={index}

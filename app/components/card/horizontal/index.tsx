@@ -22,12 +22,6 @@ function CardH({
   const [qtd, setQtd] = useState(quantity);
   const [selectSize, setSelectSize] = useState(size);
   const [selectColor, setSelectColor] = useState(color);
-  
-  const context = useContext(ContextCart);
-  if (!context) {
-    return null;
-  }
-  const { removeItemFromCart, updateItemQuantity } = context;
 
   const price = parseFloat(dataId?.price || "0.00");
 
@@ -38,6 +32,14 @@ function CardH({
     const updatedSize = selectSize !== undefined ? selectSize : "default";
     updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
   }, [qtd, selectColor, selectSize]);
+
+
+  const context = useContext(ContextCart);
+  if (!context) {
+    return;
+  }
+  const { removeItemFromCart, updateItemQuantity } = context;
+
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
   return (

@@ -61,11 +61,6 @@ function Page({ params }: any) {
 
   const context = useContext(ContextCart);
 
-  if (!context) {
-    return null;
-  }
-  const { addItemToCart } = context;
-
   useEffect(() => {
     const fetchData = async () => {
       const query = params.slug[0];
@@ -106,6 +101,11 @@ function Page({ params }: any) {
   }, [params.slug[0]]);
 
   const handleAddItem = () => {
+    if (!context) {
+        return;
+      }
+      const { addItemToCart } = context;
+
     const data = {
       id: dataCard?.id,
       price: price,

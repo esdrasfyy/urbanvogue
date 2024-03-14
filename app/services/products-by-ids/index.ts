@@ -19,8 +19,6 @@ async function ProductsByIdsApi({
     );
 
     if (response.status === 200 && response.data && response.data.products) {
-      console.log(response.data.products);
-      
       return {
         data: {
           products: response.data.products,

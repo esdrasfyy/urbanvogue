@@ -35,7 +35,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
 
     const { cartSummary } = context;
-    const { setUser, user } = contextUser;
+    const { user } = contextUser;
 
     const fetchData2 = async () => {
       if (user?.user?.user_id) {

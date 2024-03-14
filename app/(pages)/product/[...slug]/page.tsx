@@ -63,8 +63,9 @@ function Page({ params }: any) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const query = params.slug[0];
-      const res = await ProductByIdApi(query)
+      const id = params.slug[0];
+
+      await ProductByIdApi({id})
       .then((response) =>{
         console.log(response.data);
         

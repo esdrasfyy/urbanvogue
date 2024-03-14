@@ -3,15 +3,6 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 import {RatingProps} from "@/components/ui/rating/rating-ui/types/index"
 function RatingUi({ label, star, onRatingChange }: RatingProps) {
   const [ratingText, setRatingText] = useState<string>('');
-
-  useEffect(() => {
-    setRatingText(getRatingText());
-  }, [star]);
-
-  const starMouseOver = (number: number) => {
-    onRatingChange(number); 
-  };
-
   const getRatingText = () => {
     switch (star) {
       case 1:
@@ -29,6 +20,15 @@ function RatingUi({ label, star, onRatingChange }: RatingProps) {
     }
   };
 
+  useEffect(() => {
+    setRatingText(getRatingText());
+  }, [star, getRatingText]);
+
+  const starMouseOver = (number: number) => {
+    onRatingChange(number); 
+  };
+
+  
   return (
     <div className='flex gap-3 flex-col mt-4'>
       <h3 className='text-sm'>{label}</h3>

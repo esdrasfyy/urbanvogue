@@ -27,21 +27,22 @@ function CardH({
 
   const installment = price / 6;
 
-  useEffect(() => {
-    const updatedColor = selectColor !== undefined ? selectColor : "default";
-    const updatedSize = selectSize !== undefined ? selectSize : "default";
-    updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
-  }, [qtd, selectColor, selectSize]);
-
-
   const context = useContext(ContextCart);
   if (!context) {
     return;
   }
   const { removeItemFromCart, updateItemQuantity } = context;
 
+  useEffect(() => {
+    const updatedColor = selectColor !== undefined ? selectColor : "default";
+    const updatedSize = selectSize !== undefined ? selectSize : "default";
+    if (updateItemQuantity) {
+      updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
+    }
+  }, [id, index, qtd, selectColor, selectSize, updateItemQuantity]);
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
+
   return (
     <li
       className={`${
@@ -198,5 +199,4 @@ function CardH({
     </li>
   );
 }
-
 export { CardH };

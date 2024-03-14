@@ -28,18 +28,23 @@ function CardH({
   const installment = price / 6;
 
   const context = useContext(ContextCart);
-  if (!context) {
-    return;
-  }
-  const { removeItemFromCart, updateItemQuantity } = context;
 
   useEffect(() => {
+    if (!context) {
+      return;
+    }
+    const { updateItemQuantity } = context;
+
     const updatedColor = selectColor !== undefined ? selectColor : "default";
     const updatedSize = selectSize !== undefined ? selectSize : "default";
     if (updateItemQuantity) {
       updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
     }
-  }, [id, index, qtd, selectColor, selectSize, updateItemQuantity]);
+  }, [id, index, qtd, selectColor, selectSize, context]);
+  if (!context) {
+    return;
+  }
+  const { removeItemFromCart } = context;
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
 

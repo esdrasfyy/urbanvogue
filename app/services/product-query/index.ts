@@ -1,18 +1,56 @@
-import axios from "axios";
+import { ProductI } from "@/interfaces/product/card";
+import axios, { AxiosResponse } from "axios";
+export interface ProductQueryApiProps {
+  query: string;
+}
+export interface ProductQueryApiApiReq {
+  products: ProductI[] | null;
+  msg: string | null;
+}
+export interface ProductQueryApiResponse {
+  data: ProductQueryApiApiReq | null;
+  error: string | null;
+  status: number;
+}
 
-async function ProductQueryApi(query: string) {
+async function ProductQueryApi({
+  query,
+}: ProductQueryApiProps): Promise<ProductQueryApiResponse> {
+  const api = process.env.API
   try {
-    const url_default = `https://urban-back.onrender.com/product/filter?${query}`;
-    const data = await axios.get<any[]>(url_default);
-    if (!data) {
-      console.log("n oego produto");
+    const response: AxiosResponse<ProductQueryApiApiReq | null> = await axios.get(
+      `${api}product/filter?query=${query}`
+    ); 
+
+    if (response?.status === 200 && response?.data?.products && response?.data?.products?.length > 0) {
+      return {
+        data: {
+          products: response?.data?.products || [],
+          msg: response?.data?.msg || null,
+        },
+        error: null,
+        status: response.status,
+      };
+    } else {
+      return {
+        data: {
+          products: null,
+          msg: response.data ? response.data.msg || null : "Unknown error.",
+        },
+        error: response.data ? response.data.msg || "Unknown error." : "Unknown error.",
+        status: response.status,
+      };
     }
+  } catch (error: any) {
     return {
-      data: data.data,
-      status: data.status,
+      data: {
+        products: null,
+        msg: error.response?.data?.msg || null,
+      },
+      error: error.response?.data?.msg || "Unknown error.",
+      status: error.response?.status || 500,
     };
-  } catch (error) {
-    console.log(error);
   }
 }
+
 export {ProductQueryApi};

@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {CardV} from "@/components/card/vertical/index";
-import {ProductQueryApi} from "@/services/product-query/index";
-import {ProductI} from "@/interfaces/product/card/index";
+import { CardV } from "@/components/card/vertical/index";
+import { ProductQueryApi } from "@/services/product-query/index";
+import { ProductI } from "@/interfaces/product/card/index";
 import Loading from "./sub-components/loading";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import "@splidejs/react-splide/css/core";
-import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 
 interface CarrosselShopProps {
   query: string;
@@ -17,7 +17,7 @@ interface CarrosselShopProps {
 }
 
 function SlideProducts({ query, category, classname }: CarrosselShopProps) {
-  const [data, setData] = useState<ProductI[]>([]);
+  const [data, setData] = useState<ProductI[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | null>(null);
 
@@ -25,14 +25,18 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result: any = await ProductQueryApi(query);
-        setData(result.data);
-        
-        if(!result){
-          console.error("failed request in carousel.")
+        const result = await ProductQueryApi({ query });
+        if (
+          result.status === 200 &&
+          result?.data?.products &&
+          result?.data?.products?.length > 0
+        ) {
+          return setData(result.data.products);
         }
+        setData(null);
+        return console.error("failed request in carousel.");
       } catch (error) {
-        console.error("failed request in carousel.")
+        console.error("failed request in carousel.");
         setError(error);
       } finally {
         setLoading(false);
@@ -78,25 +82,23 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
         className="w-full relative"
       >
         <SplideTrack>
-        {loading && data ? (
-            [...Array(10)].map((_, index) => (
-              <SplideSlide
-                key={index}
-                className="shadow-snipped custom-slide flex flex-col bg-custom-grayTwo"
-              >
-                <Loading />
-              </SplideSlide>
-            ))
-          ) : (
-            data?.map((card: ProductI) => (
-              <SplideSlide
-                key={card.id}
-                className="shadow-snipped custom-slide flex flex-col bg-custom-grayTwo"
-              >
-                <CardV data={card} />
-              </SplideSlide>
-            ))
-          )}
+          {(loading && !data) || data === null
+            ? [...Array(10)].map((_, index) => (
+                <SplideSlide
+                  key={index}
+                  className="shadow-snipped custom-slide flex flex-col bg-custom-grayTwo"
+                >
+                  <Loading />
+                </SplideSlide>
+              ))
+            : data?.map((card: ProductI) => (
+                <SplideSlide
+                  key={card.id}
+                  className="shadow-snipped custom-slide flex flex-col bg-custom-grayTwo"
+                >
+                  <CardV data={card} />
+                </SplideSlide>
+              ))}
         </SplideTrack>
         <div className="splide__progress mt-2">
           <div className="splide__progress__bar bg-custom-pink text-custom-pink" />
@@ -151,4 +153,4 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
   );
 }
 
-export  {SlideProducts};
+export { SlideProducts };

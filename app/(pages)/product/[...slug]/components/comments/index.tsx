@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import logo from "@/app/assets/urban-vogue/logo-big.png";
+import logo from "@/assets/urban-vogue/logo-big.png";
 import CreateComment from "@/(pages)/product/[...slug]/components/comments/sub-components/comment-create";
 import CommentCard from "@/(pages)/product/[...slug]/components/comments/sub-components/comment-card";
 import { CommentsReadApi } from "@/services/comments/read/index";

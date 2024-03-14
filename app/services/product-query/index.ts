@@ -19,7 +19,7 @@ async function ProductQueryApi({
   const api = process.env.API
   try {
     const response: AxiosResponse<ProductQueryApiApiReq | null> = await axios.get(
-      `${api}product/filter?query=${query}`
+      `${api}product/filter?${query}`
     ); 
 
     if (response?.status === 200 && response?.data?.products && response?.data?.products?.length > 0) {

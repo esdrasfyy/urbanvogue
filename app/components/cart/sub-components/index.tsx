@@ -5,7 +5,7 @@ interface LoadingProps{
 function Loading({isLastItem}:LoadingProps) {
   return (
     <>
-      <div role="status" className={`${isLastItem && "border-solid border-b-[1px] pb-6 border-custom-grayThree" }flex animate-pulse`}>
+      <div role="status" className={`${isLastItem && "border-solid border-b-[1px] pb-6 border-custom-grayThree" }flex animate-pulse h-[120px]`}>
         <div className="flex rounded-md items-center justify-center h-[100px] min-w-[65px] max-w-[65px] mb-4 bg-custom-grayThree dark:bg-custom-grayThree">
           <svg
             className="rounded-md w-5 h-5 text-custom-grayOne dark:text-custom-grayOne"

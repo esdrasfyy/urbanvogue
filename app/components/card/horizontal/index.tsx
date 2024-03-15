@@ -77,7 +77,7 @@ function CardH({
             alt={dataId?.images[0].url || ""}
             width={100}
             height={100}
-            className="h-full"
+            className="h-full rounded-md"
           />
         </Link>
         <div className="flex flex-col min-h-[100px] w-full justify-between gap-2 mr-4 max-sm:mr-0">

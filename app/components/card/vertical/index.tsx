@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
-import {ProductI} from "@/interfaces/product/card/index";
+import { ProductI } from "@/interfaces/product/card/index";
 import { PiShoppingCartSimple } from "react-icons/pi";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { ContextCart } from "@/contexts/ContextCart";
@@ -32,7 +32,6 @@ function CardV({ data }: CardProps) {
   }
   const { addItemToCart } = context;
 
-
   const handleAddItem = () => {
     const add: ProductCart = {
       id: data?.id || 0,
@@ -41,7 +40,7 @@ function CardV({ data }: CardProps) {
       size: data.sizes[0]?.size || "",
       color: data.colors[0]?.name_color || "",
     };
-  
+
     if (add.id) {
       addItemToCart(add);
     }
@@ -65,7 +64,6 @@ function CardV({ data }: CardProps) {
           height={200}
           quality={100}
           loading="lazy"
-          
           blurDataURL={isHovered ? data.images[1].url : data.images[0].url}
           src={isHovered ? data.images[1].url : data.images[0].url}
           alt="a"
@@ -109,4 +107,4 @@ function CardV({ data }: CardProps) {
   );
 }
 
-export  {CardV};
+export { CardV };

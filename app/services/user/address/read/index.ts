@@ -4,6 +4,9 @@ import { AddressReadApiReq, AddressReadResponse } from "./types";
 async function AddressReadApi(id: number): Promise<AddressReadResponse> {
   const api = process.env.API;
   try {
+    if (!id) {
+      throw new Error("ID parameter is empty or undefined.");
+    }
     const response: AxiosResponse<AddressReadApiReq | null> = await axios.get(
       `${api}address/${id}`
     );

@@ -18,6 +18,9 @@ async function ProductQueryApi({
 }: ProductQueryApiProps): Promise<ProductQueryApiResponse> {
   const api = process.env.API
   try {
+    if (!query) {
+      throw new Error("query parameter is empty or undefined.");
+    }
     const response: AxiosResponse<ProductQueryApiApiReq | null> = await axios.get(
       `${api}product/filter?${query}`
     ); 

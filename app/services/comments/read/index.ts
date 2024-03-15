@@ -21,6 +21,9 @@ async function CommentsReadApi({
 }: CreateCommentApiProps): Promise<CommentReadResponse> {
   const api = process.env.API;
   try {
+    if (!id) {
+      throw new Error("ID parameter is empty or undefined.");
+    }
     const response: AxiosResponse<CommentReadApiReq | null> = await axios.get(
       `${api}comments/${id}`
     );

@@ -85,13 +85,14 @@ const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setCartSummary(calcCartSum(updatedCart));
   };
 
-  const removeItemFromCart = (id: number, index: number) => {
-    const updatedCart = productsCart.filter(
+  const removeItemFromCart = async (id: number, index: number) => {
+    const updatedCart = await  productsCart.filter(
       (item, indexItem) => item.id !== id || indexItem !== index
     );
     setProductsCart((prevProductsCart) => updatedCart);
     localStorage.setItem("MyCart", JSON.stringify(updatedCart));
     setCartSummary(calcCartSum(updatedCart));
+    return;
   };
 
   const updateItemQuantity = (

@@ -14,6 +14,9 @@ async function ProductsByIdsApi({
   ids,
 }: ProductsByIdsProps): Promise<ProductsByIdsResponse> {
   try {
+    if (!ids || ids.length === 0) {
+      throw new Error("IDs parameter is empty or undefined.");
+    }
     const response: AxiosResponse<ProductsByIdsApiReq | null> = await axios.get(
       `${api}products/${ids}`
     );
@@ -53,6 +56,10 @@ async function ProductByIdApi({
   id,
 }: ProductByIdProps): Promise<ProductByIdResponse> {
   try {
+    if (!id) {
+      throw new Error("ID parameter is empty or undefined.");
+    }
+
     const response: AxiosResponse<ProductByIdApiReq | null> = await axios.get(
       `${api}product/${id}`
     );

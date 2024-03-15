@@ -16,6 +16,7 @@ import { ProductsByIdsApi } from "@/services/products-by-ids/index";
 import { FaArrowRight } from "react-icons/fa";
 import { CardH } from "@/components/card/horizontal/index";
 import Link from "next/link";
+import { Loading } from "./sub-components";
 
 interface ProductResponse {
   products: ProductI[];
@@ -64,7 +65,7 @@ function Cart() {
       }
     };
 
-    if (cartSummary?.products[0]?.id) {
+    if (cartSummary?.products[0]?.id && !dataProducts) {
       fetchCart();
     }
   }, [context]);
@@ -95,25 +96,30 @@ function Cart() {
           <Divider />
           <DrawerBody backgroundColor={"#171a1b"}>
             <ul className="flex flex-col gap-2 ">
-              {cartSummary?.products?.map((product: any, index, array) => {
-                const matchingProduct = dataProducts?.find(
-                  (dataProduct) => dataProduct.id === product.id
-                ) as ProductI | null;
-                const isLastItem = index === array.length - 1;
-                return (
-                  <CardH
-                    key={index}
-                    dataCart={product}
-                    quantity={product.quantity}
-                    id={product.id}
-                    index={index}
-                    size={product.size || "default"}
-                    color={product.color || "default"}
-                    dataId={matchingProduct || null}
-                    isLastItem={isLastItem}
-                  />
-                );
-              })}
+              {dataProducts && dataProducts.length !== 0
+                ? cartSummary?.products?.map((product: any, index, array) => {
+                    const matchingProduct = dataProducts?.find(
+                      (dataProduct) => dataProduct.id === product.id
+                    ) as ProductI | null;
+                    const isLastItem = index === array.length - 1;
+                    return (
+                      <CardH
+                        key={index}
+                        dataCart={product}
+                        quantity={product.quantity}
+                        id={product.id}
+                        index={index}
+                        size={product.size || "default"}
+                        color={product.color || "default"}
+                        dataId={matchingProduct || null}
+                        isLastItem={isLastItem}
+                      />
+                    );
+                  })
+                : cartSummary?.products?.map((product: any, index, array) => {
+                    const isLastItem = index === array.length - 1;
+                    return <Loading key={index} isLastItem={isLastItem} />;
+                  })}
             </ul>
           </DrawerBody>
 

@@ -58,12 +58,15 @@ function CardV({ data }: CardProps) {
     >
       <Link
         href={`/product/${data.id}/${data.category}/${generateTitle}`}
-        className="object-cover flex justify-center items-center overflow-hidden"
+        className="object-cover flex justify-center items-center overflow-hidden min-h-[227px]"
       >
         <Image
           width={300}
           height={200}
           quality={100}
+          loading="lazy"
+          
+          blurDataURL={isHovered ? data.images[1].url : data.images[0].url}
           src={isHovered ? data.images[1].url : data.images[0].url}
           alt="a"
           className="rounded-md shadow-snipped border-image h-auto bg-center max-h-[235px]"

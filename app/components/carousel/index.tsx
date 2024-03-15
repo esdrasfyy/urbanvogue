@@ -26,8 +26,6 @@ function SlideProducts({ query, category, classname }: CarrosselShopProps) {
       try {
         setLoading(true);
         const result = await ProductQueryApi({ query });
-        console.log(query);
-        
         if (
           result.status === 200 &&
           result?.data?.products &&

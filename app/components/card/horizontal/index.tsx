@@ -7,6 +7,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { ContextCart } from "@/contexts/ContextCart/index";
 import Link from "next/link";
 import { CartItemProps } from "@/components/card/horizontal/types/index";
+import { LoadingSpinner } from "@/components/ui/loading";
+import { ImSpinner9 } from "react-icons/im";
 
 function CardH({
   dataId,
@@ -17,12 +19,12 @@ function CardH({
   isLastItem,
   size,
 }: CartItemProps) {
-  const [arrow1, setArrow1] = useState(false);
-  const [arrow2, setArrow2] = useState(false);
-  const [qtd, setQtd] = useState(quantity);
-  const [selectSize, setSelectSize] = useState(size);
-  const [selectColor, setSelectColor] = useState(color);
-
+  const [arrow1, setArrow1] = useState<boolean>(false);
+  const [arrow2, setArrow2] = useState<boolean>(false);
+  const [qtd, setQtd] = useState<number>(quantity);
+  const [selectSize, setSelectSize] = useState<string>(size);
+  const [selectColor, setSelectColor] = useState<string>(color);
+  const [loadingRemove, setLoadingRemove] = useState<boolean>(false);
   const price = parseFloat(dataId?.price || "0.00");
 
   const installment = price / 6;
@@ -47,7 +49,16 @@ function CardH({
   const { removeItemFromCart } = context;
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
-
+  const removeItem = async () => {
+    try {
+      setLoadingRemove(true);
+      removeItemFromCart(id, index);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingRemove(false);
+    }
+  };
   return (
     <li
       className={`${
@@ -193,12 +204,18 @@ function CardH({
           </div>
         </div>
         <div className=" ">
+          {loadingRemove ? (
+            <span className="text-custom-pink"><ImSpinner9 className="animate-spin text-3xl" /></span>
+          )
+        :
+        (
           <button
             className="text-2xl hover:text-custom-pink duration-200 ease-linear hover:scale-110"
-            onClick={() => removeItemFromCart(id, index)}
+            onClick={removeItem}
           >
             <RiDeleteBinLine />
           </button>
+        )}
         </div>
       </div>
     </li>

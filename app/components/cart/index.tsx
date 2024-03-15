@@ -68,7 +68,7 @@ function Cart() {
     if (cartSummary?.products[0]?.id && !dataProducts) {
       fetchCart();
     }
-  }, [context]);
+  }, [context, dataProducts]);
 
   if (!context) {
     return;

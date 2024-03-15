@@ -21,7 +21,7 @@ function CardH({
 }: CartItemProps) {
   const [arrow1, setArrow1] = useState<boolean>(false);
   const [arrow2, setArrow2] = useState<boolean>(false);
-  const [qtd, setQtd] = useState<number>(quantity);
+  const [qtd, setQtd] = useState<number>(quantity || 1);
   const [selectSize, setSelectSize] = useState<string>(size);
   const [selectColor, setSelectColor] = useState<string>(color);
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false);
@@ -41,7 +41,7 @@ function CardH({
         updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
       }
     }
-  }, [id, index, context]);
+  }, [id, index, context, qtd, selectColor, selectSize]);
 
   if (!context) {
     return null;
@@ -84,6 +84,8 @@ function CardH({
             <Image
               src={dataId?.images[0].url || ""}
               alt={dataId?.images[0].url || ""}
+              loading="lazy"
+              blurDataURL={dataId?.images[0].url || ""}
               width={100}
               height={100}
               className="h-full rounded-md"
@@ -138,7 +140,7 @@ function CardH({
                   <input
                     type="number"
                     className="flex-shrink-0 text-custom-pink font-extrabold dark:text-white border-0 bg-transparent text-lg focus:outline-none focus:ring-0 max-w-[3rem] text-center"
-                    defaultValue={qtd}
+                    value={qtd}
                   />
                   <button
                     type="button"
@@ -192,7 +194,7 @@ function CardH({
                 className="p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
               >
                 {dataId?.sizes.map((size) => (
-                  <option value={size.size} key={size.size}>
+                  <option defaultValue={size.size} key={size.size}>
                     {size.size}
                   </option>
                 ))}
@@ -213,7 +215,7 @@ function CardH({
                 className="p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
               >
                 {dataId.colors.map((color) => (
-                  <option key={color.name_color} value={color.name_color}>
+                  <option key={color.name_color} defaultValue={color.name_color}>
                     {color.name_color}
                   </option>
                 ))}
@@ -238,7 +240,7 @@ function CardH({
             className="w-full p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
           >
             {dataId?.sizes.map((size) => (
-              <option value={size.size} key={size.size}>
+              <option defaultValue={size.size} key={size.size}>
                 {size.size}
               </option>
             ))}
@@ -259,7 +261,7 @@ function CardH({
             className=" w-full p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
           >
             {dataId.colors.map((color) => (
-              <option key={color.name_color} value={color.name_color}>
+              <option key={color.name_color} defaultValue={color.name_color}>
                 {color.name_color}
               </option>
             ))}

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-import {RatingProps} from "@/components/ui/rating/rating-ui/types/index"
+import { RatingProps } from "@/components/ui/rating/rating-ui/types/index";
+
 function RatingUi({ label, star, onRatingChange }: RatingProps) {
   const [ratingText, setRatingText] = useState<string>('');
-  const getRatingText = () => {
+
+  const getRatingText = useCallback(() => {
     switch (star) {
       case 1:
         return 'Poor';
@@ -18,7 +20,7 @@ function RatingUi({ label, star, onRatingChange }: RatingProps) {
       default:
         return '';
     }
-  };
+  }, [star]);
 
   useEffect(() => {
     setRatingText(getRatingText());
@@ -28,7 +30,6 @@ function RatingUi({ label, star, onRatingChange }: RatingProps) {
     onRatingChange(number); 
   };
 
-  
   return (
     <div className='flex gap-3 flex-col mt-4'>
       <h3 className='text-sm'>{label}</h3>
@@ -50,4 +51,4 @@ function RatingUi({ label, star, onRatingChange }: RatingProps) {
   );
 }
 
-export {RatingUi};
+export { RatingUi };

@@ -31,7 +31,7 @@ function Comments({
   useEffect(() => {
     const fetchData = async () => {
       if (id !== 0) {
-        const res = await CommentsReadApi({id});
+        const res = await CommentsReadApi({ id });
 
         if (res.status === 200 && res.data?.comments) {
           setDataComments(res?.data?.comments);
@@ -113,21 +113,20 @@ function Comments({
         <CreateComment img={img} title={title} id={id} />
       </section>
       <section className=" mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-4.5 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-4.5">
-        {dataComments &&
-          (dataComments.length === 0 ? (
-            <div className="w-full flex items-center justify-center my-16 text-xl">
-              <p>
-                The product does not yet have ratings and comments. Log in and
-                be the first.
-              </p>
-            </div>
-          ) : (
-            <ul className="w-full flex flex-col gap-5">
-              {dataComments.map((comment) => (
-                <CommentCard key={comment.comment_id} comment={comment} />
-              ))}
-            </ul>
-          ))}
+        {!dataComments ? (
+          <div className="w-full flex items-center justify-center my-16 text-xl">
+            <p>
+              The product does not yet have ratings and comments. Log in and be
+              the first.
+            </p>
+          </div>
+        ) : (
+          <ul className="w-full flex flex-col gap-5">
+            {dataComments!.map((comment) => (
+              <CommentCard key={comment.comment_id} comment={comment} />
+            ))}
+          </ul>
+        )}
       </section>
     </>
   );

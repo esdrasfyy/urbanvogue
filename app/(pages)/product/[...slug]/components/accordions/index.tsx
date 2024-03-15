@@ -16,8 +16,8 @@ interface AccordionsProps {
 }
 function Accordions({ summary, details }: AccordionsProps) {
   return (
-    <Accordion allowMultiple className="flex flex-col gap-5 mt-8">
-      <AccordionItem className="border-none">
+    <Accordion defaultIndex={[1]} allowMultiple className="flex flex-col gap-5 mt-8">
+      <AccordionItem className="border-none" >
         <h2>
           <AccordionButton>
             <Box as="span" flex="1" textAlign="left" className="text-xl">

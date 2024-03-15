@@ -63,8 +63,6 @@ async function ProductByIdApi({
     const response: AxiosResponse<ProductByIdApiReq | null> = await axios.get(
       `${api}product/${id}`
     );
-      console.log(id);
-      
     if (response.status === 200) {
       return {
         data: {

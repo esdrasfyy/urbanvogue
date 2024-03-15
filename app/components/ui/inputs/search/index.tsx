@@ -25,7 +25,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
       <div className={`relative w-full`}>
         <input
           type="search"
-          className={`relative bg-custom-grayThree rounded-3xl py-[3px] pl-16 text-white duration-200 transition-all ease-linear hover:opacity-70 w-full outline-none searchInput text-lg max-[400px]:pl-12 `}
+          className={`shadow-snipped duration-300 ease-linear relative bg-custom-grayThree border-custom-grayThree border-2 rounded-3xl py-[3px] pl-16 text-white transition-all hover:opacity-70 w-full outline-none searchInput text-lg max-[400px]:pl-12 focus:outline-none focus:ring-0 focus:border-custom-pink focus:border-2  ring-0`}
           placeholder="ex: Camisa"
           onChange={handleChange}
         />
@@ -34,7 +34,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
         </button>
         <button
           type="submit"
-          className="absolute left-0 top-0 bg-white text-grayOnerounded-full duration-200 transition-all ease-linear hover:opacity-90 z-10 p-[6px] text-2xl rounded-full"
+          className="absolute left-0 top-[50%] -translate-y-1/2 bg-white text-grayOnerounded-full duration-200 transition-all ease-linear hover:opacity-60 z-10 p-[6px] text-2xl rounded-full"
         >
           <HiSearch />
         </button>

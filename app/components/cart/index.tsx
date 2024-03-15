@@ -129,7 +129,7 @@ function Cart() {
             className="w-full flex justify-between"
           >
             <div className="flex justify-between w-full items-center max-sm:">
-              <div className="text-xl text-custom-pink">
+              <div className="text-xl text-custom-pink max-sm:text-base">
                 TOTAL{" "}
                 <span className="text-custom-textColor font-medium ml-2 max-sm:ml-0">
                   ${cartSummary?.totalPrice.toFixed(2)}
@@ -137,7 +137,7 @@ function Cart() {
               </div>
               <Link
                 href={"/checkout"}
-                className={`group bg-none border-2 w-56 border-custom-pink flex gap-12 items-center pl-2 justify-center max-sm:py-2 text-custom-textColor py-1 rounded text-lg duration-300 hover:bg-custom-pink`}
+                className={`group bg-none border-2 w-56 border-custom-pink flex gap-12 items-center pl-2 justify-center text-custom-textColor py-1 rounded text-lg duration-300 hover:bg-custom-pink max-sm:text-sm max-sm:w-48 `}
               >
                 <span>Close order</span>
                 <FaArrowRight className="transition-all ease-in-out -translate-x-7 group-hover:translate-x-0 duration-1000" />

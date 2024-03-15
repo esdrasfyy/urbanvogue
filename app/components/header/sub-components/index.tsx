@@ -27,8 +27,8 @@ function ButtonsHeader() {
             <IoIosHeartEmpty />
             </button>
           </li>
-          <li className="relative text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 group cursor-pointer max-md:text-[28px]">
-            <button onClick={onOpenCart} className="group-hover:text-custom-pink">
+          <li className="relative text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 group cursor-pointer max-md:text-[28px]" onClick={onOpenCart}>
+            <button  className="group-hover:text-custom-pink">
             <PiShoppingCartSimple />
             </button>
           {cartSummary && cartSummary?.totalQuantity > 0 && ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartSummary?.totalQuantity}</span>)}

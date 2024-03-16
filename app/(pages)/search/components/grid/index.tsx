@@ -1,11 +1,50 @@
 import { CardV } from "@/components/card/vertical";
 import { ProductI } from "@/interfaces/product/card/index";
+import { useEffect, useState } from "react";
+import { FiltersI } from "../../types";
+import { useSearchParams } from "next/navigation";
+import { ProductSearchApi } from "@/services/product-search";
 
 interface GridSearchProps {
-  data?: ProductI[] | null;
+  handleFilters: Function;
 }
 
-function GridSearch({ data }: GridSearchProps) {
+function GridSearch({ handleFilters }: GridSearchProps) {
+  const [data, setData] = useState<ProductI[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errorFetch, setErrorFetch] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  let search = searchParams.get("query");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        search = searchParams.get("query");
+        const { data, status, error } = await ProductSearchApi({
+          search: searchParams.toString(),
+        });
+
+        if (status === 200 && data) {
+          setData(data?.products);
+          handleFilters(data.filters);
+          return;
+        }
+        if (error) {
+          console.log(error);
+
+          return setErrorFetch(error);
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [searchParams]);
+
   return (
     <section className="grid-search">
       {data && data.length > 0
@@ -59,4 +98,4 @@ function GridSearch({ data }: GridSearchProps) {
   );
 }
 
-export {GridSearch};
+export { GridSearch };

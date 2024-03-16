@@ -3,11 +3,12 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { HiSearch } from "react-icons/hi";
 import { MdKeyboardVoice } from "react-icons/md";
 import { SearchInputProps } from "@/components/ui/inputs/search/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function SearchInputUi({ classname }: SearchInputProps) {
-  const [value, setValue] = useState<string>("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [value, setValue] = useState<string>(searchParams.get("query") || "");
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -28,6 +29,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
           className={`shadow-snipped duration-300 ease-linear relative bg-custom-grayThree border-custom-grayThree border-2 rounded-3xl py-[3px] pl-16 text-white transition-all hover:opacity-70 w-full outline-none searchInput text-lg max-[400px]:pl-12 focus:outline-none focus:ring-0 focus:border-custom-pink focus:border-2  ring-0`}
           placeholder="ex: Camisa"
           onChange={handleChange}
+          value={value}
         />
         <button className="absolute right-3 z-10 top-[50%] translate-y-[-50%] text-white text-2xl duration-200 transition-all ease-linear hover:text-custom-pink max-md:text-2xl ">
           <MdKeyboardVoice />

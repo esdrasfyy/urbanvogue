@@ -211,36 +211,34 @@ function Page({ params }: any) {
                                 selectImage === imagem.url
                                   ? "border-2 border-solid border-custom-pink"
                                   : "border-2 border-solid border-custom-grayThree opacity-40"
-                              } `}
+                              } rounded-md relative`}
                               key={index}
                             >
                               <Image
                                 alt={imagem?.url}
                                 loading="lazy"
                                 blurDataURL={imagem?.url}
-                                width={220}
-                                height={220}
+                                fill
                                 src={imagem?.url}
                                 onMouseOver={() =>
                                   handleImageClick(imagem?.url)
                                 }
                                 onClick={() => handleImageClick(imagem?.url)}
-                                className="shadow-snipped w-full h-full"
+                                className="shadow-snipped w-full h-full rounded-md"
                               />
                             </li>
                           ))}
                       </ul>
                     </div>
-                    <div className="min-h-[100%] w-[100%] flex">
+                    <div className="min-h-[100%] w-[100%] flex relative">
                       {dataCard?.images && dataCard.images.length > 0 && (
                         <Image
                           loading="lazy"
                           blurDataURL={selectImage}
                           alt={selectImage}
                           src={selectImage}
-                          width={500}
-                          height={500}
-                          className="cursor-zoom-in h-full w-full shadow-snipped"
+                          fill
+                          className="cursor-zoom-in h-full w-full shadow-snipped rounded-md"
                           onClick={onOpen}
                         />
                       )}
@@ -302,7 +300,7 @@ function Page({ params }: any) {
                         </div>
                         <button
                           type="submit"
-                          className="py-3.5 rounded-sm absolute right-4 top-7 z-10 flex items-center justify-center text-2xl"
+                          className="hover:text-custom-pink duration-300 ease-linear py-3.5 rounded-sm absolute right-4 top-[25px] z-10 flex items-center justify-center text-2xl"
                         >
                           <SlArrowRightCircle />
                         </button>

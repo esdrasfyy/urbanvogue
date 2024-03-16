@@ -1,17 +1,6 @@
 import { ProductI } from "@/interfaces/product/card";
 import axios, { AxiosResponse } from "axios";
-export interface ProductQueryApiProps {
-  query: string;
-}
-export interface ProductQueryApiApiReq {
-  products: ProductI[] | null;
-  msg: string | null;
-}
-export interface ProductQueryApiResponse {
-  data: ProductQueryApiApiReq | null;
-  error: string | null;
-  status: number;
-}
+import { ProductQueryApiApiReq, ProductQueryApiProps, ProductQueryApiResponse } from "./types";
 
 async function ProductQueryApi({
   query,

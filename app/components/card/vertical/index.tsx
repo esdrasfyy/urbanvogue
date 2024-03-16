@@ -63,8 +63,8 @@ function CardV({ data }: CardProps) {
           width={300}
           height={200}
           loading="lazy"
-          blurDataURL={isHovered ? data.images[1].url : data.images[0].url}
-          src={isHovered ? data.images[1].url : data.images[0].url}
+          blurDataURL={isHovered ? data?.images[1]?.url : data?.images[0]?.url}
+          src={isHovered ? data?.images[1]?.url : data?.images[0]?.url}
           alt="a"
           className="rounded-md shadow-snipped border-image h-auto bg-center max-h-[235px]"
         />

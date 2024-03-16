@@ -1,9 +1,15 @@
 import { ProductI } from "@/interfaces/product/card";
 import axios, { AxiosResponse } from "axios";
-import { ProductSearchApiApiReq, ProductSearchApiProps, ProductSearchApiResponse } from "./types";
+import {
+  ProductSearchApiApiReq,
+  ProductSearchApiProps,
+  ProductSearchApiResponse,
+} from "./types";
 
 async function ProductSearchApi({
   search,
+  offset,
+  limit,
 }: ProductSearchApiProps): Promise<ProductSearchApiResponse> {
   const api = process.env.API;
   try {
@@ -11,8 +17,11 @@ async function ProductSearchApi({
       throw new Error("search parameter is empty or undefined.");
     }
     const response: AxiosResponse<ProductSearchApiApiReq | null> =
-      await axios.get(`${api}product/search?${search}`);
-
+      await axios.get(
+        `${api}product/search?${search}&offset=${offset || 0}&limit=${
+          limit || 11
+        }`
+      );
     if (
       response?.status === 200 &&
       response?.data?.products &&
@@ -30,7 +39,7 @@ async function ProductSearchApi({
     } else {
       return {
         data: {
-            filters: null,
+          filters: null,
           products: null,
           msg: response.data ? response.data.msg || null : "Unknown error.",
         },

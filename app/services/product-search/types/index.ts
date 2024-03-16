@@ -2,6 +2,8 @@ import { ProductI } from "@/interfaces/product/card";
 
 export interface ProductSearchApiProps {
     search: string;
+    offset:number;
+    limit: number
   }
   interface FilterData {
     sizes: { [size: string]: number };

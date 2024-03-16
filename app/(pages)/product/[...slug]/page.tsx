@@ -52,7 +52,7 @@ function Page({ params }: any) {
       <main className="h-full w-full max-w-[1050px] flex flex-col items-center justify-center">
         {dataProduct && (
           <Suspense fallback={<Loading />}>
-            <section className="h-full mt-28 bg-custom-grayTwo max-w-[1050px] w-full mx-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor">
+            <section className="h-full mt-28 bg-custom-grayTwo max-w-[1050px] w-full mx-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor rounded-md">
               <div className="flex w-full h-[573px] gap-4 flex-col max-md:h-auto">
                 <div className="flex w-full justify-between max-md:flex-col max-md:gap-3">
                   <div className="flex text-base items-center text-custom-textColor max-md:text-xs">

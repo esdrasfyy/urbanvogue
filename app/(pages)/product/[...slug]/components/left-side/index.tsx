@@ -23,34 +23,32 @@ function LeftSide({ data }: LeftSideProps) {
                   selectImage === imagem.url
                     ? "border-2 border-solid border-custom-pink"
                     : "border-2 border-solid border-custom-grayThree opacity-40"
-                } `}
+                } rounded-md relative`}
                 key={index}
               >
                 <Image
                   alt={imagem?.url}
                   loading="lazy"
                   blurDataURL={imagem?.url}
-                  width={220}
-                  height={220}
+                  fill
                   src={imagem?.url}
                   onMouseOver={() => handleImageClick(imagem?.url)}
                   onClick={() => handleImageClick(imagem?.url)}
-                  className="shadow-snipped w-full h-full"
+                  className="rounded-sm shadow-snipped w-full h-full"
                 />
               </li>
             ))}
         </ul>
       </div>
-      <div className="min-h-[100%] w-[100%] flex">
+      <div className="min-h-[100%] w-[100%] flex relative">
         {data?.images && data.images.length > 0 && (
           <Image
             loading="lazy"
             blurDataURL={selectImage}
             alt={selectImage}
             src={selectImage}
-            width={500}
-            height={500}
-            className="cursor-zoom-in h-full w-full shadow-snipped"
+            fill
+            className="cursor-zoom-in h-full w-full rounded-md shadow-snipped"
           />
         )}
       </div>

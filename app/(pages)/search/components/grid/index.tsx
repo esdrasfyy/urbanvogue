@@ -21,7 +21,8 @@ function GridSearch({ handleFilters }: GridSearchProps) {
 
   const searchParams = useSearchParams();
   let search = searchParams.get("query");
-
+  const orderBy = searchParams.get("orderBy")
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +52,7 @@ function GridSearch({ handleFilters }: GridSearchProps) {
     };
 
     fetchData();
-  }, [searchParams]);
+  }, [searchParams, orderBy]);
 
   const handleData = (newData:ProductI[]) =>{
     setData((prevData) => {

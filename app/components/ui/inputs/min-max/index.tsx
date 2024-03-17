@@ -23,6 +23,7 @@ function MinMaxUi({
         id={name}
         borderWidth="2px"
         paddingLeft="10px"
+        border={"1px"}
         borderRadius={"4px"}
         focusBorderColor={"#ed145b"}
         value={value}

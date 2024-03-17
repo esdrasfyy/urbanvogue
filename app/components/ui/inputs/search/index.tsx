@@ -15,7 +15,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (value) {
-      return router.push(`/search?query=${value}`);
+      return router.push(`/search?query=${value}&page=1`);
     }
   };
   return (

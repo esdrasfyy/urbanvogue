@@ -2,12 +2,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 function ButtonPaginationUi({ page }: { page: string }) {
+    
     const  searchParams = useSearchParams();
+    let pageQuery = searchParams.get("page");
+    
     const router = useRouter()
     const handlePage = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('page', page);
-        router.push("search?" + params.toString())
+        router.push("/search?" + params.toString())
+        console.log("/search?" + params.toString());
         
     };
   return (
@@ -15,7 +19,7 @@ function ButtonPaginationUi({ page }: { page: string }) {
       <input
         type="button"
         onClick={handlePage}
-        className="cursor-pointer shadow-snipped duration-300 ease-linear rounded-md flex items-center justify-center px-4 h-10 leading-tight text-custom-textColor bg-custom-grayTwo border border-custom-pink  hover:bg-custom-pink hover:text-custom-textColor dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        className={`cursor-pointer shadow-snipped duration-300 ease-linear rounded-md flex items-center justify-center px-4 h-10 leading-tight text-custom-textColor border border-custom-pink  ${pageQuery === page ? "bg-custom-pink": "bg-custom-grayTwo"} hover:bg-custom-pink hover:text-custom-textColor dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
         defaultValue={page}
       />
     </li>

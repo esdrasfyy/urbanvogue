@@ -4,9 +4,6 @@ import { useDisclosure } from "@chakra-ui/react";
 import { RiFilterLine } from "react-icons/ri";
 import { GridSearch } from "@/(pages)/search/components/grid/index";
 import { Filter } from "@/(pages)/search/components/filter/index";
-import { ProductSearchApi } from "@/services/product-search";
-import { ProductI } from "@/interfaces/product/card";
-import { useSearchParams } from "next/navigation";
 import { FiltersI } from "./types";
 import {PaginationUi} from "./components/pagination";
 

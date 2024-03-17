@@ -1,4 +1,4 @@
-import { ProductI } from "@/interfaces/product/card";
+import { ProductI } from "../../interfaces/product/card";
 import axios, { AxiosResponse } from "axios";
 import {
   ProductSearchApiApiReq,

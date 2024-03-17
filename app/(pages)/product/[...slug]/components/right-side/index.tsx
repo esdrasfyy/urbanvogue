@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import Link from 'next/link';
-import { InputUi } from '@/components/ui/inputs/default';
-import { ContextCart } from '@/contexts/ContextCart';
+import { InputUi } from '../../../../../components/ui/inputs/default';
+import { ContextCart } from '../../../../../contexts/ContextCart';
 import { BsShare } from 'react-icons/bs';
 import { SlArrowRightCircle } from 'react-icons/sl';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ProductPageI } from '@/interfaces/product/card';
+import { ProductPageI } from '../../../../../interfaces/product/card';
 
 interface ProductCart {
     id: number;

@@ -235,7 +235,12 @@ body {
   width: 90px;
   transform: translate(-50%, -50%);
 }
+.inner-shadow {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 .heartActived {
+  overflow: hidden;
   background-position: right;
   animation: animateHeart 0.8s steps(28) 1;
 }

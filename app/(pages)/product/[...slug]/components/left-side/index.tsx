@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { RatingView } from "@/components/ui/rating/rating-view";
+import { RatingView } from "../../../../../components/ui/rating/rating-view";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { ProductPageI } from "@/interfaces/product/card";
+import { ProductPageI } from "../../../../../interfaces/product/card";
 interface LeftSideProps {
   data: ProductPageI;
 }

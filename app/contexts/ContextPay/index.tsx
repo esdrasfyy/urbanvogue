@@ -7,12 +7,12 @@ import React, {
   useContext,
 } from "react";
 
-import { ContextPayProps, Product } from "@/contexts/ContextPay/types/index";
-import { AddressReadApi } from "@/services/user/address/read";
-import { AddressI } from "@/interfaces/address";
+import { ContextPayProps, Product } from "./types/index";
+import { AddressReadApi } from "../../services/user/address/read";
+import { AddressI } from "../../interfaces/address";
 import { ContextCart } from "../ContextCart";
-import { ProductI } from "@/interfaces/product/card";
-import { ProductsByIdsApi } from "@/services/products-by-ids";
+import { ProductI } from "../../interfaces/product/card";
+import { ProductsByIdsApi } from "../../services/products-by-ids";
 import { ContextUser } from "../ContextUser";
 
 const ContextPay = createContext<ContextPayProps | undefined>(undefined);

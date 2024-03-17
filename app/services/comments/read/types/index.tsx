@@ -1,4 +1,4 @@
-import { CommentI } from "@/interfaces/comment";
+import { CommentI } from "../../../../interfaces/comment";
 
 export interface CommentReadApiReq {
   comments: CommentI[] | null;

@@ -1,8 +1,9 @@
+"use client"
 import React, { createContext, useEffect, useState, ReactNode } from "react";
 
-import { ContextUserProps } from "@/contexts/ContextUser/types/index";
-import { LoginApi } from "@/services/login";
-import { UserI } from "@/interfaces/user";
+import { ContextUserProps } from "./types/index";
+import { LoginApi } from "../../services/login";
+import { UserI } from "../../interfaces/user";
 
 const ContextUser = createContext<ContextUserProps | undefined>(undefined);
 

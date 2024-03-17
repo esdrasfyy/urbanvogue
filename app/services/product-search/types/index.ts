@@ -1,4 +1,4 @@
-import { ProductI } from "@/interfaces/product/card";
+import { ProductI } from "../../../interfaces/product/card";
 
 export interface ProductSearchApiProps {
     search: string;

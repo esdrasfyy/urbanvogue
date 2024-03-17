@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { CommentI, CreateCommentI } from "@/interfaces/comment";
+import { CommentI, CreateCommentI } from "../../../interfaces/comment";
 
 export interface CreateCommentApiReq {
   msg: string;

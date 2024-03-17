@@ -1,7 +1,7 @@
 "use client";
 
 import { ChakraProvider } from "@chakra-ui/react";
-import { CartProvider } from "@/contexts/ContextCart/index";
+import { CartProvider } from "../contexts/ContextCart/index";
 import { UserProvider } from "../contexts/ContextUser";
 import { PayProvider } from "../contexts/ContextPay";
 

@@ -1,4 +1,4 @@
-import { MinMaxUi } from "@/components/ui/inputs/min-max";
+import { MinMaxUi } from "../../../../components/ui/inputs/min-max";
 import {
   Divider,
   Drawer,

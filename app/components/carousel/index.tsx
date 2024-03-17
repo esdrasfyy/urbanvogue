@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CardV } from "@/components/card/vertical/index";
-import { ProductQueryApi } from "@/services/product-query/index";
-import { ProductI } from "@/interfaces/product/card/index";
+import { CardV } from "../card/vertical/index";
+import { ProductQueryApi } from "../../services/product-query/index";
+import { ProductI } from "../../interfaces/product/card/index";
 import Loading from "./sub-components/loading";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
@@ -59,11 +59,10 @@ function SlideProducts({
       </h3>
       <Splide
         hasTrack={false}
-        
         options={{
           arrows:!notArrow,
           autoplay: true,
-          perPage: 3,
+          perPage: 1,
           type: "loop",
           pagination: false,
           rewind: true,
@@ -89,7 +88,7 @@ function SlideProducts({
         aria-label="My Favorite Images"
         className="w-full relative"
       >
-        <SplideTrack>
+        <SplideTrack className="pb-[20px] rounded-md">
           {(loading && !data) || data === null
             ? [...Array(10)].map((_, index) => (
                 <SplideSlide

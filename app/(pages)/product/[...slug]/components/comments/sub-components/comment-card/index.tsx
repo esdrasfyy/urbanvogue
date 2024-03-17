@@ -4,9 +4,9 @@ import {
   FaAngry,
   FaGrinHearts,
 } from "react-icons/fa";
-import {RatingView} from "@/components/ui/rating/rating-view";
+import {RatingView} from "../../../../../../../components/ui/rating/rating-view";
 import { Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
-import { CommentI } from "@/interfaces/comment";
+import { CommentI } from "../../../../../../../interfaces/comment";
 
 interface Url {
   url: string;

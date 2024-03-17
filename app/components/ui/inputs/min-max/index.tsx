@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@chakra-ui/react";
 import React from "react";
-import {MinMaxProps} from "@/components/ui/inputs/min-max/types/index"
+import {MinMaxProps} from "./types/index"
 function MinMaxUi({
   type,
   label,

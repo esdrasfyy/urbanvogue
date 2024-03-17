@@ -4,10 +4,10 @@ import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ContextCart } from "@/contexts/ContextCart/index";
+import { ContextCart } from "../../../contexts/ContextCart/index";
 import Link from "next/link";
-import { CartItemProps } from "@/components/card/horizontal/types/index";
-import { LoadingSpinner } from "@/components/ui/loading";
+import { CartItemProps } from "./types/index";
+import { LoadingSpinner } from "../../ui/loading";
 import { ImSpinner9 } from "react-icons/im";
 
 function CardH({

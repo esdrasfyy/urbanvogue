@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-import { RatingProps } from "@/components/ui/rating/rating-ui/types/index";
+import { RatingProps } from "./types/index";
 
 function RatingUi({ label, star, onRatingChange }: RatingProps) {
   const [ratingText, setRatingText] = useState<string>('');

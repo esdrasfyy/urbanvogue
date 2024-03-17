@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
-import { ProductI } from "@/interfaces/product/card/index";
+import { ProductI } from "../../../interfaces/product/card/index";
 import { PiShoppingCartSimple } from "react-icons/pi";
 import { IoIosHeartEmpty } from "react-icons/io";
-import { ContextCart } from "@/contexts/ContextCart";
+import { ContextCart } from "../../../contexts/ContextCart";
 interface CardProps {
   data: ProductI;
 }

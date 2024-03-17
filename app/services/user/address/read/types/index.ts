@@ -1,4 +1,4 @@
-import { AddressI } from "@/interfaces/address";
+import { AddressI } from "../../../../../interfaces/address";
 
 export interface AddressReadApiReq {
   address: AddressI[] | null;

@@ -1,4 +1,4 @@
-import { ProductI } from "@/interfaces/product/card/index"
+import { ProductI } from "../../../../interfaces/product/card/index"
 export interface Product {
     id: number;
     quantity: number;

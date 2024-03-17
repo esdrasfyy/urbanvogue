@@ -1,4 +1,4 @@
-import { ProductI, ProductPageI } from "@/interfaces/product/card";
+import { ProductI, ProductPageI } from "../../../interfaces/product/card";
 
 export interface ProductsByIdsProps {
     ids: string;

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { LoginApiReq, LoginApiResponse,LoginApiProps } from "@/services/login/types/index";
+import { LoginApiReq, LoginApiResponse,LoginApiProps } from "./types/index";
 
 async function LoginApi({credential, password}:LoginApiProps): Promise<LoginApiResponse> {
   const api = process.env.API;

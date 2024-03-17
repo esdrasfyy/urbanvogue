@@ -1,5 +1,5 @@
 "use client";
-import { ContextCart } from "@/contexts/ContextCart/index";
+import { ContextCart } from "../../contexts/ContextCart/index";
 import {
   Drawer,
   DrawerBody,
@@ -11,10 +11,10 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { ProductI } from "@/interfaces/product/card/index";
-import { ProductsByIdsApi } from "@/services/products-by-ids/index";
+import { ProductI } from "../../interfaces/product/card/index";
+import { ProductsByIdsApi } from "../../services/products-by-ids/index";
 import { FaArrowRight } from "react-icons/fa";
-import { CardH } from "@/components/card/horizontal/index";
+import { CardH } from "../card/horizontal/index";
 import Link from "next/link";
 import { Loading } from "./sub-components";
 

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BsShare } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { InputUi } from "@/components/ui/inputs/default/index";
+import { InputUi } from "../../../components/ui/inputs/default/index";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SlArrowRightCircle } from "react-icons/sl";
 import {
@@ -15,13 +15,13 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Accordions } from "@/(pages)/product/[...slug]/components/accordions/index";
-import { ProductPageI } from "@/interfaces/product/card/index";
-import { ContextCart } from "@/contexts/ContextCart/index";
-import { ProductByIdApi } from "@/services/products-by-ids";
-import Comments from "@/(pages)/product/[...slug]/components/comments/index";
-import { RatingView } from "@/components/ui/rating/rating-view/index";
-import { SlideProducts } from "@/components/carousel/index";
+import { Accordions } from "./components/accordions/index";
+import { ProductPageI } from "../../../interfaces/product/card/index";
+import { ContextCart } from "../../../contexts/ContextCart/index";
+import { ProductByIdApi } from "../../../services/products-by-ids";
+import Comments from "./components/comments/index";
+import { RatingView } from "../../../components/ui/rating/rating-view/index";
+import { SlideProducts } from "../../../components/carousel/index";
 import Link from "next/link";
 import Loading from "./loading";
 type Inputs = {
@@ -67,8 +67,7 @@ function Page({ params }: any) {
       const id = params.slug[0];
 
       await ProductByIdApi({ id }).then((response) => {
-        console.log(response.data);
-
+        
         if (response.status === 200) {
           if (response?.data?.product) {
             const { price, images, sizes, colors } = response.data.product;
@@ -145,7 +144,7 @@ function Page({ params }: any) {
 
   return (
     <>
-      <main className="h-full w-full max-w-[1050px] flex flex-col items-center justify-center">
+      <main className="h-full w-full max-w-[1050px] flex flex-col items-center justify-center overflow-hidden px-4">
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent
@@ -168,7 +167,7 @@ function Page({ params }: any) {
         </Modal>
         {dataCard && (
           <Suspense fallback={<Loading />}>
-            <section className="h-full mt-28 bg-custom-grayTwo max-w-[1050px] w-full mx-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor">
+            <section className="h-full mt-28 bg-custom-grayTwo max-w-[1050px] w-full mx-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor rounded-md">
               <div className="flex w-full h-[573px] gap-4 flex-col max-md:h-auto">
                 <div className="flex w-full justify-between max-md:flex-col max-md:gap-3">
                   <div className="flex text-base items-center text-custom-textColor max-md:text-xs">
@@ -467,7 +466,7 @@ function Page({ params }: any) {
                 />
               )}
             </section>
-            <section className=" mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-12">
+            <section className="mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-12 rounded-md">
               <SlideProducts query="order_by=created_at:desc" category="NEWS" notArrow={true} />
               <SlideProducts query="order_by=created_at:desc" category="NEWS" notArrow={true}/>
             </section>

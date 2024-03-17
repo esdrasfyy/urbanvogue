@@ -2,10 +2,10 @@
 import React, { useContext } from 'react'
 import Link from "next/link";
 
-import { ContextCart } from "@/contexts/ContextCart/index";
+import { ContextCart } from "../../../contexts/ContextCart/index";
 import { IoIosHeartEmpty } from 'react-icons/io';
 import { PiShoppingCartSimple, PiUserCirclePlus } from "react-icons/pi";
-import { ContextUser } from '@/contexts/ContextUser';
+import { ContextUser } from '../../../contexts/ContextUser';
 import { LiaUserCircle } from 'react-icons/lia';
 
 

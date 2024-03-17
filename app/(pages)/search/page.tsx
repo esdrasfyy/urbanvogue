@@ -2,8 +2,8 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { RiFilterLine } from "react-icons/ri";
-import { GridSearch } from "@/(pages)/search/components/grid/index";
-import { Filter } from "@/(pages)/search/components/filter/index";
+import { GridSearch } from "./components/grid/index";
+import { Filter } from "./components/filter/index";
 import { FiltersI } from "./types";
 import {PaginationUi} from "./components/pagination";
 

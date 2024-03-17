@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import Image from "next/image";
 import logo from "@/assets/urban-vogue/bird-logo.png";
 import Link from "next/link";
-import {SearchInputUi} from "@/components/ui/inputs/search/index";
-import ButtonsHeader from "@/components/header/sub-components/index";
+import {SearchInputUi} from "../ui/inputs/search/index";
+import ButtonsHeader from "./sub-components/index";
 
 
 async function Header() {

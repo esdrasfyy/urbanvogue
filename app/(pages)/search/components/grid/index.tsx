@@ -1,9 +1,9 @@
-import { CardV } from "@/components/card/vertical";
-import { ProductI } from "@/interfaces/product/card/index";
+import { CardV } from "../../../../components/card/vertical";
+import { ProductI } from "../../../../interfaces/product/card/index";
 import { useEffect, useRef, useState } from "react";
 import { FiltersI } from "../../types";
 import { useSearchParams } from "next/navigation";
-import { ProductSearchApi } from "@/services/product-search";
+import { ProductSearchApi } from "../../../../services/product-search";
 import { Intersection } from "../intersection";
 
 interface GridSearchProps {

@@ -12,15 +12,15 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { TextAreaUi } from "@/components/ui/inputs/textarea/index";
-import { RatingUi } from "@/components/ui/rating/rating-ui/index";
+import { TextAreaUi } from "../../../../../../../components/ui/inputs/textarea/index";
+import { RatingUi } from "../../../../../../../components/ui/rating/rating-ui/index";
 import Image from "next/image";
 import { FaAngry, FaGrinHearts } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "@/services/firebase/index";
-import { CreateCommentApi } from "@/services/comments/create/index";
-import { LoadingSpinner } from "@/components/ui/loading/index";
-import { ContextUser } from "@/contexts/ContextUser";
+import { storage } from "../../../../../../../services/firebase/index";
+import { CreateCommentApi } from "../../../../../../../services/comments/create/index";
+import { LoadingSpinner } from "../../../../../../../components/ui/loading/index";
+import { ContextUser } from "../../../../../../../contexts/ContextUser";
 
 type Inputs = {
   recommend: boolean;

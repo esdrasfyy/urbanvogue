@@ -1,5 +1,5 @@
-import { AddressI } from "@/interfaces/address";
-import { ProductI } from "@/interfaces/product/card";
+import { AddressI } from "../../../interfaces/address";
+import { ProductI } from "../../../interfaces/product/card";
 
 export interface Product {
   id: number;

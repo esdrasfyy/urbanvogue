@@ -1,5 +1,5 @@
 "use client";
-import { ProductSearchApi } from "@/services/product-search";
+import { ProductSearchApi } from "../../../../services/product-search";
 import { useSearchParams } from "next/navigation";
 import React, { Ref, useEffect, useRef, useState } from "react";
 

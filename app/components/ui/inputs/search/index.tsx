@@ -2,7 +2,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { HiSearch } from "react-icons/hi";
 import { MdKeyboardVoice } from "react-icons/md";
-import { SearchInputProps } from "@/components/ui/inputs/search/types";
+import { SearchInputProps } from "./types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 function SearchInputUi({ classname }: SearchInputProps) {

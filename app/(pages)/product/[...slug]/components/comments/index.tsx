@@ -1,11 +1,11 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logo from "@/assets/urban-vogue/logo-big.png";
-import CreateComment from "@/(pages)/product/[...slug]/components/comments/sub-components/comment-create";
-import CommentCard from "@/(pages)/product/[...slug]/components/comments/sub-components/comment-card";
-import { CommentsReadApi } from "@/services/comments/read/index";
-import { RatingView } from "@/components/ui/rating/rating-view";
-import { CommentI } from "@/interfaces/comment";
+import CreateComment from "./sub-components/comment-create";
+import CommentCard from "./sub-components/comment-card";
+import { CommentsReadApi } from "../../../../../services/comments/read/index";
+import { RatingView } from "../../../../../components/ui/rating/rating-view";
+import { CommentI } from "../../../../../interfaces/comment";
 
 interface CommentsProps {
   title: string;
@@ -46,7 +46,7 @@ function Comments({
 
   return (
     <>
-      <section className="h-full mt-2 mx-2 bg-custom-grayTwo max-w-[1050px] w-full max-md:mx-5 p-4 shadow-snipped text-custom-textColor">
+      <section className="h-full mt-2 mx-2 bg-custom-grayTwo max-w-[1050px] w-full max-md:mx-5 p-4 shadow-snipped text-custom-textColor rounded-md">
         <div className="w-full">
           <div className="flex justify-between">
             <div className="w-full flex mt-3 justify-between">
@@ -112,7 +112,7 @@ function Comments({
         </div>
         <CreateComment img={img} title={title} id={id} />
       </section>
-      <section className=" mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-4.5 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-4.5">
+      <section className=" mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-4.5 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-4.5 rounded-md">
         {!dataComments ? (
           <div className="w-full flex items-center justify-center my-16 text-xl">
             <p>

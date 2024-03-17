@@ -1,4 +1,4 @@
-import { UserI } from "@/interfaces/user";
+import { UserI } from "../../../interfaces/user";
 
 export interface LoginApiProps {
     credential: string | null;

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
-import {RatingViewProps} from "@/components/ui/rating/rating-view/types/index"
+import {RatingViewProps} from "./types/index"
 function RatingView({ rating }: RatingViewProps) {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;

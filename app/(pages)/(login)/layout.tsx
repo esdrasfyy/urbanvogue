@@ -8,10 +8,7 @@ interface LoginLayoutProps {
 async function LoginLayout({ children }: LoginLayoutProps) {
   return (
     <>
-      <DontHaveLogin
-        route="/account"
-        children={children}
-      />
+      <DontHaveLogin route="/account">{children}</DontHaveLogin>
     </>
   );
 }

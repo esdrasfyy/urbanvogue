@@ -18,20 +18,22 @@ import React, { useContext} from "react";
 
 
 function FormLogin({ loading, handleLoading }: FormLoginProps) {
-  const context = useContext(ContextUser);
-  if (!context) {
-    return;
-  }
-  const { setUser, user } = context;
-
   const router = useRouter();
   const toast = useToast();
+  
+  const context = useContext(ContextUser);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
+
+  if (!context) {
+    return;
+  }
+  const { setUser, user } = context;
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("submitado");
 

@@ -36,10 +36,9 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
   const { setUser, user } = context;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("submitado");
-
     const credential = data.credential;
     const password = data.password;
+    
     try {
       handleLoading(!loading);
       const {data, status, error} = await LoginApi({ credential, password });
@@ -59,7 +58,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         });
         setInterval(() => {
           if (router) {
-            router.push("/account");
+            router.back();
           }
         }, 2000);
       }

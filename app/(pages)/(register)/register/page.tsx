@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext, useState } from "react";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
-import logo from "@/assets/urban-vogue/logo-big.png";
-import Image from "next/image";
-import Link from "next/link";
 import {LoadingSpinner} from "@/components/ui/loading";
 import { HiMiniArrowUturnLeft } from "react-icons/hi2";
-import FormRegister from "./components/form";
+import logo from "@/assets/urban-vogue/logo-big.png";
+import {FormRegister} from "./components/form";
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 
 function Register() {

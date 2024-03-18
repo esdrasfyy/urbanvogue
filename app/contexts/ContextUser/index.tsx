@@ -38,7 +38,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       console.log(res);
     };
     fetchUser();
-  }, []);
+  }, [api]);
   return (
     <ContextUser.Provider value={contextValue}>{children}</ContextUser.Provider>
   );

@@ -11,15 +11,15 @@ interface BeLoggedProps {
 function BeLogged({ children, route }: BeLoggedProps) {
   const router = useRouter();
   const context = useContext(ContextUser);
-  if (!context) {
-    return;
-  }
-  const { user } = context;
   useEffect(() => {
+    if (!context) {
+      return;
+    }
+    const { user } = context;
     if (!user) {
       return router.push(route);
     }
-  }, [user]);
+  }, [context]);
   return <>{children}</>;
 }
 

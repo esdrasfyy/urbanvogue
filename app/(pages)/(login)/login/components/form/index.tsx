@@ -18,6 +18,7 @@ import React, { useContext} from "react";
 
 
 function FormLogin({ loading, handleLoading }: FormLoginProps) {
+  const [show, setShow] = React.useState(false);
   const router = useRouter();
   const toast = useToast();
   
@@ -91,7 +92,6 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
     }
   };
 
-  const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
   return (

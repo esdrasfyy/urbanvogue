@@ -52,7 +52,9 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
     if (searchParams.has('max')) {
       setMax(parseInt(searchParams.get('max') || '999'));
     }
-  }, [])
+  }, [searchParams])
+
+
   useEffect(() => {
     const params = new URLSearchParams();
     let pageQuery = searchParams.get("page");
@@ -76,7 +78,7 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
     params.set("query", search);
     params.set("page", pageQuery || "1");
     router.push(pathname + "?" + params.toString());
-  }, [search, brand, category, min, max]);
+  }, [search, brand, category, min, max, pathname, searchParams, router]);
 
   const handleMin = (value: string) => {
     const realValue = parseInt(value);

@@ -1,5 +1,4 @@
 import React from "react";
-import { AuthGuard } from "./components/auth-guard";
 interface ProductLayoutProps {
   children: React.ReactNode;
 }
@@ -7,7 +6,7 @@ interface ProductLayoutProps {
 async function ProductLayout({ children }: ProductLayoutProps) {
   return (
     <>
-      <AuthGuard>{children}</AuthGuard>
+      {children}
     </>
   );
 }

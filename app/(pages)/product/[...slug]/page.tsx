@@ -1,13 +1,4 @@
 "use client";
-import React, { Suspense, useContext, useEffect, useState } from "react";
-import Image from "next/image";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { BsShare } from "react-icons/bs";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { InputUi } from "../../../components/ui/inputs/default/index";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { SlArrowRightCircle } from "react-icons/sl";
 import {
   Divider,
   Modal,
@@ -15,15 +6,25 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Accordions } from "./components/accordions/index";
-import { ProductPageI } from "../../../interfaces/product/card/index";
-import { ContextCart } from "../../../contexts/ContextCart/index";
-import { ProductByIdApi } from "../../../services/products-by-ids";
-import Comments from "./components/comments/index";
 import { RatingView } from "../../../components/ui/rating/rating-view/index";
+import React, { Suspense, useContext, useEffect, useState } from "react";
+import { InputUi } from "../../../components/ui/inputs/default/index";
+import { ProductPageI } from "../../../interfaces/product/card/index";
+import { ProductByIdApi } from "../../../services/products-by-ids";
 import { SlideProducts } from "../../../components/carousel/index";
-import Link from "next/link";
+import { ContextCart } from "../../../contexts/ContextCart/index";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { Accordions } from "./components/accordions/index";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SlArrowRightCircle } from "react-icons/sl";
+import Comments from "./components/comments/index";
+import { BsShare } from "react-icons/bs";
 import Loading from "./loading";
+import Image from "next/image";
+import Link from "next/link";
+import * as yup from "yup";
+
 type Inputs = {
   cep: string;
 };

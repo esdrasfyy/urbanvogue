@@ -71,6 +71,7 @@ function Login() {
         <aside className="w-[30%] min-h-full relative hidden justify-center items-center sm:flex">
           <Image
             src={bg}
+            priority
             alt="bg-gray"
             className="absolute w-full h-full z-0 rounded-r-md shadow-snipped"
           />{" "}

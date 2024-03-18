@@ -40,12 +40,6 @@ interface ProductCart {
   size?: string;
   color?: string;
 }
-
-interface ApiResponse {
-  data: ProductResponse | any[];
-  status: number;
-}
-
 interface ProductResponse {
   products: ProductPageI[];
   notFoundIds: number[];

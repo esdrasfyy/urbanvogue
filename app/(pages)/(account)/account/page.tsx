@@ -1,14 +1,7 @@
+import { MoreOptions } from "./sub-components/more-options";
+import { Navigation } from "./sub-components/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import {
-  IoIosArrowForward,
-  IoIosHeartEmpty,
-  IoMdNotificationsOutline,
-} from "react-icons/io";
-import { IoGiftOutline, IoWalletOutline } from "react-icons/io5";
-import { GoChecklist } from "react-icons/go";
-import { LiaUserEditSolid } from "react-icons/lia";
 
 function Account() {
   return (
@@ -46,143 +39,10 @@ function Account() {
               </div>
             </div>
           </div>
-          <div className="w-full flex gap-5 flex-col mt-8">
-            <div className=" h-20 w-full bg-custom-grayOne rounded-md shadow-snipped">
-              <ul className="w-full flex justify-between items-center h-full px-3">
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear ">
-                  <Link
-                    href={"/teste"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    <GoChecklist />
-                  </Link>
-                </li>
-                <span className="flex w-[1px] h-8 bg-custom-grayThree"></span>
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear">
-                  <Link
-                    href={"/teste"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    {" "}
-                    <IoIosHeartEmpty />
-                  </Link>
-                </li>
-                <span className="flex w-[1px] h-8 bg-custom-grayThree"></span>
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear ">
-                  <Link
-                    href={"/teste"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    <IoMdNotificationsOutline />
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <nav className=" h-20 w-full bg-custom-grayOne rounded-md shadow-snipped">
-              <ul className="w-full flex justify-between items-center h-full px-3">
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear ">
-                  <Link
-                    href={"/teste"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    <IoWalletOutline />
-                  </Link>
-                </li>
-                <span className="flex w-[1px] h-8 bg-custom-grayThree"></span>
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear ">
-                  <Link
-                    href={"/teste"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    <IoGiftOutline />
-                  </Link>
-                </li>
-                <span className="flex w-[1px] h-8 bg-custom-grayThree"></span>
-                <li className="text-custom-textColor text-3xl hover:bg-custom-grayThree/10 hover:text-custom-pink hover:shadow-snipped rounded-md duration-300 ease-linear ">
-                  <Link
-                    href={"/account/edit"}
-                    className="flex items-center justify-center p-4"
-                  >
-                    <LiaUserEditSolid />
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          <Navigation />
         </div>
       </main>
-      <section className="max-w-[1050px] w-full bg-custom-grayTwo flex shadow-snipped relative rounded-md  mx-4">
-        <nav className="w-full">
-          <ul className="w-full flex flex-col">
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>MY PROFILE</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>CHATS</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>SUPPORT</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>GET THE APP</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>SUGGESTIONS</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-            <li className="w-full p-4">
-              <Link
-                href={"teste"}
-                className=" text-custom-textColor font-semibold w-full flex justify-between items-center bg-custom-grayThree/20 hover:bg-custom-grayThree/45 rounded-md shadow-snipped duration-300 ease-linear py-4 px-4"
-              >
-                <p>SETTINGS</p>{" "}
-                <span>
-                  <IoIosArrowForward />
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </section>
+      <MoreOptions />
     </section>
   );
 }

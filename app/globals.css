@@ -180,7 +180,12 @@ body {
 }
 .inputDate {
   padding: 0 5px !important;
-  height: 52px !important;
+  height: 44px !important;
+}
+.inputDate::-webkit-calendar-picker-indicator{
+  color: #ed145b;
+  background: url("../app/assets/icons/calendar.png") no-repeat;  
+  background-size: cover;
 }
 .boxprofile {
   position: relative !important;

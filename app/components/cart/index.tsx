@@ -90,12 +90,12 @@ function Cart() {
           backdropInvert="50%"
           backdropBlur="3px"
         />
-        <DrawerContent backgroundColor={"#171a1b"} textColor={"#d9d9d9"}>
+        <DrawerContent backgroundColor={"#  "} textColor={"#d9d9d9"}>
           <DrawerCloseButton className="hover:text-custom-pink" />
           <DrawerHeader className="shadow-snipped">SHOPPING CART</DrawerHeader>
           <Divider />
           <DrawerBody backgroundColor={"#171a1b"}>
-            <ul className="flex flex-col gap-2 ">
+            <ul className="flex flex-col gap-2">
               {dataProducts && dataProducts.length !== 0
                 ? cartSummary?.products?.map((product: any, index, array) => {
                     const matchingProduct = dataProducts?.find(

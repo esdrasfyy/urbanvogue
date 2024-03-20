@@ -76,14 +76,14 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
 
         url = await getDownloadURL(uploadTask.snapshot.ref);
       }
-      console.log(typeof user?.user.user_id);
+      console.log(typeof user?.user_id);
 
       const result = await CreateCommentApi({
         comment: {
           text_comment: comment,
-          user_id: Number(user?.user.user_id),
-          user_img: user?.user.profile_img || "",
-          username: user?.user.username || "",
+          user_id: Number(user?.user_id),
+          user_img: user?.profile_img || "",
+          username: user?.username || "",
           product_id: Number(id),
           rating: rating.toFixed(1),
           recommend: recommend,
@@ -135,7 +135,7 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
     }
     const { user } = context;
 
-    if (!user || !user.user) {
+    if (!user) {
       return alert("necessario fazer login");
     }
     onOpen();

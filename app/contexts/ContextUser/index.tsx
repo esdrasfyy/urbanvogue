@@ -30,12 +30,13 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
       );
       if (res.status === 200 && res?.data?.user) {
+        console.log(res.data.user);
+        
         setUser(res.data.user);
         setHaveUser(true);
         return;
       }
       setHaveUser(false);
-      console.log(res);
     };
     fetchUser();
   }, [api]);

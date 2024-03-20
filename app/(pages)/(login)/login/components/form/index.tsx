@@ -58,14 +58,14 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         });
         setInterval(() => {
           if (router) {
-            router.back()
+            router.push("/account")
           }
         }, 2000);
       }
       if (status !== 200 && status !== 401) {
         toast({
           title: "Error unknown.",
-          description: "error when logging in, try agai",
+          description: "error when logging in, try again.",
           status: "error",
           duration: 9000,
           isClosable: true,

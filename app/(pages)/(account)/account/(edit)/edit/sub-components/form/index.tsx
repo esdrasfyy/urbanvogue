@@ -2,8 +2,8 @@
 const profileDefault =
   "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import React, { ChangeEvent, useContext, useState } from "react";
-import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import { Radio, RadioGroup, Stack, useToast } from "@chakra-ui/react";
 import { MdOutlinePhotoCameraBack } from "react-icons/md";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputUi } from "@/components/ui/inputs/default";
@@ -17,13 +17,16 @@ import { useRouter } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
 import { formatCpf } from "@/masks/cpf";
 import Image from "next/image";
+import { LoadingSpinner } from "@/components/ui/loading";
 
 function FormEdit() {
   const [imgUrl, setImgUrl] = useState<string>(profileDefault);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [cpf, setCpf] = useState<string>("");
+  const [gender, setGender] = useState<string>("Other");
   const router = useRouter();
+  const toast = useToast();
   const context = useContext(ContextUser);
   const {
     register,
@@ -32,16 +35,118 @@ function FormEdit() {
   } = useForm<InputsEdit>({
     resolver: yupResolver(schema),
   });
-  
-  console.log("teste");
-  
+
   const onSubmit: SubmitHandler<InputsEdit> = async (data) => {
+    const file = data.file;
     if (!context) {
       return;
     }
-    const { user } = context;
-    console.log("Submit foi acionado");
-    console.log(data);
+    const { user, setUser } = context;
+    try {
+      setLoading(true);
+      if (!file || file.length === 0) {
+        const res = await UpdateUserApi({
+          userId: Number(user?.user_id),
+          gender: data?.gender,
+          profile: imgUrl,
+          fullname: data.fullname,
+          username: data.username,
+          email: data.email,
+          phone: data.phone,
+          birthdate: data.birthdate,
+          cpf: data.cpf ? data.cpf.toString() : "",
+        });
+        if (res.status === 200 && res?.data?.user) {
+          setUser(res?.data?.user);
+          toast({
+            title: "Updated user!",
+            description: "User data is successfully updated.",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+            variant: "left-accent",
+            position: "top-right",
+          });
+          return;
+        }
+        return toast({
+          title: "Error updating user!",
+          description: `${
+            res.data?.msg || res.error || "Error updating user!"
+          }`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          variant: "left-accent",
+          position: "top-right",
+        });
+      } else {
+        const storageRef = ref(storage, `images/${file[0].name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file[0]);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          (error) => {
+            toast({
+              title: "Error updating user!",
+              description: "Error hosting image in firebase.",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+              variant: "left-accent",
+              position: "top-right",
+            });
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+
+              const res = await UpdateUserApi({
+                userId: Number(user?.user_id),
+                gender: data?.gender,
+                profile: url,
+                fullname: data.fullname,
+                username: data.username,
+                email: data.email,
+                phone: data.phone,
+                birthdate: data.birthdate,
+                cpf: data.cpf ? data.cpf.toString() : "",
+              });
+              if (res.status === 200 && res?.data?.user) {
+                setUser(res?.data?.user);
+                toast({
+                  title: "Updated user!",
+                  description: "User data is successfully updated.",
+                  status: "success",
+                  duration: 9000,
+                  isClosable: true,
+                  variant: "left-accent",
+                  position: "top-right",
+                });
+                return;
+              }
+              return toast({
+                title: "Error updating user!",
+                description: `${
+                  res.data?.msg || res.error || "Error updating user!"
+                }`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                variant: "left-accent",
+                position: "top-right",
+              });
+            });
+          }
+        );
+      }
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   const toggleProfile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -65,21 +170,30 @@ function FormEdit() {
     return;
   }
   const { user } = context;
-  console.log(user);
-  
 
+  useEffect(() => {
+    setCpf(user?.cpf || "");
+    setGender(user?.gender || "")
+    
+    setSelectedImage(
+      user?.profile_img ||
+        "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
+    );
+  }, [user]);
   return (
     <form
-      className="z-10 flex items-center justify-center w-full flex-col px-20 max-sm:px-4"
+      className="z-10 flex items-center justify-center w-full flex-col px-20 max-sm:px-4 relative"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {loading && (
+        <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
+          <LoadingSpinner />
+        </div>
+      )}
       <div className="relative mt-8">
         <Image
           alt="profile logo"
-          src={
-            selectedImage ||
-            "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
-          }
+          src={selectedImage}
           className="max-h-[115px] max-w-[115px] border-[6px] shadow-snipped border-solid border-custom-grayOne  rounded-full object-cover"
           width={115}
           height={115}
@@ -182,18 +296,23 @@ function FormEdit() {
           <label className={` mb-8 text-sm text-custom-textColor uppercase`}>
             Gender
           </label>
-          <RadioGroup>
+          <RadioGroup onChange={setGender} value={gender} >
             <Stack
               spacing={5}
               direction="row"
               color={"#fff"}
               fontSize={"6px"}
               marginTop={"4px"}
-              {...register("gender")}
             >
-              <Radio value="Feminine">Feminine</Radio>
-              <Radio value="Masculine">Masculine</Radio>
-              <Radio value="Other">Other</Radio>
+              <Radio value="Feminine" {...register("gender")}>
+                Feminine
+              </Radio>
+              <Radio value="Masculine" {...register("gender")}>
+                Masculine
+              </Radio>
+              <Radio value="Other" {...register("gender")}>
+                Other
+              </Radio>
             </Stack>
           </RadioGroup>
         </div>
@@ -213,6 +332,7 @@ function FormEdit() {
           </span>
         ) : (
           <button
+            disabled={loading}
             type="submit"
             className="py-2 px-6 bg-custom-pink/40 rounded-md hover:bg-custom-pink duration-300 ease-linear"
           >

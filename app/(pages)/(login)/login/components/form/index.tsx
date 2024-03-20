@@ -58,7 +58,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         });
         setInterval(() => {
           if (router) {
-            router.push("/")
+            router.back()
           }
         }, 2000);
       }

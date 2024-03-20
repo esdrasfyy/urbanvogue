@@ -1,4 +1,3 @@
-import { BeLogged } from "@/components/be-logged";
 import React from "react";
 
 export default async function AccountLayout({
@@ -6,5 +5,5 @@ export default async function AccountLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <BeLogged route="/login">{children}</BeLogged>;
+  return <>{children}</>
 }

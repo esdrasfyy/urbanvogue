@@ -1,4 +1,6 @@
-"use client"
+"use client";
+const profileDefault =
+  "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { ChangeEvent, useContext, useState } from "react";
 import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
@@ -17,21 +19,12 @@ import { formatCpf } from "@/masks/cpf";
 import Image from "next/image";
 
 function FormEdit() {
+  const [imgUrl, setImgUrl] = useState<string>(profileDefault);
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [cpf, setCpf] = useState<string>("");
   const router = useRouter();
   const context = useContext(ContextUser);
-  if (!context) {
-    return null;
-  }
-  const { user } = context;
-
-  const [imgUrl, setImgUrl] = useState(
-    "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
-  );
-
-  const [selectedImage, setSelectedImage] = useState<string>();
-
   const {
     register,
     handleSubmit,
@@ -39,76 +32,16 @@ function FormEdit() {
   } = useForm<InputsEdit>({
     resolver: yupResolver(schema),
   });
-
+  
+  console.log("teste");
+  
   const onSubmit: SubmitHandler<InputsEdit> = async (data) => {
-    const file = data.file;
-    const gender = "Male";
-    const userId = user?.user.user_id;
-    const password = user?.user.password_hash;
-    if (!userId || !password) {
-      return console.log("ntem");
+    if (!context) {
+      return;
     }
-
-    try {
-      setLoading(true);
-      if (!file || file.length === 0) {
-        const { status, msg }: any = await UpdateUserApi({
-          userId,
-          gender,
-          profile: imgUrl,
-          password,
-          fullname: data.fullname,
-          username: data.username,
-          email: data.email,
-          phone: data.phone,
-          birthdate: data.birthdate,
-          cpf: data.cpf ? data.cpf.toString() : "",
-        });
-        /*
-            if (status === 200) {
-              update({ fullname: "TEste 123" });
-            }
-            */
-        if (status !== 200) {
-
-        }
-      } else {
-        const storageRef = ref(storage, `images/${file[0].name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file[0]);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          },
-          (error) => {
-            alert(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-              const { status, msg }: any = await UpdateUserApi({
-                userId,
-                gender,
-                profile: url,
-                password,
-                fullname: data.fullname,
-                username: data.username,
-                email: data.email,
-                phone: data.phone,
-                birthdate: data.birthdate,
-                cpf: data.cpf ? data.cpf.toString() : "",
-              });
-
-              if (status !== 200) {
-              }
-            });
-          }
-        );
-      }
-    } catch (error: any) {
-    } finally {
-      setLoading(false);
-    }
+    const { user } = context;
+    console.log("Submit foi acionado");
+    console.log(data);
   };
   const toggleProfile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -127,6 +60,13 @@ function FormEdit() {
     const formattedValue = formatCpf(value);
     setCpf(formattedValue);
   };
+
+  if (!context) {
+    return;
+  }
+  const { user } = context;
+  console.log(user);
+  
 
   return (
     <form
@@ -173,7 +113,7 @@ function FormEdit() {
           register={register}
           error={errors?.username?.message}
           disabled={loading ? true : false}
-          defaultvalue={""}
+          defaultvalue={user?.username}
         />
         <InputUi
           type="text"
@@ -184,7 +124,7 @@ function FormEdit() {
           register={register}
           error={errors?.fullname?.message}
           disabled={loading ? true : false}
-          defaultvalue={""}
+          defaultvalue={user?.fullname}
         />
         <InputUi
           type="email"
@@ -195,23 +135,25 @@ function FormEdit() {
           register={register}
           error={errors?.email?.message}
           disabled={loading ? true : false}
-          defaultvalue={""}
+          defaultvalue={user?.email}
         />
         <InputUi
+          type="text"
           label="CPF"
-          name="cpf_holder"
-          type="tel"
-          pleaceholder="123.456.789-01"
-          change={handleCPF}
-          value={cpf}
-          register={register}
+          pleaceholder="xxx.xxx.xxx-xx"
           classname="w-full text-custom-textColor"
+          name="cpf"
+          value={cpf}
+          change={handleCPF}
+          register={register}
           error={errors?.cpf?.message}
           disabled={loading ? true : false}
+          defaultvalue={user?.cpf}
         />
         <div className="flex justify-between w-full gap-9 max-sm:flex-wrap max-sm:gap-0">
           <div className="w-1/2 flex gap-[1px] flex-col max-sm:w-full">
-            <DateUi
+            <InputUi
+              type="date"
               label="Date of birth"
               pleaceholder=""
               classname="w-full text-custom-textColor inputDate"
@@ -219,7 +161,7 @@ function FormEdit() {
               register={register}
               error={errors?.birthdate?.message}
               disabled={loading ? true : false}
-              defaultvalue={""}
+              defaultvalue={user?.date_of_birth}
             />
           </div>
           <div className="w-1/2 flex gap-[1px] flex-col max-sm:w-full">
@@ -232,7 +174,7 @@ function FormEdit() {
               register={register}
               error={errors?.phone?.message}
               disabled={loading ? true : false}
-              defaultvalue={""}
+              defaultvalue={user?.phone}
             />
           </div>
         </div>
@@ -247,6 +189,7 @@ function FormEdit() {
               color={"#fff"}
               fontSize={"6px"}
               marginTop={"4px"}
+              {...register("gender")}
             >
               <Radio value="Feminine">Feminine</Radio>
               <Radio value="Masculine">Masculine</Radio>
@@ -258,7 +201,7 @@ function FormEdit() {
       <div className="flex justify-end w-full gap-4 text-custom-textColor font-semibold mt-6 pb-6">
         <button
           type="button"
-          className="py-2 px-6 border-2 border-custom-pink/40 rounded-md hover:bg-custom-pink duration-300 ease-linear shadow-snipped"
+          className="py-2 px-6 border-2 border-custom-pink/40 rounded-md hover:bg-custom-pink duration-300 ease-linear"
           onClick={() => router.back()}
           disabled={loading ? true : false}
         >
@@ -271,7 +214,7 @@ function FormEdit() {
         ) : (
           <button
             type="submit"
-            className="py-2 px-6 bg-custom-pink/40 rounded-md hover:bg-custom-pink duration-300 ease-linear shadow-snipped"
+            className="py-2 px-6 bg-custom-pink/40 rounded-md hover:bg-custom-pink duration-300 ease-linear"
           >
             Save
           </button>
@@ -281,4 +224,4 @@ function FormEdit() {
   );
 }
 
-export {FormEdit};
+export { FormEdit };

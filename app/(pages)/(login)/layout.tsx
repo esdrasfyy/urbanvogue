@@ -1,4 +1,3 @@
-import { DontHaveLogin } from "@/components/dont-have-login";
 import React from "react";
 
 interface LoginLayoutProps {
@@ -6,7 +5,7 @@ interface LoginLayoutProps {
 }
 
 async function LoginLayout({ children }: LoginLayoutProps) {
-  return <DontHaveLogin route="/account">{children}</DontHaveLogin>;
+  return <>{children}</>
 }
 
 export default LoginLayout;

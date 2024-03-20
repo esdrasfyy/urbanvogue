@@ -38,8 +38,8 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { user } = contextUser;
 
     const fetchData2 = async () => {
-      if (user?.user?.user_id) {
-        const res = await AddressReadApi(user?.user?.user_id);
+      if (user?.user_id) {
+        const res = await AddressReadApi(user?.user_id);
         if (res.data?.address && res.data?.address?.length > 0) {
           setAddress(res.data.address[0]?.address_id);
           setDataAddress(res.data.address);

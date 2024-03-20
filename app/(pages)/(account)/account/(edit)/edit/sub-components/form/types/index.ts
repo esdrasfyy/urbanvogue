@@ -4,8 +4,7 @@ export interface InputsEdit {
     username: string;
     email: string;
     phone: string;
-    cep?: string;
-    address?: string;
+    gender: string;
     cpf: string;
     file?: FileList;
     birthdate: Date;
@@ -26,6 +25,10 @@ export interface InputsEdit {
       .required("Este campo é obrigatório!")
       .min(8, "O mínimo de caracteres são 8."),
     username: yup
+      .string()
+      .required("Este campo é obrigatório!")
+      .min(5, "O mínimo de caracteres são 5."),
+    gender: yup
       .string()
       .required("Este campo é obrigatório!")
       .min(5, "O mínimo de caracteres são 5."),

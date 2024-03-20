@@ -5,7 +5,7 @@ interface LoginLayoutProps {
 }
 
 async function RegisterLayout({ children }: LoginLayoutProps) {
-  return <DontHaveLogin route="/account">{children}</DontHaveLogin>;
+  return <>{children}</>
 }
 
 export default RegisterLayout;

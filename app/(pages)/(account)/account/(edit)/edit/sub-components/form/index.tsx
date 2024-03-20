@@ -166,12 +166,12 @@ function FormEdit() {
     setCpf(formattedValue);
   };
 
-  if (!context) {
-    return;
-  }
-  const { user } = context;
-
   useEffect(() => {
+    if (!context) {
+      return;
+    }
+    const { user } = context;
+
     setCpf(user?.cpf || "");
     setGender(user?.gender || "")
     
@@ -179,7 +179,13 @@ function FormEdit() {
       user?.profile_img ||
         "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
     );
-  }, [user]);
+  }, []);
+  
+  if (!context) {
+    return;
+  }
+  const { user } = context;
+
   return (
     <form
       className="z-10 flex items-center justify-center w-full flex-col px-20 max-sm:px-4 relative"

@@ -1,9 +1,16 @@
+"use client";
+import { ContextUser } from "@/contexts/ContextUser";
 import { MoreOptions } from "./sub-components/more-options";
 import { Navigation } from "./sub-components/navigation";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 
 function Account() {
+  const context = useContext(ContextUser);
+  if (!context) {
+    return;
+  }
+  const { user } = context;
   return (
     <section
       className={` min-w-full flex flex-col gap-8 items-center pt-[115px] px-4`}
@@ -21,6 +28,7 @@ function Account() {
               <figure className="max-w-[120px] flex">
                 <Image
                   src={
+                    user?.profile_img ||
                     "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
                   }
                   alt="user profile"
@@ -31,10 +39,10 @@ function Account() {
               </figure>
               <div className="flex flex-col gap-2">
                 <h3 className="text-2xl text-custom-textColor max-sm:text-xl font-semibold">
-                  esdrasfyy
+                  {user?.username}
                 </h3>
                 <p className="text-sm text-custom-textColor/50 max-sm:text-sm">
-                  fernaando.esdras@gmail.com
+                  {user?.email}
                 </p>
               </div>
             </div>

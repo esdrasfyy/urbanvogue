@@ -1,14 +1,12 @@
 "use client";
-import { Select } from "@chakra-ui/react";
-import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { ContextCart } from "../../../contexts/ContextCart/index";
-import Link from "next/link";
+import React, { useContext, useEffect, useState } from "react";
+import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { CartItemProps } from "./types/index";
-import { LoadingSpinner } from "../../ui/loading";
-import { ImSpinner9 } from "react-icons/im";
+import { Select } from "@chakra-ui/react";
+import Image from "next/image";
+import Link from "next/link";
 
 function CardH({
   dataId,

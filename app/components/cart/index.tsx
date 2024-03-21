@@ -92,7 +92,7 @@ function Cart() {
         />
         <DrawerContent backgroundColor={"#  "} textColor={"#d9d9d9"}>
           <DrawerCloseButton className="hover:text-custom-pink" />
-          <DrawerHeader className="shadow-snipped">SHOPPING CART</DrawerHeader>
+          <DrawerHeader className="shadow-snipped bg-custom-grayTwo">SHOPPING CART</DrawerHeader>
           <Divider />
           <DrawerBody backgroundColor={"#171a1b"}>
             <ul className="flex flex-col gap-2">

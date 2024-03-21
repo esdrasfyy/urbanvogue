@@ -37,13 +37,14 @@ function FormEdit() {
   });
 
   const onSubmit: SubmitHandler<InputsEdit> = async (data) => {
+    setLoading(true);
+    
     const file = data.file;
     if (!context) {
       return;
     }
     const { user, setUser } = context;
     try {
-      setLoading(true);
       if (!file || file.length === 0) {
         const res = await UpdateUserApi({
           userId: Number(user?.user_id),
@@ -191,16 +192,16 @@ function FormEdit() {
       className="z-10 flex items-center justify-center w-full flex-col px-20 max-sm:px-4 relative"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {loading && (
+      {loading ? (
         <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
           <LoadingSpinner />
         </div>
-      )}
+      ): ""}
       <div className="relative mt-8">
         <Image
           alt="profile logo"
           src={selectedImage}
-          className="max-h-[115px] max-w-[115px] border-[6px] shadow-snipped border-solid border-custom-grayOne  rounded-full object-cover"
+          className="max-h-[115px] max-w-[115px] min-h-[115px] min-w-[115px] border-[6px] shadow-snipped border-solid border-custom-grayOne  rounded-full object-cover"
           width={115}
           height={115}
         />

@@ -37,8 +37,8 @@ function CardV({ data }: CardProps) {
       id: data?.id || 0,
       quantity: 1,
       price: parseFloat(data.price),
-      size: data.sizes[0]?.size || "",
-      color: data.colors[0]?.name_color || "",
+      size: data && data.sizes && data.sizes.length > 0 ? data.sizes[0].size : "",
+      color: data && data.colors && data.colors.length > 0 ? data.colors[0].name_color : "",
     };
 
     if (add.id) {

@@ -7,10 +7,9 @@ async function AddressDeleteApi({user_id, address_id}:AddressDeleteApiProps): Pr
     if (!user_id || !address_id) {
       throw new Error("ID parameter is empty or undefined.");
     }
-    const response: AxiosResponse<AddressDeleteApiReq | null> = await axios.get(
+    const response: AxiosResponse<AddressDeleteApiReq | null> = await axios.delete(
       `${api}address/delete?user=${user_id}&address=${address_id}`
     );
-
     if (response.status === 204) {
       return {
         data: {

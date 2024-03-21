@@ -26,7 +26,7 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
   const toast = useToast()
 
   if (!contextPay) {
-    return null;
+    return;
   }
   const { handleAddressDefalt, handleDeleteAddress,  dataAddress: data } = contextPay;
 
@@ -38,6 +38,7 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
   const handleDelete = async (address_id:number, user_id:number) =>{
     try {
       const {status, data} = await AddressDeleteApi({address_id, user_id})
+      console.log(status);
       if(status !== 204){
         toast({
           title: "Error deleting address!",
@@ -49,8 +50,9 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
           position: "top-right",
         });
         return;
-      }      
-      await handleDeleteAddress(address_id)
+      }  
+
+      handleDeleteAddress(address_id)
       toast({
         title: "Address deleted!",
         description: "Your address has been successfully deleted.",
@@ -60,16 +62,15 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
         variant: "left-accent",
         position: "top-right",
       });
-       onClose();
+      return onClose();
     } catch (error) {
-      console.log(error);
-      
+      console.error(error);
     }
   }
 
   const context = useContext(ContextUser);
   if (!context) {
-    return null;
+    return;
   }
   const { user } = context;
 

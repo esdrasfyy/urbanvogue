@@ -4,6 +4,7 @@ export interface AddressDeleteApiProps{
 }
 export interface AddressDeleteApiReq{
     msg?:string | null;
+    status?:number | null;
 }
 export interface AddressDeleteApiResponse{
     data: AddressDeleteApiReq;

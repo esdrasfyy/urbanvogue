@@ -38,10 +38,15 @@ function AddAddress() {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const contextPay = useContext(ContextPay);
-  const toast = useToast();
   const context = useContext(ContextUser);
-
+  const toast = useToast();
+  
   const handleFormSubmit: SubmitHandler<Inputs> = async (data) => {
+    if(!contextPay){
+      return;
+    }
+    const { handleAddressDefalt, handleDataAddress, handleDeleteAddress } = contextPay;
+
     try {
       setLoading(true);
 
@@ -61,7 +66,7 @@ function AddAddress() {
       });
 
       if (result && !result.error && result.status === 201) {
-        await handleDataAddress(result.data.address);
+        await handleDataAddress(result?.data.address);
         await handleAddressDefalt(result?.data?.address?.address_id);
         toast({
           title: "Address Add.",
@@ -102,7 +107,7 @@ function AddAddress() {
     return null;
   }
 
-  const { handleAddressDefalt, handleDataAddress } = contextPay;
+
 
   return (
     <>
@@ -248,7 +253,6 @@ function AddAddress() {
                 >
                   Cancel
                 </button>
-                <span className="py-2 px-6 bg-custom-pink/40 rounded-md">
                   {loading ? (
                     <ImSpinner9 className="animate-spin text-3xl" />
                   ) : (
@@ -259,7 +263,6 @@ function AddAddress() {
                       Add
                     </button>
                   )}
-                </span>
               </div>
             </form>
           </ModalBody>

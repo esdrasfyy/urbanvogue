@@ -107,10 +107,6 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
     }
   };
 
-  if (!contextPay || !context) {
-    return;
-  }
-
   const handleName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setName(e.target.value);
     return;

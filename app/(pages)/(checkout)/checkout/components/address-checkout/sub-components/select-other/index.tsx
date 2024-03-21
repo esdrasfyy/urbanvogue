@@ -23,23 +23,29 @@ interface SelectOtherProps {
 }
 function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
   const contextPay = useContext(ContextPay);
-  const toast = useToast()
-
-  if (!contextPay) {
-    return;
-  }
-  const { handleAddressDefalt, handleDeleteAddress,  dataAddress: data } = contextPay;
+  const context = useContext(ContextUser);
+  const toast = useToast();
 
   const handle = (id: number) => {
+    if (!contextPay) {
+      return;
+    }
+    const { handleAddressDefalt } = contextPay;
+
     handleAddressDefalt(id);
     onClose();
   };
 
-  const handleDelete = async (address_id:number, user_id:number) =>{
+  const handleDelete = async (address_id: number, user_id: number) => {
+    if (!contextPay) {
+      return;
+    }
+    const { handleDeleteAddress, dataAddress: data } = contextPay;
+
     try {
-      const {status, data} = await AddressDeleteApi({address_id, user_id})
+      const { status, data } = await AddressDeleteApi({ address_id, user_id });
       console.log(status);
-      if(status !== 204){
+      if (status !== 204) {
         toast({
           title: "Error deleting address!",
           description: "You can be together again in moments.",
@@ -50,9 +56,9 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
           position: "top-right",
         });
         return;
-      }  
+      }
 
-      handleDeleteAddress(address_id)
+      handleDeleteAddress(address_id);
       toast({
         title: "Address deleted!",
         description: "Your address has been successfully deleted.",
@@ -66,13 +72,13 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  const context = useContext(ContextUser);
-  if (!context) {
+  if (!context || !contextPay) {
     return;
   }
   const { user } = context;
+  const { dataAddress: data } = contextPay;
 
   return (
     <>
@@ -98,21 +104,24 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
             <ul className="flex w-full h-full gap-5 flex-col">
               {data.length > 0 &&
                 data.map((card) => (
-                  <li className="relative w-full cursor-pointer"
+                  <li
+                    className="relative w-full cursor-pointer"
                     key={card.address_id}
                   >
                     <div
                       className="flex w-full"
                       onClick={() => handle(card.address_id)}
                     >
-                      <CardAddress
-                        data={card}
-                      />
+                      <CardAddress data={card} />
                     </div>
                     <div className="absolute py-3 items-end top-1 right-4 flex flex-col justify-between h-full">
                       <div>
-                        <button className="text-2xl hover:text-custom-pink duration-200 ease-linear hover:scale-110"
-                        onClick={() => handleDelete(card.address_id, user?.user_id || 0)}>
+                        <button
+                          className="text-2xl hover:text-custom-pink duration-200 ease-linear hover:scale-110"
+                          onClick={() =>
+                            handleDelete(card.address_id, user?.user_id || 0)
+                          }
+                        >
                           <RiDeleteBinLine />
                         </button>
                       </div>

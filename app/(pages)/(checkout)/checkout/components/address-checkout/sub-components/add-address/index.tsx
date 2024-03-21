@@ -30,6 +30,8 @@ function AddAddress() {
   const [selectType, setSelectType] = useState<string>("House");
   const [selectState, setSelectState] = useState<string>("SP");
   const [loading, setLoading] = useState<boolean>(false);
+  const contextPay = useContext(ContextPay);
+  const context = useContext(ContextUser);
   
   const {
     register,
@@ -37,15 +39,13 @@ function AddAddress() {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const contextPay = useContext(ContextPay);
-  const context = useContext(ContextUser);
   const toast = useToast();
   
   const handleFormSubmit: SubmitHandler<Inputs> = async (data) => {
     if(!contextPay){
       return;
     }
-    const { handleAddressDefalt, handleDataAddress, handleDeleteAddress } = contextPay;
+    const { handleAddressDefalt, handleDataAddress } = contextPay;
 
     try {
       setLoading(true);
@@ -104,10 +104,8 @@ function AddAddress() {
   };
 
   if (!contextPay || !context || !context.user) {
-    return null;
+    return;
   }
-
-
 
   return (
     <>

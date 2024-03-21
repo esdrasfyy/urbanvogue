@@ -7,14 +7,11 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {
-  Inputs,
-  schema,
-} from "@/functions/add-card/types/index";
+import { Inputs, schema } from "@/functions/add-card/types/index";
 import { Card } from "@/functions/add-card/subcomponents/card/index";
 import { CardCreateApi } from "@/services/user/card/create/index";
-import {LoadingSpinner} from "@/components/ui/loading/index";
-import {InputUi} from "@/components/ui/inputs/default/index";
+import { LoadingSpinner } from "@/components/ui/loading/index";
+import { InputUi } from "@/components/ui/inputs/default/index";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -25,8 +22,7 @@ import { formatCpf } from "@/masks/cpf/index";
 import { ImSpinner9 } from "react-icons/im";
 import { useRouter } from "next/navigation";
 
-
-function AddCard({ type, getData }: { type: string, getData:() => void }) {
+function AddCard({ type, getData }: { type: string; getData: () => void }) {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
   const [back, setBack] = useState<boolean>(false);
@@ -37,6 +33,7 @@ function AddCard({ type, getData }: { type: string, getData:() => void }) {
   const [year, setYear] = useState("");
   const [cvv, setCvv] = useState("");
   const [network, setNetWork] = useState<string>("elo");
+  const toast = useToast();
 
   const {
     register,
@@ -45,16 +42,8 @@ function AddCard({ type, getData }: { type: string, getData:() => void }) {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const contextPay = useContext(ContextPay);
-
-  if (!contextPay) {
-    return null;
-  }
-  const router = useRouter()
   const context = useContext(ContextUser);
- 
-  
-  const toast = useToast();
-  
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!context) {
       return;
@@ -85,8 +74,8 @@ function AddCard({ type, getData }: { type: string, getData:() => void }) {
         name_holder,
         user_id,
       });
-      if(res && !res.error && res.status === 201){
-        getData()
+      if (res && !res.error && res.status === 201) {
+        getData();
         toast({
           title: `Card added!`,
           description: `Your ${type} card has been added to your account.`,
@@ -113,11 +102,14 @@ function AddCard({ type, getData }: { type: string, getData:() => void }) {
         setLoading(false);
         return;
       }
-    } catch (error:any) {
+    } catch (error: any) {
       throw new Error(error);
-      return
     }
   };
+
+  if (!contextPay || !context) {
+    return;
+  }
 
   const handleName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setName(e.target.value);

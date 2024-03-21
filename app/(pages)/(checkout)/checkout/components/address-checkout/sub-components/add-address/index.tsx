@@ -49,7 +49,6 @@ function AddAddress() {
 
     try {
       setLoading(true);
-
       const { cep, city, number, references, state, street, type } = data;
       const ref = references ? String(references) : "";
       const id = context?.user?.user_id;

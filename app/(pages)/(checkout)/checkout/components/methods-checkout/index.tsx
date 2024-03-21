@@ -41,7 +41,7 @@ function PaymentsMethods() {
   };
   useEffect(() => {
     getData();
-  }, [context]);
+  }, [context, getData]);
 
   if (!contextPay) {
     return;

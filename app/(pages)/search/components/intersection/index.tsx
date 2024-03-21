@@ -26,35 +26,39 @@ function Intersection({
         offset: offsetRef.current,
         limit: limitRef.current,
       });
-
+  
       if (status === 200 && data) {
         handleData(data.products);
         return;
       }
     };
+  
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting) {
         count.current += 1;
         offsetRef.current = count.current * limitRef.current;
-        fetchData()
+        fetchData();
       }
     };
-
+  
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0,
     });
-
-    if (componentRef.current) {
-      observer.observe(componentRef.current);
+  
+    const currentComponentRef = componentRef.current;
+  
+    if (currentComponentRef) {
+      observer.observe(currentComponentRef);
     }
-
+  
     return () => {
-      if (componentRef.current) {
-        observer.unobserve(componentRef.current);
+      if (currentComponentRef) {
+        observer.unobserve(currentComponentRef);
       }
     };
-  }, []);
+  }, [componentRef, limitRef, offsetRef, count, handleData, searchParams]);
+  
 
   return (
     <div

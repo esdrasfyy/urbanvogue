@@ -36,6 +36,7 @@ function SelectCard({ data, type, getData }: SelectCardProps) {
                   ? ""
                   : "border-solid border-b-[1px] pb-2 border-custom-grayThree"
               } `}
+              key={card.card_id}
             >
               <Radio
                 value={`${card.card_id}`}

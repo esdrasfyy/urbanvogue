@@ -32,8 +32,8 @@ function RightSide({dataProduct}:RightSideProps) {
     const priceValue = parseFloat(dataProduct.price);
   
     const installmentValue = parseInt((priceValue / 6).toFixed(2));
-    const [selectColor, setSelectColor] = useState<string>(dataProduct?.colors[0].name_color);
-    const [selectSize, setSelectSize] = useState<string>(dataProduct.sizes[0].size);
+    const [selectColor, setSelectColor] = useState<string>(dataProduct?.colors[0]?.name_color);
+    const [selectSize, setSelectSize] = useState<string>(dataProduct?.sizes[0]?.size);
     const [qtd, setQtd] = useState(1);
     const [price, setPrice] = useState<number>(priceValue);
     const [installment, setInstallment] = useState<number>(installmentValue);

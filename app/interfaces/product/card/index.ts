@@ -1,4 +1,4 @@
-interface Image {
+export interface ImageI {
     url: string;
   }
   
@@ -37,7 +37,7 @@ interface Image {
     created_at: string;
     createdAt: string;
     updatedAt: string;
-    images: Image[];
+    images: ImageI[];
     colors: Color[];
     details: Detail[];
     sizes: Size[];
@@ -63,7 +63,7 @@ interface Image {
     parcelable: boolean;
     max_installments: number;
     interest_rate: number;
-    images: Image[];
+    images: ImageI[];
     colors: Color[];
     sizes: Size[];
   }

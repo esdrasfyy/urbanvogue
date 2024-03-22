@@ -182,9 +182,9 @@ body {
   padding: 0 5px !important;
   height: 44px !important;
 }
-.inputDate::-webkit-calendar-picker-indicator{
+.inputDate::-webkit-calendar-picker-indicator {
   color: #ed145b;
-  background: url("../app/assets/icons/calendar.png") no-repeat;  
+  background: url("../app/assets/icons/calendar.png") no-repeat;
   background-size: cover;
 }
 .boxprofile {
@@ -551,4 +551,9 @@ svg.progressbar {
 .front:hover::before,
 .back:hover::before {
   opacity: 0.6;
+}
+
+.splide__slide.is-active, .splide__track--nav > .splide__list > .splide__slide.is-active {
+  border: none !important;
+  opacity: 1;
 }

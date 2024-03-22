@@ -19,24 +19,28 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const api = process.env.API;
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.post(
+      try {
+        
+        const res = await axios.post(
         `${api}login`,
         {
           credential: null,
-          password: null,
-        },
-        {
-          withCredentials: true,
+            password: null,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        if (res.status === 200 && res?.data?.user) {
+          console.log(res.data.user);
+          
+          setUser(res.data.user);
+          setHaveUser(true);
+          return;
         }
-      );
-      if (res.status === 200 && res?.data?.user) {
-        console.log(res.data.user);
-        
-        setUser(res.data.user);
-        setHaveUser(true);
-        return;
+      } catch (error) {
+        setHaveUser(false);
       }
-      setHaveUser(false);
     };
     fetchUser();
   }, [api]);

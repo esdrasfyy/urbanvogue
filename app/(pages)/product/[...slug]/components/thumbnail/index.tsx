@@ -36,8 +36,8 @@ function ThumbnailCarousel({
           },
         }}
       >
-        {images.map((image) => (
-          <SplideSlide onClick={() => handhleImageClick(image.url)}>
+        {images.map((image, index) => (
+          <SplideSlide onClick={() => handhleImageClick(image.url)} key={index}>
             <Image src={image.url} alt={image.url} width={100} height={64} className="rounded-md" />
           </SplideSlide>
         ))}

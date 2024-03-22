@@ -1,16 +1,16 @@
 "use client";
-import { ContextPay } from "@/contexts/ContextPay";
-import { Radio, RadioGroup } from "@chakra-ui/react";
+import { SelectCard } from "@/(pages)/(checkout)/checkout/components/methods-checkout/select-card-checkout/index";
+import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
 import React, { useContext, useEffect, useState } from "react";
-import { BiSolidBank } from "react-icons/bi";
 import { FaCreditCard, FaRegCreditCard } from "react-icons/fa";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { CardReadApi } from "@/services/user/card/read";
+import { Radio, RadioGroup } from "@chakra-ui/react";
+import { ContextUser } from "@/contexts/ContextUser";
+import { ContextPay } from "@/contexts/ContextPay";
+import { BiSolidBank } from "react-icons/bi";
 import { ImBarcode } from "react-icons/im";
 import { MdPix } from "react-icons/md";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
-import { SelectCard } from "@/(pages)/(checkout)/checkout/components/methods-checkout/select-card-checkout/index";
-import { CardReadApi } from "@/services/user/card/read";
-import { ContextUser } from "@/contexts/ContextUser";
 
 interface Card {
   card_id: number;
@@ -20,7 +20,7 @@ interface Card {
   card_network: string;
 }
 
-function PaymentsMethods() {
+function MethodsCheckout() {
   const context = useContext(ContextUser);
   const [dataCards, setDataCards] = useState<Card[]>([]);
   const contextPay = useContext(ContextPay);
@@ -41,7 +41,7 @@ function PaymentsMethods() {
   };
   useEffect(() => {
     getData();
-  }, [context, getData]);
+  }, []);
 
   if (!contextPay) {
     return;
@@ -155,4 +155,4 @@ function PaymentsMethods() {
   );
 }
 
-export { PaymentsMethods };
+export { MethodsCheckout };

@@ -24,6 +24,7 @@ import Loading from "./loading";
 import Image from "next/image";
 import Link from "next/link";
 import * as yup from "yup";
+import { LeftSide } from "./components/left-side";
 
 type Inputs = {
   cep: string;
@@ -195,49 +196,8 @@ function Page({ params }: any) {
                   </div>
                 </div>
                 <div className="flex w-full gap-3 h-full max-md:flex-col">
-                  <div className="w-[40%] h-full flex gap-4 max-md:w-full max-md:h-[530px]">
-                    <div>
-                      <ul className="flex flex-col gap-[16.5px] min-h-full">
-                        {dataCard?.images &&
-                          dataCard.images.slice(0, 5).map((imagem, index) => (
-                            <li
-                              className={`w-14 h-[93px]  cursor-pointer ${
-                                selectImage === imagem.url
-                                  ? "border-2 border-solid border-custom-pink"
-                                  : "border-2 border-solid border-custom-grayThree opacity-40"
-                              } rounded-md relative`}
-                              key={index}
-                            >
-                              <Image
-                                alt={imagem?.url}
-                                loading="lazy"
-                                blurDataURL={imagem?.url}
-                                fill
-                                src={imagem?.url}
-                                onMouseOver={() =>
-                                  handleImageClick(imagem?.url)
-                                }
-                                onClick={() => handleImageClick(imagem?.url)}
-                                className="shadow-snipped w-full h-full rounded-md"
-                              />
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                    <div className="min-h-[100%] w-[100%] flex relative">
-                      {dataCard?.images && dataCard.images.length > 0 && (
-                        <Image
-                          loading="lazy"
-                          blurDataURL={selectImage}
-                          alt={selectImage}
-                          src={selectImage}
-                          fill
-                          className="cursor-zoom-in h-full w-full shadow-snipped rounded-md"
-                          onClick={onOpen}
-                        />
-                      )}
-                    </div>
-                  </div>
+                 <LeftSide data={dataCard}/>
+                
                   <div className="w-[60%] h-full font-semibold flex flex-col justify-between max-md:w-full">
                     <div className="flex text-2xl font-bold">
                       <p>{dataCard?.title}</p>

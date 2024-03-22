@@ -7,7 +7,7 @@ import { ContextPay } from "@/contexts/ContextPay";
 import { SiGooglemaps } from "react-icons/si";
 import React, { useContext } from "react";
 
-function Address() {
+function AddressCheckout() {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const contextPay = useContext(ContextPay);
 
@@ -63,4 +63,4 @@ function Address() {
   );
 }
 
-export { Address };
+export { AddressCheckout };

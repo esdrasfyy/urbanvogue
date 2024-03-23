@@ -11,7 +11,7 @@ async function LoginApi({
       throw new Error("Credentials parameter is empty or undefined.");
     }
     const response: AxiosResponse<LoginApiReq | null> = await axios.post(
-      `${api}login`,
+      `${api}login/credential`,
       {
         credential: credential || null,
         password: password || null,

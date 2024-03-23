@@ -22,7 +22,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       try {
         
         const res = await axios.post(
-        `${api}login`,
+        `${api}login/credential`,
         {
           credential: null,
             password: null,

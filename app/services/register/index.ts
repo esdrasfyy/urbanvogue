@@ -17,8 +17,8 @@ async function RegisterApi({
       throw new Error("Infos parameter is empty or undefined.");
     }
     const response: AxiosResponse<RegisterApiReq | null> = await axios.post(
-      `${api}user/create`,
-      { email, fullname, password, username }
+      `${api}register/credential`,
+      { email, fullname, password_hash: password, username }
     );
 
     if (response?.status === 201) {

@@ -10,18 +10,14 @@ import Link from "next/link";
 
 function CardH({
   dataId,
-  id,
   index,
-  quantity,
-  color,
   isLastItem,
-  size,
 }: CartItemProps) {
   const [arrow1, setArrow1] = useState<boolean>(false);
   const [arrow2, setArrow2] = useState<boolean>(false);
-  const [qtd, setQtd] = useState<number>(quantity || 1);
-  const [selectSize, setSelectSize] = useState<string>(size);
-  const [selectColor, setSelectColor] = useState<string>(color);
+  const [qtd, setQtd] = useState<number>(dataId?.quantity || 1);
+  const [selectSize, setSelectSize] = useState<string>(dataId?.size || "");
+  const [selectColor, setSelectColor] = useState<string>(dataId?.color || "");
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false);
   const price = parseFloat(dataId?.price || "0.00");
 
@@ -29,28 +25,18 @@ function CardH({
 
   const context = useContext(ContextCart);
 
-  useEffect(() => {
-    if (context) {
-      const { updateItemQuantity } = context;
-
-      const updatedColor = selectColor !== undefined ? selectColor : "default";
-      const updatedSize = selectSize !== undefined ? selectSize : "default";
-      if (updateItemQuantity) {
-        updateItemQuantity(id, index, qtd, updatedSize, updatedColor);
-      }
-    }
-  }, [id, index, context, qtd, selectColor, selectSize]);
+  
 
   if (!context) {
     return null;
   }
-  const { removeItemFromCart } = context;
+
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
   const removeItem = async () => {
     try {
       setLoadingRemove(true);
-      removeItemFromCart(id, index);
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -80,10 +66,10 @@ function CardH({
             className="shadow-snipped object-contain"
           >
             <Image
-              src={dataId?.images[0].url || ""}
-              alt={dataId?.images[0].url || ""}
+              src={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
+              alt={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
               loading="lazy"
-              blurDataURL={dataId?.images[0].url || ""}
+              blurDataURL={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
               width={100}
               height={100}
               className="h-full rounded-md"
@@ -177,7 +163,7 @@ function CardH({
             </div>
           </div>
           <div className="flex gap-2 max-sm:hidden">
-            {dataId && dataId.sizes.length !== 0 && (
+            {dataId && dataId?.sizes?.length !== 0 && (
               <Select
                 iconColor="#ed145b"
                 icon={arrow1 ? <TbArrowBadgeUp /> : <TbArrowBadgeDown />}
@@ -191,14 +177,14 @@ function CardH({
                 }}
                 className="p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
               >
-                {dataId?.sizes.map((size) => (
+                {dataId?.sizes?.map((size) => (
                   <option defaultValue={size.size} key={size.size}>
                     {size.size}
                   </option>
                 ))}
               </Select>
             )}
-            {dataId && dataId.colors.length !== 0 && (
+            {dataId && dataId?.colors?.length !== 0 && (
               <Select
                 iconColor="#ed145b"
                 icon={arrow2 ? <TbArrowBadgeUp /> : <TbArrowBadgeDown />}
@@ -212,7 +198,7 @@ function CardH({
                 }}
                 className="p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
               >
-                {dataId.colors.map((color) => (
+                {dataId?.colors?.map((color) => (
                   <option key={color.name_color} defaultValue={color.name_color}>
                     {color.name_color}
                   </option>
@@ -223,7 +209,7 @@ function CardH({
         </div>
       </div>
       <div className="hidden gap-2 max-sm:flex w-full">
-        {dataId && dataId.sizes.length !== 0 && (
+        {dataId && dataId?.sizes?.length !== 0 && (
           <Select
             iconColor="#ed145b"
             icon={arrow1 ? <TbArrowBadgeUp /> : <TbArrowBadgeDown />}
@@ -237,14 +223,14 @@ function CardH({
             }}
             className="w-full p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
           >
-            {dataId?.sizes.map((size) => (
+            {dataId?.sizes?.map((size) => (
               <option defaultValue={size.size} key={size.size}>
                 {size.size}
               </option>
             ))}
           </Select>
         )}
-        {dataId && dataId.colors.length !== 0 && (
+        {dataId && dataId?.colors?.length !== 0 && (
           <Select
             iconColor="#ed145b"
             icon={arrow2 ? <TbArrowBadgeUp /> : <TbArrowBadgeDown />}
@@ -258,7 +244,7 @@ function CardH({
             }}
             className=" w-full p-0 shadow-snipped border-[10px] border-solid rounded-md outline-none focus:ring-custom-pink cursor-pointer focus:border-custom-pink"
           >
-            {dataId.colors.map((color) => (
+            {dataId?.colors?.map((color) => (
               <option key={color.name_color} defaultValue={color.name_color}>
                 {color.name_color}
               </option>

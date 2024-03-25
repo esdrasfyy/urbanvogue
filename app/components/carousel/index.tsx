@@ -66,7 +66,7 @@ function SlideProducts({
           type: "loop",
           pagination: false,
           rewind: true,
-          perMove: 1,
+          perMove: 5,
           padding: { right: "15rem" },
           width: "70%",
           gap: "15px",

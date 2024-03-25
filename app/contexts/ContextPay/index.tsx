@@ -10,7 +10,7 @@ import React, {
 import { ContextPayProps, Product } from "./types/index";
 import { AddressReadApi } from "../../services/user/address/read";
 import { AddressI } from "../../interfaces/address";
-import { ContextCart } from "../ContextCart";
+import { ContextCart } from "../ContextCart/index";
 import { ProductI } from "../../interfaces/product/card";
 import { ProductsByIdsApi } from "../../services/products-by-ids";
 import { ContextUser } from "../ContextUser";
@@ -34,7 +34,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       return;
     }
 
-    const { cartSummary } = context;
     const { user } = contextUser;
 
     const fetchData2 = async () => {
@@ -48,10 +47,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
 
     const fetchData = async (): Promise<void> => {
-      const ids =
-        cartSummary?.products.map((product: Product) => product.id).join("&") ??
-        "";
-
+    const ids = "56, 45"
       try {
         const res = await ProductsByIdsApi({ ids });
         if (res?.status === 200 && res.data?.products) {

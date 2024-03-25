@@ -8,12 +8,24 @@ import { ContextCart } from "../../../contexts/ContextCart";
 interface CardProps {
   data: ProductI;
 }
-interface ProductCart {
+interface Size {
+  size: string;
+}
+
+interface Color {
+  name_color: string;
+}
+
+export interface ProductCartI {
   id: number;
   quantity: number;
-  price: number;
+  price: string;
+  title: string;
+  image: string;
   size?: string;
   color?: string;
+  colors?: Color[];
+  sizes?: Size[];
 }
 function CardV({ data }: CardProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -33,12 +45,16 @@ function CardV({ data }: CardProps) {
   const { addItemToCart } = context;
 
   const handleAddItem = () => {
-    const add: ProductCart = {
+    const add: ProductCartI = {
       id: data?.id || 0,
       quantity: 1,
-      price: parseFloat(data.price),
-      size: data && data.sizes && data.sizes.length > 0 ? data.sizes[0].size : "",
-      color: data && data.colors && data.colors.length > 0 ? data.colors[0].name_color : "",
+      price: data.price,
+      size: data && data?.sizes && data?.sizes?.length > 0 ? data?.sizes[0]?.size : "",
+      color: data && data?.colors && data?.colors.length > 0 ? data?.colors[0]?.name_color : "",
+      image: data?.images[0]?.url,
+      title: data?.title,
+      colors: data?.colors || null,
+      sizes: data?.sizes || null
     };
 
     if (add.id) {

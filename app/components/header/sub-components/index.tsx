@@ -1,12 +1,11 @@
 "use client"
+import { PiShoppingCartSimple, PiUserCirclePlus } from "react-icons/pi";
+import { ContextCart } from "../../../contexts/ContextCart/index";
+import { ContextUser } from '../../../contexts/ContextUser';
+import { IoIosHeartEmpty } from 'react-icons/io';
+import { LiaUserCircle } from 'react-icons/lia';
 import React, { useContext } from 'react'
 import Link from "next/link";
-
-import { ContextCart } from "../../../contexts/ContextCart/index";
-import { IoIosHeartEmpty } from 'react-icons/io';
-import { PiShoppingCartSimple, PiUserCirclePlus } from "react-icons/pi";
-import { ContextUser } from '../../../contexts/ContextUser';
-import { LiaUserCircle } from 'react-icons/lia';
 
 
 function ButtonsHeader() {
@@ -14,10 +13,10 @@ function ButtonsHeader() {
     const contextUser = useContext(ContextUser);
     
     if (!cart || !contextUser) {
-      return null;
+      return;
     }
     
-    const { disclosure: { onOpen: onOpenCart }, cartSummary } = cart;
+    const { disclosure: { onOpen: onOpenCart }, cartResume  } = cart;
     const { user } = contextUser;
 
   return (
@@ -31,7 +30,7 @@ function ButtonsHeader() {
             <button  className="group-hover:text-custom-pink">
             <PiShoppingCartSimple />
             </button>
-          {cartSummary && cartSummary?.totalQuantity > 0 && ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartSummary?.totalQuantity}</span>)}
+          {cartResume?.totalQuantity && cartResume?.totalQuantity > 0 && ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartResume?.totalQuantity}</span>)}
           </li>
           <li className=" text-[30px] text-white duration-200 transition-all  -translate-y-1 ease-linear hover:-translate-y-2.5 hover:text-custom-pink cursor-pointer max-md:text-[28px]">
             <Link href={user ? "/account" : "/login"}>

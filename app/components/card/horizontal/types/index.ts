@@ -1,25 +1,26 @@
-import { ProductI } from "../../../../interfaces/product/card/index"
-export interface Product {
-    id: number;
-    quantity: number;
-    price: number;
-    size?: string;
-    color?: string;
-  }
-  export interface CartSummary {
-    totalPrice: number;
-    totalQuantity: number;
-    products: Product;
-  }
+interface Size {
+  size: string;
+}
+
+interface Color {
+  name_color: string;
+}
+
+export interface ProductCartI {
+  id: number;
+  quantity: number;
+  price: string;
+  title: string;
+  image: string;
+  size?: string;
+  color?: string;
+  colors?: Color[];
+  sizes?: Size[];
+}
   
   export interface CartItemProps {
     key: number;
-    dataCart: CartSummary;
-    dataId: ProductI | null;
-    quantity: number;
-    size: string;
-    id: number;
+    dataId: ProductCartI | null;
     index: number;
-    color: string;
     isLastItem: boolean;
   }

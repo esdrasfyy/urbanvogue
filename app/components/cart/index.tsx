@@ -11,20 +11,28 @@ import { Loading } from "./sub-components";
 
 function Cart() {
   const [dataProducts, setDataProducts] = useState<ProductI[] | null>(null);
-  const context = useContext(ContextCart)!;
+
+  const context = useContext(ContextCart);
+
   const btnRef = useRef<HTMLButtonElement | null>(null);
-  
+
+  const falsetrue = false;
   useEffect(() => {
+    if (!context) {
+      return;
+    }
+
+    const { cartSummary } = context;
+    const ids =
+      cartSummary?.products.map((product) => product.id).join("&") ?? "";
+
     const fetchCart = async () => {
-      if (!context || !context.cartSummary?.products) return;
-      
-      const ids = context.cartSummary.products.map((product) => product.id).join("&");
-      
       try {
         const { data, status, error } = await ProductsByIdsApi({ ids });
         if (status === 200 && data?.products) {
           setDataProducts(data.products);
-        } else {
+        }
+        if (status !== 200) {
           console.log(error);
         }
       } catch (error) {
@@ -32,8 +40,13 @@ function Cart() {
       }
     };
 
-    fetchCart();
-  }, [context.cartSummary?.products.length]);
+  
+      fetchCart();
+  }, [context?.productsCart]);
+
+  if (!context) {
+    return;
+  }
 
   return (
     <>

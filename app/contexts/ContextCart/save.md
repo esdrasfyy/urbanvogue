@@ -6,7 +6,7 @@ import {
   CartSummary,
   ContextCartProps,
   Product,
-} from "./types/index";
+} from "@/contexts/ContextCart/types/index";
 
 const ContextCart = createContext<ContextCartProps | undefined>(undefined);
 

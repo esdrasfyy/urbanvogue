@@ -21,7 +21,7 @@ function PhoneUi({
 }: inputProps) {
   return (
     <>
-      <label className={` mb-2 text-sm text-custom-textColor uppercase`} htmlFor={name}>
+      <label className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`} htmlFor={name}>
         {label}
       </label>
       <Input

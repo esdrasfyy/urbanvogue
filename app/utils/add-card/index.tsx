@@ -7,8 +7,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { Inputs, schema } from "@/functions/add-card/types/index";
-import { Card } from "@/functions/add-card/subcomponents/card/index";
+import { Inputs, schema } from "@/utils/add-card/types/index";
+import { Card } from "@/utils/add-card/subcomponents/card/index";
 import { CardCreateApi } from "@/services/user/card/create/index";
 import { LoadingSpinner } from "@/components/ui/loading/index";
 import { InputUi } from "@/components/ui/inputs/default/index";

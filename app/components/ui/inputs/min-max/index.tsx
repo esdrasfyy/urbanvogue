@@ -14,16 +14,15 @@ function MinMaxUi({
 }: MinMaxProps) {
   return (
     <>
-      <label className={` mb-2 text-sm text-custom-textColor`} htmlFor={name}>
+      <label className={` mb-2 text-sm text-custom-textColor max-md:text-[10px] max-md:mb-1`} htmlFor={name}>
         {label}
       </label>
       <Input
         type="number"
         placeholder={pleaceholder}
         id={name}
-        borderWidth="2px"
+        borderWidth="1px"
         paddingLeft="10px"
-        border={"1px"}
         borderRadius={"4px"}
         focusBorderColor={"#ed145b"}
         value={value}

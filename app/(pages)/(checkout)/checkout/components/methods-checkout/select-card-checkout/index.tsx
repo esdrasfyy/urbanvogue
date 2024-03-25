@@ -1,7 +1,7 @@
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import Image from "next/image";
-import { AddCard } from "@/functions/add-card";
+import { AddCard } from "@/utils/add-card";
 import elo from "@/assets/networks/elo.webp";
 import { ContextPay } from "@/contexts/ContextPay";
 import { SelectCardProps, networkImageMap } from "./types";

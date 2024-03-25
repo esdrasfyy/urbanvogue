@@ -1,63 +1,30 @@
-"use client";
-import { ContextCart } from "../../contexts/ContextCart/index";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Divider,
-} from "@chakra-ui/react";
+"use client"
+import { Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Divider } from "@chakra-ui/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
+import Link from "next/link";
 import { ProductI } from "../../interfaces/product/card/index";
 import { ProductsByIdsApi } from "../../services/products-by-ids/index";
-import { FaArrowRight } from "react-icons/fa";
+import { ContextCart } from "../../contexts/ContextCart/index";
 import { CardH } from "../card/horizontal/index";
-import Link from "next/link";
 import { Loading } from "./sub-components";
-
-interface ProductResponse {
-  products: ProductI[];
-  notFoundIds: number[];
-}
-interface ProductCart {
-  id: number;
-  quantity: number;
-  price: number;
-  size?: string;
-  color?: string;
-}
-interface CartSummary {
-  totalPrice: number;
-  totalQuantity: number;
-  products: ProductCart;
-}
 
 function Cart() {
   const [dataProducts, setDataProducts] = useState<ProductI[] | null>(null);
-
-  const context = useContext(ContextCart);
-
+  const context = useContext(ContextCart)!;
   const btnRef = useRef<HTMLButtonElement | null>(null);
-
+  
   useEffect(() => {
-    if (!context) {
-      return;
-    }
-
-    const { cartSummary } = context;
-    const ids =
-      cartSummary?.products.map((product) => product.id).join("&") ?? "";
-
     const fetchCart = async () => {
+      if (!context || !context.cartSummary?.products) return;
+      
+      const ids = context.cartSummary.products.map((product) => product.id).join("&");
+      
       try {
         const { data, status, error } = await ProductsByIdsApi({ ids });
         if (status === 200 && data?.products) {
           setDataProducts(data.products);
-        }
-        if (status !== 200) {
+        } else {
           console.log(error);
         }
       } catch (error) {
@@ -65,23 +32,16 @@ function Cart() {
       }
     };
 
-    if (cartSummary?.products[0]?.id && !dataProducts) {
-      fetchCart();
-    }
-  }, [context, dataProducts]);
+    fetchCart();
+  }, [context.cartSummary?.products.length]);
 
-  if (!context) {
-    return;
-  }
-  const { isOpen, onOpen, onClose } = context.disclosure;
-  const { cartSummary } = context;
   return (
     <>
       <Drawer
         size={"lg"}
-        isOpen={isOpen}
+        isOpen={context.disclosure.isOpen}
         placement="right"
-        onClose={onClose}
+        onClose={context.disclosure.onClose}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay
@@ -92,15 +52,15 @@ function Cart() {
         />
         <DrawerContent backgroundColor={"#  "} textColor={"#d9d9d9"}>
           <DrawerCloseButton className="hover:text-custom-pink" />
-          <DrawerHeader className="shadow-snipped bg-custom-grayTwo">SHOPPING CART</DrawerHeader>
+          <DrawerHeader className="shadow-snipped bg-custom-grayTwo">
+            SHOPPING CART
+          </DrawerHeader>
           <Divider />
           <DrawerBody backgroundColor={"#171a1b"}>
             <ul className="flex flex-col gap-2">
               {dataProducts && dataProducts.length !== 0
-                ? cartSummary?.products?.map((product: any, index, array) => {
-                    const matchingProduct = dataProducts?.find(
-                      (dataProduct) => dataProduct.id === product.id
-                    ) as ProductI | null;
+                ? context.cartSummary?.products?.map((product: any, index, array) => {
+                    const matchingProduct = dataProducts?.find((dataProduct) => dataProduct.id === product.id) as ProductI | null;
                     const isLastItem = index === array.length - 1;
                     return (
                       <CardH
@@ -116,13 +76,12 @@ function Cart() {
                       />
                     );
                   })
-                : cartSummary?.products?.map((product: any, index, array) => {
+                : context.cartSummary?.products?.map((product: any, index, array) => {
                     const isLastItem = index === array.length - 1;
                     return <Loading key={index} isLastItem={isLastItem} />;
                   })}
             </ul>
           </DrawerBody>
-
           <Divider className="shadow-snipped" />
           <DrawerFooter
             backgroundColor={"#1d2123"}
@@ -132,7 +91,7 @@ function Cart() {
               <div className="text-xl text-custom-pink max-sm:text-base">
                 TOTAL{" "}
                 <span className="text-custom-textColor font-medium ml-2 max-sm:ml-0">
-                  ${cartSummary?.totalPrice.toFixed(2)}
+                  ${context.cartSummary?.totalPrice.toFixed(2)}
                 </span>
               </div>
               <Link

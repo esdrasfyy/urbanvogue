@@ -14,10 +14,11 @@ import { LoginApi } from "@/services/login";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useContext} from "react";
+import { ForgotPassword } from "../forgot-password";
 
 
 
-function FormLogin({ loading, handleLoading }: FormLoginProps) {
+function FormLogin({ loading, handleLoading, onOpen }: FormLoginProps) {
   const [show, setShow] = React.useState(false);
   const router = useRouter();
   const toast = useToast();
@@ -95,7 +96,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
 
   return (
     <form
-      className="flex w-full flex-col  justify-center px-10 pb-3 max-md:px-3"
+      className="flex w-full flex-col  justify-center px-10 pb-3 max-md:px-5"
       onSubmit={handleSubmit(onSubmit)}
     >
       <InputUi
@@ -119,11 +120,12 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         error={errors?.password?.message}
         disabled={loading ? true : false}
       />
+      <ForgotPassword onOpen={onOpen}/>
       <ButtonIconUi
         type="submit"
         content="Login"
         icon="FaArrowRight"
-        classname="justify-end mt-8 max-sm:justify-start duration-300 ease-linear"
+        classname="justify-end mt-6 max-sm:justify-start duration-300 ease-linear"
       />
     </form>
   );

@@ -17,7 +17,7 @@ function ButtonPassUi({
 }: buttonPassUiProps) {
   return (
       <>
-        <label className="mb-2 text-sm text-custom-textColor uppercase" htmlFor={name}>
+        <label className="mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1" htmlFor={name}>
           {label}
         </label>
         <InputGroup>
@@ -25,7 +25,7 @@ function ButtonPassUi({
             pr="4.5rem"
             type={show ? "text" : "password"}
             placeholder="Enter password"
-            borderWidth="2px"
+            borderWidth="1px"
             borderRadius={"4px"}
             id={name}
             name={name}

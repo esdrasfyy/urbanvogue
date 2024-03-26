@@ -30,7 +30,7 @@ function ButtonsHeader() {
             <button  className="group-hover:text-custom-pink">
             <PiShoppingCartSimple />
             </button>
-          {cartResume?.totalQuantity && cartResume?.totalQuantity > 0 && ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartResume?.totalQuantity}</span>)}
+          {cartResume?.totalQuantity && cartResume?.totalQuantity > 0 ? ( <span className='w-6 h-6 flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[10px] font-bold'>{cartResume?.totalQuantity}</span> ): ""}
           </li>
           <li className=" text-[30px] text-white duration-200 transition-all  -translate-y-1 ease-linear hover:-translate-y-2.5 hover:text-custom-pink cursor-pointer max-md:text-[28px]">
             <Link href={user ? "/account" : "/login"}>

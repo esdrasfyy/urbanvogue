@@ -95,52 +95,12 @@ function Page({ params }: any) {
     fetchData();
   }, [params.slug]);
 
-  const handleAddItem = () => {
-    if (!context) {
-      return;
-    }
-    const { addItemToCart } = context;
-
-    const data: ProductCartI = {
-      id: dataCard!.id,
-      price: price.toString(),
-      quantity: qtd,
-      size: selectSize,
-      color: selectColor,
-      image: dataCard?.images[0].url || "",
-      title: dataCard?.title || "",
-      colors: dataCard?.colors,
-      sizes: dataCard?.sizes
-    };
-
-    if (dataCard?.id) {
-      addItemToCart(data);
-    }
-  };
-
-  const handleImageClick = (url: string) => {
-    setSelectImage(url);
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const cep = data.cep;
-    try {
-      alert("cep pesquisado");
-    } catch (error) {
-      alert("cep nao pesquisado");
-    } finally {
-    }
-  };
-
-  const handleInputChange = (event: any) => {
-    setQtd(event.target.value);
-  };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

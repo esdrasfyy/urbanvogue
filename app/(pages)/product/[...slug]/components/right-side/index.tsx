@@ -132,7 +132,7 @@ function RightSide({dataProduct}:RightSideProps) {
         </div>
         <button
           type="submit"
-          className="hover:text-custom-pink duration-300 ease-linear rounded-sm absolute right-4 top-[38px] z-10 flex items-center justify-center text-2xl"
+          className="hover:text-custom-pink duration-300 ease-linear rounded-sm absolute right-4 top-[38px] max-lg:top-[34px] z-10 flex items-center justify-center text-2xl"
         >
           <SlArrowRightCircle />
         </button>
@@ -265,17 +265,17 @@ function RightSide({dataProduct}:RightSideProps) {
       <div className="flex w-full mt-2 gap-3">
         <Link
           href={"/checkout"}
-          className="w-full rounded-md py-2.5 border-solid border-custom-pink border-2 duration-300 ease-linear bg-custom-pink/50 text-xl hover:bg-custom-pink shadow-snipped text-center"
+          className="w-full rounded-md py-2.5 max-md:text-base max-md:py-2 border-solid border-custom-pink border-2 duration-300 ease-linear bg-custom-pink/50 text-xl hover:bg-custom-pink shadow-snipped text-center"
         >
           BUY NOW
         </Link>
-        <button className="min-w-[50px] px-[7px] text-[23px] relative rounded-md duration-300 ease-linear hover:bg-custom-grayThree/50 shadow-snipped flex items-center justify-center">
+        <button className="min-w-[50px] px-[7px] text-[23px]  relative rounded-md duration-300 ease-linear hover:bg-custom-grayThree/50 shadow-snipped flex items-center justify-center">
           <BsShare />
         </button>
       </div>
       <div className="flex w-full mt-2 gap-3">
         <button
-          className="shadow-snipped w-full rounded-md py-2.5 border-solid border-custom-grayThree border-2 duration-300 ease-linear shadow-const first = useRef(second)ed text-xl hover:bg-custom-grayThree"
+          className="shadow-snipped w-full rounded-md py-2.5 max-md:text-base max-md:py-2  border-solid border-custom-grayThree border-2 duration-300 ease-linear shadow-const first = useRef(second)ed text-xl hover:bg-custom-grayThree"
           onClick={handleAddItem}
         >
           ADD CART

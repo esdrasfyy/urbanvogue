@@ -3,6 +3,9 @@ const APP_ROUTES = {
     account: {
       name: "/account",
     },
+    account_edit: {
+      name: "/account/edit",
+    },
     checkout: {
       name: "/checkout",
     },

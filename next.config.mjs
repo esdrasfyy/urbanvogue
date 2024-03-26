@@ -11,6 +11,7 @@ const nextConfig = {
       "static.ecosweb.com.br",
       "ph-cdn3.ecosweb.com.br",
       "example.com",
+      "lh3.googleusercontent.com"
     ],
   },
   env: {

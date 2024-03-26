@@ -1,8 +1,8 @@
-"use client";
-import React, { useContext, useState } from "react";
+"use client"
+import React, { useState } from "react";
 import { useDisclosure, Modal } from "@chakra-ui/react";
 import { HiMiniArrowUturnLeft } from "react-icons/hi2";
-import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { TbBrandGithubFilled } from "react-icons/tb";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,58 +11,15 @@ import { FormLogin } from "@/(pages)/(login)/login/components/form/index";
 import { LoadingSpinner } from "@/components/ui/loading/index";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
 import logo from "@/assets/urban-vogue/logo-big.png";
-import { getGoogleOAuthURL } from "@/utils/get-google-url";
-import { FloatingWindow } from "@/utils/floating-window";
-import { ContextUser } from "@/contexts/ContextUser";
-import { useRouter } from "next/navigation";
+import OAuthGoogle from "./components/oauth/google";
 
 function Login() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  const handleLoading = (load: boolean) => {
+  const handleLoading = (load:boolean) => {
     setLoading(load);
-  };
-  const context = useContext(ContextUser);
-  const { fetchUser, user } = context || {};
-
-  const OpenWindowGoogle = async () => {
-    setLoading(true);
-    if (!fetchUser) return;
-    const url = getGoogleOAuthURL();
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    let options = "";
-    
-    if (isMobile) {
-      // Estilo para dispositivos móveis (tela cheia)
-      options = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=100%,height=100%,top=0,left=0";
-    } else {
-      // Estilo para desktop (centralizado)
-      const popupWidth = 600;
-      const popupHeight = 600;
-      const left = (window.screen.width - popupWidth) / 2;
-      const top = (window.screen.height - popupHeight) / 2;
-      options = `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-    }
-    
-    const popupWindow = window.open(
-      url,
-      "googleLogin",
-      options
-    );
-
-    const checkPopupClosed = setInterval(() => {
-      if (popupWindow && popupWindow.closed) {
-        setLoading(false);
-        clearInterval(checkPopupClosed);
-        fetchUser();
-        setTimeout(() =>{
-          router.push("/account");
-        },0)
-      }
-    }, 1000);
   };
 
   return (
@@ -86,29 +43,16 @@ function Login() {
             <Link href="/">
               <HiMiniArrowUturnLeft className="text-2xl hover-snipped max-sm:text-xl" />
             </Link>
-            <Link
-              href="/register"
-              className="text-xl hover-snipped max-sm:text-base"
-            >
+            <Link href="/register" className="text-xl hover-snipped max-sm:text-base">
               Register
             </Link>
           </nav>
           <h2 className="w-full text-center mb-8 text-custom-pink text-3xl max-sm:text-2xl">
             Login
           </h2>
-          <FormLogin
-            handleLoading={handleLoading}
-            loading={loading}
-            onOpen={onOpen}
-          />
+          <FormLogin handleLoading={handleLoading} loading={loading} onOpen={onOpen} />
           <div className="flex items-center gap-4 text-3xl justify-center mt-5">
-            <button
-              className="text-xl text-custom-textColor border border-custom-textColor p-3 rounded-full hover:text-custom-grayTwo hover:bg-custom-textColor duration-300 ease-linear"
-              onClick={() => OpenWindowGoogle()}
-            >
-              <FaGoogle />
-            </button>
-
+            <OAuthGoogle/>  
             <button className="text-xl text-custom-textColor border border-custom-textColor p-3 rounded-full hover:text-custom-grayTwo hover:bg-custom-textColor duration-300 ease-linear">
               <FaFacebookF />
             </button>

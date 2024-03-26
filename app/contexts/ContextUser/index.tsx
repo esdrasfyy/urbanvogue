@@ -12,38 +12,38 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserI | null>(null);
   const [haveUser, setHaveUser] = useState<boolean>(false);
 
-  const contextValue: ContextUserProps = {
-    user,
-    setUser,
-  };
   const api = process.env.API;
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        
-        const res = await axios.post(
+  const fetchUser = async () => {
+    try {
+      const res = await axios.post(
         `${api}login/credentials`,
         {
           credential: null,
-            password: null,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        if (res.status === 200 && res?.data?.user) {
-          console.log(res.data.user);
-          
-          setUser(res.data.user);
-          setHaveUser(true);
-          return;
+          password: null,
+        },
+        {
+          withCredentials: true,
         }
-      } catch (error) {
-        setHaveUser(false);
+      );
+      if (res.status === 200 && res?.data?.user) {
+        setUser(res.data.user);
+        setHaveUser(true);
+        return;
       }
-    };
+    } catch (error) {
+      setHaveUser(false);
+    }
+  };
+  useEffect(() => {
     fetchUser();
   }, [api]);
+
+  const contextValue: ContextUserProps = {
+    user,
+    setUser,
+    fetchUser,
+  };
+
   return (
     <ContextUser.Provider value={contextValue}>{children}</ContextUser.Provider>
   );

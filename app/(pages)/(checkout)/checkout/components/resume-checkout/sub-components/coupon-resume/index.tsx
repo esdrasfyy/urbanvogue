@@ -27,15 +27,15 @@ function CouponResume() {
   if (!contextCart || !contextPay) {
     return;
   }
-  const { cartSummary } = contextCart;
+  const { cartResume } = contextCart;
   const { total, setTotal, setDiscount } = contextPay;
 
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const code = data.code;
     const ids: number[] = [];
-    if (cartSummary?.products) {
-      for (const products of cartSummary?.products) {
+    if (cartResume?.products) {
+      for (const products of cartResume?.products) {
         ids.push(products.id);
       }
     }
@@ -56,7 +56,7 @@ function CouponResume() {
   };
   const resetCoupon = () => {
     setCouponData(null);
-    setTotal(cartSummary!.totalPrice);
+    setTotal(cartResume?.totalPrice || 0);
     setDiscount(null);
   };
   return (

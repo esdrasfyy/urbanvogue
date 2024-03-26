@@ -12,29 +12,19 @@ function ProductsGridCheckout() {
   if (!contextCart || !contextPay) {
     return;
   }
-  const { cartSummary } = contextCart;
+  const { cartResume } = contextCart;
   const { dataProducts } = contextPay;
 
   return (
     <ul>
-      {cartSummary?.products.map((product: any, index, array) => {
-        const matchingProduct =
-          dataProducts &&
-          (dataProducts.find(
-            (dataProduct) => dataProduct.id === product.id
-          ) as ProductI | null);
+      {cartResume?.products?.map((product: any, index, array) => {
 
         const isLastItem = index === array.length - 1;
         return (
           <CardH
             key={index}
-            dataCart={product}
-            quantity={product.quantity}
-            id={product.id}
             index={index}
-            size={product.size || "default"}
-            color={product.color || "default"}
-            dataId={matchingProduct}
+            dataId={product}
             isLastItem={isLastItem}
           />
         );

@@ -19,18 +19,18 @@ function ResumeCheckout() {
       return;
     }
 
-    const { cartSummary } = contextCart;
+    const { cartResume } = contextCart;
     const { setTotal } = contextPay;
 
-    if (cartSummary?.totalPrice) {
-      setTotal(cartSummary?.totalPrice);
+    if (cartResume?.totalPrice) {
+      setTotal(cartResume?.totalPrice);
     }
   }, [contextCart, contextPay]);
 
   if (!contextCart || !contextPay) {
     return;
   }
-  const { cartSummary } = contextCart;
+  const { cartResume } = contextCart;
   const { address, method, cardId, dataProducts, discount, total } = contextPay;
 
   const verifyData = () => {
@@ -79,7 +79,7 @@ function ResumeCheckout() {
           </div>
           <div className="w-fit">
             <p className="font-semibold">
-              $ {cartSummary?.totalPrice.toFixed(2)}
+              $ {cartResume?.totalPrice?.toFixed(2)}
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ function ResumeCheckout() {
             <p className="font-semibold mb-2">$ {total.toFixed(2)}</p>
             <div className="text-xs flex flex-col text-end">
               <p className="text-green-400">
-                + ${cartSummary?.totalPrice.toFixed(2)}
+                + ${cartResume?.totalPrice?.toFixed(2)}
               </p>
               {discount && (
                 <p className="text-red-600">- ${discount.toFixed(2)}</p>

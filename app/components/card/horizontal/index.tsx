@@ -25,18 +25,28 @@ function CardH({
 
   const context = useContext(ContextCart);
 
-  
+  useEffect(() => {
+    if (context) {
+      const { updateItemQuantity } = context;
+
+      const updatedColor = selectColor !== undefined ? selectColor : "default";
+      const updatedSize = selectSize !== undefined ? selectSize : "default";
+      if (updateItemQuantity) {
+        updateItemQuantity(dataId!.id, index, qtd, updatedSize, updatedColor);
+      }
+    }
+  }, [dataId, index, context, qtd, selectColor, selectSize]);
 
   if (!context) {
     return null;
   }
-
+  const { removeItemFromCart } = context;
 
   const generateTitle = dataId?.title?.split(" ").join("&").toLowerCase();
   const removeItem = async () => {
     try {
       setLoadingRemove(true);
-      
+      removeItemFromCart(dataId!.id, index);
     } catch (error) {
       console.log(error);
     } finally {
@@ -66,10 +76,10 @@ function CardH({
             className="shadow-snipped object-contain"
           >
             <Image
-              src={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
-              alt={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
+              src={dataId?.image || "https://imgs.search.brave.com/Skid3pgubrDRciHxEU4v8343eK2p0P7BOapMvqAA2fY/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzg5LzM0/LzlkLzg5MzQ5ZGYx/MzYyOWJmNGNlNmNi/NDViOGM1Y2JlYzEx/LmpwZw"}
+              alt={dataId?.image || "https://imgs.search.brave.com/Skid3pgubrDRciHxEU4v8343eK2p0P7BOapMvqAA2fY/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzg5LzM0/LzlkLzg5MzQ5ZGYx/MzYyOWJmNGNlNmNi/NDViOGM1Y2JlYzEx/LmpwZw"}
               loading="lazy"
-              blurDataURL={dataId?.image || "https://imgs.search.brave.com/dccs-TpzcfMOLIfTxaHRGBQNP131k8nntx4rx0SwPgM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/Zm90b3MtZ3JhdGlz/L2NhcnJlZ2FuZG8t/YS10ZWxhLWRvLWlj/b25lLWRvLXNtYXJ0/cGhvbmUtcGFyYS1v/LWRpc3Bvc2l0aXZv/LWRlLXRlY25vbG9n/aWFfNTM4NzYtMTAz/MDM5LmpwZz9zaXpl/PTYyNiZleHQ9anBn"}
+              blurDataURL={dataId?.image || "https://imgs.search.brave.com/Skid3pgubrDRciHxEU4v8343eK2p0P7BOapMvqAA2fY/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzg5LzM0/LzlkLzg5MzQ5ZGYx/MzYyOWJmNGNlNmNi/NDViOGM1Y2JlYzEx/LmpwZw"}
               width={100}
               height={100}
               className="h-full rounded-md"

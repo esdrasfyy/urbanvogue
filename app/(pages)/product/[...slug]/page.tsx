@@ -26,6 +26,7 @@ import Link from "next/link";
 import * as yup from "yup";
 import { LeftSide } from "./components/left-side";
 import { RightSide } from "./components/right-side";
+import { ProductCartI } from "@/contexts/ContextCart/types";
 
 type Inputs = {
   cep: string;
@@ -100,16 +101,20 @@ function Page({ params }: any) {
     }
     const { addItemToCart } = context;
 
-    const data = {
-      id: dataCard?.id,
-      price: price,
+    const data: ProductCartI = {
+      id: dataCard!.id,
+      price: price.toString(),
       quantity: qtd,
       size: selectSize,
       color: selectColor,
+      image: dataCard?.images[0].url || "",
+      title: dataCard?.title || "",
+      colors: dataCard?.colors,
+      sizes: dataCard?.sizes
     };
 
     if (dataCard?.id) {
-      addItemToCart(data as ProductCart);
+      addItemToCart(data);
     }
   };
 

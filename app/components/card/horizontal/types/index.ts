@@ -1,23 +1,5 @@
-interface Size {
-  size: string;
-}
+import { ProductCartI } from "@/contexts/ContextCart/types";
 
-interface Color {
-  name_color: string;
-}
-
-export interface ProductCartI {
-  id: number;
-  quantity: number;
-  price: string;
-  title: string;
-  image: string;
-  size?: string;
-  color?: string;
-  colors?: Color[];
-  sizes?: Size[];
-}
-  
   export interface CartItemProps {
     key: number;
     dataId: ProductCartI | null;

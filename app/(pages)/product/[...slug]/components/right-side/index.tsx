@@ -8,14 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductPageI } from '../../../../../interfaces/product/card';
-
-interface ProductCart {
-    id: number;
-    quantity: number;
-    price: number;
-    size?: string;
-    color?: string;
-  }
+import { ProductCartI } from '@/contexts/ContextCart/types';
 
   type Inputs = {
     cep: string;
@@ -62,16 +55,20 @@ function RightSide({dataProduct}:RightSideProps) {
         }
         const { addItemToCart } = context;
     
-        const data = {
+        const data: ProductCartI = {
           id: dataProduct?.id,
-          price: price,
+          price: price.toString(),
           quantity: qtd,
           size: selectSize,
           color: selectColor,
+          image: dataProduct.images[0].url,
+          title: dataProduct?.title,
+          colors: dataProduct.colors,
+          sizes: dataProduct.sizes
         };
     
         if (dataProduct?.id) {
-          addItemToCart(data as ProductCart);
+          addItemToCart(data);
         }
       };
       const handleInputChange = (event: any) => {

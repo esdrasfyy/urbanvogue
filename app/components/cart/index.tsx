@@ -15,26 +15,8 @@ import Link from "next/link";
 import { ContextCart } from "../../contexts/ContextCart/index";
 import { CardH } from "../card/horizontal/index";
 import { Loading } from "./sub-components";
+import { ProductCartI } from "@/contexts/ContextCart/types";
 
-interface Size {
-  size: string;
-}
-
-interface Color {
-  name_color: string;
-}
-
-export interface ProductCartI {
-  id: number;
-  quantity: number;
-  price: string;
-  title: string;
-  image: string;
-  size?: string;
-  color?: string;
-  colors?: Color[];
-  sizes?: Size[];
-}
 
 function Cart() {
   const context = useContext(ContextCart)!;

@@ -16,7 +16,7 @@ export default function Home() {
 
       <span className="my-5"></span>
       <SlideProducts
-        query="categoria=moda-fitness"
+        query="categoria=moda-feminina"
         category="FITNESS FASHION"
       />
     </main>

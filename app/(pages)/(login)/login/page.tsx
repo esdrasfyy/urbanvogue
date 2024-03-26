@@ -51,7 +51,7 @@ function Login() {
             Login
           </h2>
           <FormLogin handleLoading={handleLoading} loading={loading} onOpen={onOpen} />
-          <div className="flex items-center gap-4 text-3xl justify-center">
+          <div className="flex items-center gap-4 text-3xl justify-center mt-5">
             <Link className="text-xl text-custom-textColor border border-custom-textColor p-3 rounded-full hover:text-custom-grayTwo hover:bg-custom-textColor duration-300 ease-linear" href={getGoogleOAuthURL()}>
               <FaGoogle />
             </Link>

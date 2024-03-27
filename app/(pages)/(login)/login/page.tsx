@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { useDisclosure, Modal } from "@chakra-ui/react";
 import { HiMiniArrowUturnLeft } from "react-icons/hi2";
 import { FaFacebookF } from "react-icons/fa";
-import { TbBrandGithubFilled } from "react-icons/tb";
 import Image from "next/image";
 import Link from "next/link";
 import { ResetPassword } from "@/(pages)/(login)/login/components/reset-password/reset-password/index";
@@ -11,14 +10,15 @@ import { FormLogin } from "@/(pages)/(login)/login/components/form/index";
 import { LoadingSpinner } from "@/components/ui/loading/index";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
 import logo from "@/assets/urban-vogue/logo-big.png";
-import OAuthGoogle from "./components/oauth/google";
+import { OAuthGoogle } from "./components/oauth/google";
+import { OAuthGithub } from "./components/oauth/github";
 
 function Login() {
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  const handleLoading = (load:boolean) => {
+  const handleLoading = (load: boolean) => {
     setLoading(load);
   };
 
@@ -43,22 +43,30 @@ function Login() {
             <Link href="/">
               <HiMiniArrowUturnLeft className="text-2xl hover-snipped max-sm:text-xl" />
             </Link>
-            <Link href="/register" className="text-xl hover-snipped max-sm:text-base">
+            <Link
+              href="/register"
+              className="text-xl hover-snipped max-sm:text-base"
+            >
               Register
             </Link>
           </nav>
           <h2 className="w-full text-center mb-8 text-custom-pink text-3xl max-sm:text-2xl">
             Login
           </h2>
-          <FormLogin handleLoading={handleLoading} loading={loading} onOpen={onOpen} />
+          <FormLogin
+            handleLoading={handleLoading}
+            loading={loading}
+            onOpen={onOpen}
+          />
           <div className="flex items-center gap-4 text-3xl justify-center mt-5">
-            <OAuthGoogle/>  
-            <button className="text-xl text-custom-textColor border border-custom-textColor p-3 rounded-full hover:text-custom-grayTwo hover:bg-custom-textColor duration-300 ease-linear">
+            <OAuthGoogle />
+            <button
+              disabled
+              className="text-xl text-custom-textColor/20 border border-custom-textColor/20 p-3 rounded-full duration-300 ease-linear"
+            >
               <FaFacebookF />
             </button>
-            <button className="text-xl text-custom-textColor border border-custom-textColor p-3 rounded-full hover:text-custom-grayTwo hover:bg-custom-textColor duration-300 ease-linear">
-              <TbBrandGithubFilled />
-            </button>
+            <OAuthGithub />
           </div>
           <div className="w-full flex flex-col justify-end items-center text-custom-textColor pb-5">
             <p className="mt-8 pb-3">

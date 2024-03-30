@@ -70,7 +70,7 @@ function Login() {
           </div>
           <div className="w-full flex flex-col justify-end items-center text-custom-textColor pb-5">
             <p className="mt-8 pb-3">
-              <Link href="forgot-password">forgot password</Link> •
+              <Link href="/forgot-password">forgot password</Link> •
               <Link href="privacy"> privacy policy</Link>
             </p>
           </div>

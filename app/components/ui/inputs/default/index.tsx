@@ -47,7 +47,7 @@ function InputUi({
       />
       <span
         className={`text-custom-red text-sm italic text-right mr-2 ${
-          error ? "mb-0" : "mb-0"
+          error ? "mb-4" : "mb-0"
         }`}
       >
         {error}

@@ -17,10 +17,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { ContextUser } from "@/contexts/ContextUser";
 import React, { useContext, useState } from "react";
-import { ContextPay } from "@/contexts/ContextPay";
 import { formatCpf } from "@/masks/cpf/index";
 import { ImSpinner9 } from "react-icons/im";
-import { useRouter } from "next/navigation";
 
 function AddCard({ type, getData }: { type: string; getData: () => void }) {
   const { onOpen, onClose, isOpen } = useDisclosure();
@@ -41,7 +39,6 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const contextPay = useContext(ContextPay);
   const context = useContext(ContextUser);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

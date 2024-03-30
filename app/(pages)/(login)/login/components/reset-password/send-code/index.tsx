@@ -30,7 +30,7 @@ function SendCode({ id }: SendCodeProps) {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const code = valueInput;
-    const url = `http://localhost:9090/reset-password/${id}/${code}`;
+    const url = `http://localhost:9090/reset-password/${code}`;
     try {
       if (code.length !== 6) {
         return setErrorCode("Enter the correct code!");
@@ -85,67 +85,7 @@ function SendCode({ id }: SendCodeProps) {
               </button>
             </div>
             <div className="w-full flex flex-col px-6">
-              <form onSubmit={onSubmit}>
-                <HStack className="flex justify-between w-full">
-                  <PinInput
-                    value={valueInput}
-                    onChange={handleChange}
-                    manageFocus={true}
-                    autoFocus
-                    otp
-                    placeholder="0"
-                  >
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                      autoFocus={true}
-                    />
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                    />
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                    />
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                    />
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                    />
-                    <PinInputField
-                      className="inputPin py-8"
-                      outline={"none"}
-                      outlineOffset={0}
-                    />
-                  </PinInput>
-                </HStack>
-                <div className="flex w-full justify-between py-8">
-                  <p className="text-red text-lg">{errorCode && errorCode}</p>
-                  {loading ? (
-                    <span>
-                      <ImSpinner9 className="animate-spin text-4xl" />
-                    </span>
-                  ) : (
-                    <Button
-                      className="buttonForgot pr-0 mr-0"
-                      type="submit"
-                      marginRight={0}
-                      disabled
-                    >
-                      Send
-                    </Button>
-                  )}
-                </div>
-              </form>
+            
             </div>
           </ModalContent>
         </>

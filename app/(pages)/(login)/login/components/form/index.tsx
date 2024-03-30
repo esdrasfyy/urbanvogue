@@ -45,8 +45,6 @@ function FormLogin({ loading, handleLoading, onOpen }: FormLoginProps) {
       const {data, status, error} = await LoginApi({ credential, password });
    
       if (status === 200) {
-        console.log("HAVE USERRRR");
-        
         setUser(data!.user);
         toast({
           title: "Logged in user!",

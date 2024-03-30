@@ -8,7 +8,7 @@ function CardAddress({ data }: CardAddressProps) {
   const contextPay = useContext(ContextPay);
 
   if (!contextPay) {
-    return null;
+    return;
   }
   const { address } = contextPay;
   return (

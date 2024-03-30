@@ -1,16 +1,17 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
-function ForgotPassword({onOpen}:{onOpen: () => void}) {
+function ForgotPassword({ onOpen }: { onOpen: () => void }) {
   return (
     <div className="flex justify-end">
-    <button
-      onClick={onOpen}
-      className="text-custom-textColor mt-5 font-light text-sm duration-300 ease-linear hover:text-custom-pink"
-    >
-      Forgot your password?
-    </button>
-  </div>
-  )
+      <Link
+        href={"/forgot-password"}
+        className="text-custom-textColor mt-5 font-light text-sm duration-300 ease-linear hover:text-custom-pink"
+      >
+        Forgot your password?
+      </Link>
+    </div>
+  );
 }
 
-export {ForgotPassword}
+export { ForgotPassword };

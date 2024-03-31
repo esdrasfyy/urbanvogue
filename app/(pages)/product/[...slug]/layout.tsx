@@ -4,11 +4,7 @@ interface ProductLayoutProps {
 }
 
 async function ProductLayout({ children }: ProductLayoutProps) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
 
 export default ProductLayout;

@@ -1,11 +1,11 @@
-import { CommentI } from "../../../../interfaces/comment";
+import { CommentI } from "@/interfaces/comment";
 
 export interface CommentReadApiReq {
   comments: CommentI[] | null;
   msg: string | null;
 }
 
-export interface CreateCommentResponse {
+export interface CommentReadResponse {
   data: CommentReadApiReq | null;
   error: string | null;
   status: number;

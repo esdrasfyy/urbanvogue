@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 import favicon from "@/favicon.ico";
 import { Cart } from "./components/cart/index";
+import { Footer } from "./components/footer";
 
 export default async function RootLayout({
   children,
@@ -24,12 +25,13 @@ export default async function RootLayout({
         <link rel="icon" href={`${favicon}`} />
       </head>
       <body
-        className={`${inter.className} flex w-full justify-center min-h-screen bg-custom-grayOne`}
+        className={`${inter.className} flex flex-col w-full items-center justify-center min-h-screen bg-custom-grayOne`}
       >
         <Providers>
           <Cart />
           <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

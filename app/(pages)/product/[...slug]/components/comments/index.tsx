@@ -32,6 +32,7 @@ function Comments({
     const fetchData = async () => {
       if (id !== 0) {
         const res = await CommentsReadApi({ id });
+        console.log(res);
 
         if (res.status === 200 && res.data?.comments) {
           setDataComments(res?.data?.comments);
@@ -122,7 +123,7 @@ function Comments({
           </div>
         ) : (
           <ul className="w-full flex flex-col gap-5">
-            {dataComments!.map((comment) => (
+            {dataComments?.map((comment) => (
               <CommentCard key={comment.comment_id} comment={comment} />
             ))}
           </ul>

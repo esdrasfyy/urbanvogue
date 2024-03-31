@@ -1,20 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { CommentI } from "../../../interfaces/comment";
-
-export interface CommentReadApiReq {
-  comments: CommentI[] | null;
-  msg: string | null;
-}
-
-export interface CommentReadResponse {
-  data: CommentReadApiReq | null;
-  error: string | null;
-  status: number;
-}
-
-export interface CreateCommentApiProps {
-  id: number;
-}
+import { CommentReadApiReq, CommentReadResponse, CreateCommentApiProps } from "./types";
 
 async function CommentsReadApi({
   id,
@@ -28,7 +13,7 @@ async function CommentsReadApi({
       `${api}comments/${id}`
     );
 
-    if (response.status === 201 && response.data && response.data) {
+    if (response.status === 200 && response.data && response.data) {
       return {
         data: {
           comments: response.data.comments,

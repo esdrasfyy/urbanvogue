@@ -62,7 +62,7 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     fetchData2();
     fetchData();
-  }, [context, contextUser]);
+  }, [ contextUser]);
 
   const handleDataAddress = (data: AddressI) => {
     const old = dataAddress;

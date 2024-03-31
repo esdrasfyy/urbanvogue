@@ -9,12 +9,11 @@ import {
   DrawerCloseButton,
   Divider,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import { ContextCart } from "../../contexts/ContextCart/index";
 import { CardH } from "../card/horizontal/index";
-import { Loading } from "./sub-components";
 import { ProductCartI } from "@/contexts/ContextCart/types";
 
 

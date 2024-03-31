@@ -3,7 +3,6 @@ import { useDisclosure } from "@chakra-ui/react";
 import { CartSummary, ContextCartProps, ProductCartI } from "./types";
 
 
-
 const ContextCart = createContext<ContextCartProps | undefined>(undefined);
 
 const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

@@ -18,6 +18,7 @@ const APP_ROUTES = {
   others: {
     login: "/login",
     register: "/register",
+    forgot_password: "/forgot-password"
   },
 };
 export { APP_ROUTES };

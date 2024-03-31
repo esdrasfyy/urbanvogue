@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-function ForgotPassword({ onOpen }: { onOpen: () => void }) {
+function ForgotPassword() {
   return (
     <div className="flex justify-end">
       <Link

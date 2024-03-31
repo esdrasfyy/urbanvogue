@@ -1,7 +1,7 @@
 "use client";
 import { InputUi } from "@/components/ui/inputs/default";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
 import * as yup from "yup";
@@ -9,23 +9,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { useToast } from "@chakra-ui/react";
 import { ForgotPassSendEmail } from "@/services/user/forgot-password/send-email";
+import { ContextUser } from "@/contexts/ContextUser";
+import { Inputs, SendEmailProps, schema } from "./types";
 axios.defaults.withCredentials = true;
 
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("must be a valid email!")
-    .required("This field is required!"),
-});
-type Inputs = {
-  email: string;
-};
-
-interface SendEmailProps{
-  handleCount: (value: number) => void;
-}
-
-function SendEmail({handleCount}:SendEmailProps) {
+function SendEmail({ handleCount }: SendEmailProps) {
+  const context = useContext(ContextUser);
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +27,8 @@ function SendEmail({handleCount}:SendEmailProps) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const email = data.email;
+    if (!context) return;
+    const { setEmailForRecovery } = context;
     try {
       setLoading(true);
       const res = await ForgotPassSendEmail(email);
@@ -54,7 +45,8 @@ function SendEmail({handleCount}:SendEmailProps) {
         });
         return;
       }
-      handleCount(2)
+      setEmailForRecovery(email);
+      handleCount(2);
       return toast({
         title: "Code sent!",
         description: res?.data?.msg || "A code has been sent to your email.",
@@ -78,7 +70,10 @@ function SendEmail({handleCount}:SendEmailProps) {
           <ImSpinner9 className="animate-spin text-8xl" />
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-96 mx-auto pb-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-96 mx-auto pb-4"
+      >
         <div>
           <p className="mb-4 text-sm text-custom-textColor/35">
             Enter your email address and we'll send you a code to reset your

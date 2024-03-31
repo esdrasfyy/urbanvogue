@@ -18,7 +18,7 @@ import { ForgotPassword } from "../forgot-password";
 
 
 
-function FormLogin({ loading, handleLoading, onOpen }: FormLoginProps) {
+function FormLogin({ loading, handleLoading }: FormLoginProps) {
   const [show, setShow] = React.useState(false);
   const router = useRouter();
   const toast = useToast();
@@ -118,7 +118,7 @@ function FormLogin({ loading, handleLoading, onOpen }: FormLoginProps) {
         error={errors?.password?.message}
         disabled={loading ? true : false}
       />
-      <ForgotPassword onOpen={onOpen}/>
+      <ForgotPassword />
       <ButtonIconUi
         type="submit"
         content="Login"

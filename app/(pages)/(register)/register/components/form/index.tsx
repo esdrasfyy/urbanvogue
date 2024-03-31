@@ -101,7 +101,7 @@ function FormRegister({ handleLoading, loading }: FormRegisterProps) {
 
   return (
     <form
-      className="flex w-full flex-col  justify-center px-10 pb-10 max-sm:px-3"
+      className="flex w-full flex-col  justify-center px-10 pb-10 max-md:px-5"
       onSubmit={handleSubmit(onSubmit)}
     >
       <InputUi

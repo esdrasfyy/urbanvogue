@@ -6,6 +6,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ButtonPassUi } from "@/components/ui/buttons/button-password";
 import { ImSpinner9 } from "react-icons/im";
 import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
+import { ForgotPassReset } from "@/services/user/forgot-password/reset-password";
+import { useToast } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 interface NewPasswordProps {
   id: number;
@@ -28,15 +31,18 @@ type Inputs = {
   passwordConfirm: string;
 };
 
-function ResetPassword() {
+function ResetPassword({
+  handleCount,
+}: {
+  handleCount: (value: number) => void;
+}) {
   const [showPass, setShowPass] = React.useState(false);
-  const [success, setSuccess] = React.useState<boolean>();
   const [loading, setLoading] = React.useState(false);
-  const [errorPass, setErrorPass] = React.useState("");
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const showPassword = () => setShowPass(!showPass);
   const showConfirmPassword = () => setShowConfirmPass(!showConfirmPass);
-
+  const toast = useToast();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -49,31 +55,59 @@ function ResetPassword() {
 
     try {
       setLoading(true);
-      if (password !== passwordConfirm) {
-        return setErrorPass("Passwords do not match!");
-      }
-      const url = `http://localhost:9090/new-password/`;
-      const { data, status } = await axios.post(url, {
-        password,
-      });
 
-      if (status === 200) {
-        setSuccess(true);
+      if (password !== passwordConfirm) {
+        return toast({
+          title: "Don't match.",
+          description: "Your passwords don't match, correct them.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          variant: "left-accent",
+          position: "top-right",
+        });
       }
+      const res = await ForgotPassReset({ password });
+
+      if (res.status !== 200) {
+        handleCount(1);
+        return toast({
+          title: "Error changing password.",
+          description:
+            res?.data?.msg || "Our system has failed, please try again.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          variant: "left-accent",
+          position: "top-right",
+        });
+      }
+      router.push("/login");
+      return toast({
+        title: "Code sent!",
+        description: res?.data?.msg || "A code has been sent to your email.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.data.msg) {
-        setSuccess(false);
-        setErrorPass(error.response?.data.msg);
-      } else {
-        setSuccess(false);
-        setErrorPass("Unknown error!");
-      }
     } finally {
       setLoading(false);
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col pb-4 w-full max-w-96 mx-auto">
+    <>
+        {loading && (
+        <div className="text-custom-pink bg-custom-grayOne/75 left-0 top-0 absolute w-full h-full flex justify-center items-center">
+          <ImSpinner9 className="animate-spin text-8xl" />
+        </div>
+      )}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col pb-4 w-full max-w-96 mx-auto"
+    >
       <div
         className={` ${errors?.passwordConfirm?.message ? "pb-6" : "pb-10"}`}
       >
@@ -107,6 +141,7 @@ function ResetPassword() {
         classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear`}
       />
     </form>
+        </>
   );
 }
 

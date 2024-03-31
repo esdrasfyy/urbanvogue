@@ -8,7 +8,7 @@ import { SendCode } from "./components/send-code";
 import { ResetPassword } from "./components/reset-password";
 
 function ForgotPassword() {
-  const [stepCount, setStepCount] = useState<number>(2);
+  const [stepCount, setStepCount] = useState<number>(1);
 
   const handleCount = (value: number) => {
     setStepCount(value);
@@ -21,10 +21,10 @@ function ForgotPassword() {
       componentStep = <SendEmail handleCount={handleCount} />;
       break;
     case 2:
-      componentStep = <SendCode />;
+      componentStep = <SendCode handleCount={handleCount}/>;
       break;
     case 3:
-      componentStep = <ResetPassword />;
+      componentStep = <ResetPassword handleCount={handleCount}/>;
       break;
     default:
       componentStep = <SendEmail handleCount={handleCount} />;

@@ -11,7 +11,7 @@ const ContextUser = createContext<ContextUserProps | undefined>(undefined);
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserI | null>(null);
   const [haveUser, setHaveUser] = useState<boolean>(false);
-
+  const [emailForRecovery, setEmailForRecovery] = useState<string | null>(null)
   const api = process.env.API;
   const fetchUser = async () => {
     try {
@@ -41,6 +41,8 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const contextValue: ContextUserProps = {
     user,
     setUser,
+    emailForRecovery,
+    setEmailForRecovery,
     fetchUser,
   };
 

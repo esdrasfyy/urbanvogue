@@ -5,7 +5,6 @@ import { HiMiniArrowUturnLeft } from "react-icons/hi2";
 import { FaFacebookF } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { ResetPassword } from "@/(pages)/(login)/login/components/reset-password/reset-password/index";
 import { FormLogin } from "@/(pages)/(login)/login/components/form/index";
 import { LoadingSpinner } from "@/components/ui/loading/index";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
@@ -15,24 +14,13 @@ import { OAuthGithub } from "./components/oauth/github";
 
 function Login() {
   const [loading, setLoading] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
   const handleLoading = (load: boolean) => {
     setLoading(load);
   };
 
   return (
     <section className="w-full h-screen bg-custom-grayOne flex justify-center items-center pt-12">
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ResetPassword />
-      </Modal>
-      <div className="max-w-[1050px] w-full mx-8 bg-custom-grayTwo flex shadow-snipped rounded-md">
+      <div className="max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex shadow-snipped rounded-md">
         <div className="w-[100%] relative sm:w-[70%]">
           {loading && (
             <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
@@ -53,11 +41,7 @@ function Login() {
           <h2 className="w-full text-center mb-8 text-custom-pink text-3xl max-sm:text-2xl">
             Login
           </h2>
-          <FormLogin
-            handleLoading={handleLoading}
-            loading={loading}
-            onOpen={onOpen}
-          />
+          <FormLogin handleLoading={handleLoading} loading={loading} />
           <div className="flex items-center gap-4 text-3xl justify-center mt-5">
             <OAuthGoogle />
             <button

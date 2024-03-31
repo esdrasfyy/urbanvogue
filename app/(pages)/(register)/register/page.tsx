@@ -20,7 +20,7 @@ function Register() {
 
   return (
     <section className="w-full h-screen bg-custom-grayOne flex justify-center items-center pt-12">
-      <div className=" max-w-[1050px] w-full mx-8 bg-custom-grayTwo flex  shadow-snipped rounded-md">
+      <div className=" max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex  shadow-snipped rounded-md">
         <aside className="w-[30%] min-h-full relative hidden justify-center items-center sm:flex">
           <Image
             src={bg}

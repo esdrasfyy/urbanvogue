@@ -6,7 +6,6 @@ export type Inputs = {
   export type FormLoginProps = {
     loading: boolean;
     handleLoading: Function;
-    onOpen: () => void
   }
 
 const schema = yup.object().shape({

@@ -1,13 +1,13 @@
 const APP_ROUTES = {
   private: {
+    checkout: {
+      name: "/checkout",
+    },
     account: {
       name: "/account",
     },
     account_edit: {
       name: "/account/edit",
-    },
-    checkout: {
-      name: "/checkout",
     },
   },
   public: {
@@ -18,7 +18,7 @@ const APP_ROUTES = {
   others: {
     login: "/login",
     register: "/register",
-    forgot_password: "/forgot-password"
+    forgot_password: "/forgot-password",
   },
 };
 export { APP_ROUTES };

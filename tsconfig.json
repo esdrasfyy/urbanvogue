@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node", "recaptcha"],
+    "types": ["node"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,

@@ -7,13 +7,14 @@ import pix from "@/assets/networks/pix.png";
 import loterica from "@/assets/networks/loterica.png";
 import Image from "next/image";
 import {BackTop} from "./components/back-top"
+import { Divider } from "@chakra-ui/react";
 function Footer() {
   return (
     <>
      <BackTop/>
       <footer className="flex justify-center items-center w-full text-custom-textColor bg-custom-grayTwo py-5 border-y border-solid border-custom-textColor/35">
-        <div className="flex justify-between w-full items-start max-w-[1050px]">
-          <section>
+        <div className="flex justify-between w-full items-start max-w-[1050px] max-md:flex-col mx-4">
+          <section className="w-full border-custom-textColor/30 max-md:border-b max-md:mb-4 max-md:pb-4">
             <h3 className="text-custom-pink font-medium mb-3">ACCOUNT</h3>
             <ul className="flex flex-col gap-3">
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">Your Account</li>
@@ -24,7 +25,7 @@ function Footer() {
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">Help</li>
             </ul>
           </section>
-          <section>
+          <section className="w-full border-custom-textColor/30 max-md:border-b max-md:mb-4 max-md:pb-4">
             <h3 className="text-custom-pink font-medium mb-3">WHO WE ARE</h3>
             <ul className="flex flex-col gap-3">
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">About Urban Vogue</li>
@@ -35,7 +36,7 @@ function Footer() {
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">Urban Vogue Awards</li>
             </ul>
           </section>
-          <section>
+          <section className="w-full border-custom-textColor/30 max-md:border-b max-md:mb-4 max-md:pb-4">
             <h3 className="text-custom-pink font-medium mb-3">FAQs</h3>
             <ul className="flex flex-col gap-3">
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">How to buy</li>
@@ -46,7 +47,7 @@ function Footer() {
               <li className="text-sm text-custom-textColor/60 uppercase cursor-pointer hover:text-custom-textColor duration-300 ease-linear">Contact us</li>
             </ul>
           </section>
-          <section>
+          <section className="w-full">
             <div>
               <h3 className="text-custom-pink font-medium mb-3">CONTACTS</h3>
               <ul>

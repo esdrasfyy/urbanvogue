@@ -25,7 +25,7 @@ export default async function RootLayout({
         <link rel="icon" href={`${favicon}`} />
       </head>
       <body
-        className={`${inter.className} flex flex-col w-full items-center justify-center min-h-screen bg-custom-grayOne`}
+        className={`${inter.className} flex flex-col min-w-full items-center justify-end min-h-screen bg-custom-grayOne`}
       >
         <Providers>
           <Cart />

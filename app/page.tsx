@@ -1,8 +1,7 @@
-import {SearchInputUi} from "./components/ui/inputs/search/index";
+import { SearchInputUi } from "./components/ui/inputs/search/index";
 import React from "react";
-import {GridHome} from "./components/home/grid/index";
-import {SlideProducts } from "./components/carousel/index";
-
+import { GridHome } from "./components/home/grid/index";
+import { SlideProducts } from "./components/carousel/index";
 export default function Home() {
   return (
     <main className="flex min-h-screen max-w-[1050px] w-full  flex-col items-center mt-24 px-4">

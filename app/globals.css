@@ -563,3 +563,19 @@ svg.progressbar {
   border: none !important;
   opacity: 1;
 }
+
+.arrow-footer{
+  animation: arrowFooter 1.5s infinite;
+  scroll-behavior: smooth;
+}
+@keyframes arrowFooter {
+  0%{
+    transform: translateY(7px);
+  }
+  50%{
+    transform: translateY(-7px);
+  }
+  100%{
+    transform: translateY(7px);
+  }
+}

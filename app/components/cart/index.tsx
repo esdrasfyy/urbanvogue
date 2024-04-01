@@ -15,7 +15,7 @@ import Link from "next/link";
 import { ContextCart } from "../../contexts/ContextCart/index";
 import { CardH } from "../card/horizontal/index";
 import { ProductCartI } from "@/contexts/ContextCart/types";
-
+import { LinkCheckout } from "./sub-components/link-checkout";
 
 function Cart() {
   const context = useContext(ContextCart)!;
@@ -71,13 +71,7 @@ function Cart() {
                   ${context?.cartResume?.totalPrice?.toFixed(2)}
                 </span>
               </div>
-              <Link
-                href={"/checkout"}
-                className={`group bg-none border-2 w-56 border-custom-pink flex gap-12 items-center pl-2 justify-center text-custom-textColor py-1 rounded text-lg duration-300 hover:bg-custom-pink max-sm:text-sm max-sm:w-48 `}
-              >
-                <span>Close order</span>
-                <FaArrowRight className="transition-all ease-in-out -translate-x-7 group-hover:translate-x-0 duration-1000" />
-              </Link>
+              <LinkCheckout />
             </div>
           </DrawerFooter>
         </DrawerContent>

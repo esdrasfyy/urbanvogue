@@ -15,8 +15,7 @@ import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useContext} from "react";
 import { ForgotPassword } from "../forgot-password";
-
-
+import { Recaptcha } from "@/components/recaptcha";
 
 function FormLogin({ loading, handleLoading }: FormLoginProps) {
   const [show, setShow] = React.useState(false);
@@ -39,7 +38,10 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const credential = data.credential;
     const password = data.password;
-    
+    const token = window.grecaptcha.execute();
+    const secretKey = 'YOUR_SECRET_KEY';
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+  
     try {
       handleLoading(!loading);
       const {data, status, error} = await LoginApi({ credential, password });
@@ -99,7 +101,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
     >
       <InputUi
         type="text"
-        label="Email ou username"
+        label="Email or username"
         pleaceholder="Enter you email or username"
         classname="w-full text-custom-textColor"
         name="credential"
@@ -119,6 +121,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         disabled={loading ? true : false}
       />
       <ForgotPassword />
+      <Recaptcha/>
       <ButtonIconUi
         type="submit"
         content="Login"

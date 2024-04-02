@@ -35,7 +35,7 @@ function AddressCheckout() {
           ) : (
             <div className="w-full flex justify-center">
               {" "}
-              <div className="bg-custom-grayOne py-2 px-4 rounded-md mt-3 cursor-pointer hover:bg-custom-grayOne/40 duration-300 ease-linear">
+              <div className="w-full flex items-center justify-center py-12 px-4 rounded-md mt-3 bg-white/5 shadow-snipped duration-300 ease-linear">
                 <AddAddress />
               </div>
             </div>

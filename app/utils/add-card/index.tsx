@@ -205,7 +205,7 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
-        <ModalContent backgroundColor={"#1d2123"} color={"#d9d9d9"}>
+        <ModalContent backgroundColor={"#1d2123"} color={"#d9d9d9"} margin={ "0px 15px"}>
           {loading ? (
             <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
               <LoadingSpinner />

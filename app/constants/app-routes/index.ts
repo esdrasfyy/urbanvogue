@@ -3,6 +3,9 @@ const APP_ROUTES = {
     checkout: {
       name: "/checkout",
     },
+    approve: {
+      name: "/checkout/approve",
+    },
     account: {
       name: "/account",
     },

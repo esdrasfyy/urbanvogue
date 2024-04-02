@@ -24,8 +24,8 @@ export interface ApiResponse {
 }
 
 export interface ContextPayProps {
-  address: number;
-  setAddress: React.Dispatch<React.SetStateAction<number>>;
+  address: number | null;
+  setAddress: React.Dispatch<React.SetStateAction<number | null>>;
   total: number;
   setTotal: React.Dispatch<React.SetStateAction<number>>;
   discount: number | null;

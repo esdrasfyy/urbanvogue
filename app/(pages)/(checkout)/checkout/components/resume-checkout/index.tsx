@@ -1,16 +1,12 @@
 "use client";
 import React, { useContext, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import { TbShoppingCartDollar } from "react-icons/tb";
 import { ContextCart } from "@/contexts/ContextCart";
 import { ContextPay } from "@/contexts/ContextPay";
 import { CouponResume } from "@/(pages)/(checkout)/checkout/components/resume-checkout/sub-components/coupon-resume/index";
 import { FreightageResume } from "@/(pages)/(checkout)/checkout/components/resume-checkout/sub-components/freightage-resume/index";
-import { useRouter } from "next/navigation";
-import { useToast } from "@chakra-ui/react";
+import { RedirectApprove } from "./sub-components/redirect-approve";
 function ResumeCheckout() {
-  const router = useRouter();
-  const toast = useToast();
   const contextCart = useContext(ContextCart);
   const contextPay = useContext(ContextPay);
 
@@ -31,36 +27,7 @@ function ResumeCheckout() {
     return;
   }
   const { cartResume } = contextCart;
-  const { address, method, cardId, dataProducts, discount, total } = contextPay;
-
-  const verifyData = () => {
-    const errorMessages = [];
-
-    if (!address) errorMessages.push("Please add a delivery address.");
-    if (!method) errorMessages.push("Please add a payment method.");
-    if (!dataProducts) errorMessages.push("Your shopping cart is empty.");
-    if (!total) errorMessages.push("Interna Error.");
-    if ((method === "credit_card" || method === "debit_card") && !cardId) {
-      errorMessages.push("Please select a card to continue.");
-    }
-
-    if (errorMessages.length > 0) {
-      errorMessages.forEach((message) => {
-        toast({
-          title: "Error in one of the fields!",
-          description: message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-          variant: "left-accent",
-          position: "top-right",
-        });
-      });
-      return;
-    }
-
-    router.push("/checkout/approve");
-  };
+  const { discount, total } = contextPay;
 
   return (
     <div>
@@ -106,13 +73,7 @@ function ResumeCheckout() {
           </div>
         </div>
       </div>
-      <button
-        onClick={verifyData}
-        className={`group bg-none border-2 border-custom-pink flex gap-12 items-center pl-2 justify-center max-sm:py-2 w-full mt-5 text-custom-textColor py-1 rounded text-lg duration-300 hover:bg-custom-pink`}
-      >
-        <span>CONTINUE</span>
-        <FaArrowRight className="transition-all ease-in-out -translate-x-7 group-hover:translate-x-0 duration-1000" />
-      </button>
+     <RedirectApprove/>
     </div>
   );
 }

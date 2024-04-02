@@ -19,7 +19,7 @@ const ContextPay = createContext<ContextPayProps | undefined>(undefined);
 
 const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [dataAddress, setDataAddress] = useState<AddressI[]>([]);
-  const [address, setAddress] = useState<number>(1);
+  const [address, setAddress] = useState<number | null>(null);
   const [cardId, setCardId] = useState<string>("");
   const [method, setMethod] = useState<string>("pix");
   const [total, setTotal] = useState<number>(0);

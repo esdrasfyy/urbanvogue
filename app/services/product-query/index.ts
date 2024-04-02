@@ -1,4 +1,3 @@
-import { ProductI } from "../../interfaces/product/card";
 import axios, { AxiosResponse } from "axios";
 import { ProductQueryApiApiReq, ProductQueryApiProps, ProductQueryApiResponse } from "./types";
 

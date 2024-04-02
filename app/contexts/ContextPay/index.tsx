@@ -22,9 +22,9 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [address, setAddress] = useState<number | null>(null);
   const [cardId, setCardId] = useState<string>("");
   const [method, setMethod] = useState<string>("pix");
+  const [coupon, setCoupon] = useState<string | null>(null);
   const [total, setTotal] = useState<number>(0);
   const [discount, setDiscount] = useState<number | null>(null);
-  const [dataProducts, setDataProducts] = useState<ProductI[] | null>(null);
 
   const context = useContext(ContextCart);
   const contextUser = useContext(ContextUser);
@@ -45,24 +45,8 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
       }
     };
-
-    const fetchData = async (): Promise<void> => {
-    const ids = "56, 45"
-      try {
-        const res = await ProductsByIdsApi({ ids });
-        if (res?.status === 200 && res.data?.products) {
-          setDataProducts(res?.data?.products);
-        } else {
-          console.error("Resposta da requisição não contém dados esperados.");
-        }
-      } catch (error: any) {
-        console.error("Erro na requisição do produto:", error);
-      }
-    };
-
     fetchData2();
-    fetchData();
-  }, [ contextUser]);
+  }, [contextUser?.user?.user_id]);
 
   const handleDataAddress = (data: AddressI) => {
     const old = dataAddress;
@@ -85,8 +69,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setAddress,
     dataAddress,
     setDataAddress,
-    dataProducts,
-    setDataProducts,
     handleAddressDefalt,
     handleDeleteAddress,
     handleDataAddress,
@@ -94,6 +76,8 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setCardId,
     method,
     setMethod,
+    coupon,
+    setCoupon,
     total,
     setTotal,
     discount,

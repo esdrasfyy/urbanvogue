@@ -28,7 +28,7 @@ function CouponResume() {
     return;
   }
   const { cartResume } = contextCart;
-  const { total, setTotal, setDiscount } = contextPay;
+  const { total, setTotal, setDiscount, setCoupon } = contextPay;
 
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -45,6 +45,7 @@ function CouponResume() {
         const percentage = res.data?.percentage || 0;
         const disc = (total * percentage) / 100;
         setDiscount(disc);
+        setCoupon(code)
         const value = total - disc;
         setTotal(value);
       }

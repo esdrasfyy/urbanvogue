@@ -32,12 +32,12 @@ export interface ContextPayProps {
   setDiscount: React.Dispatch<React.SetStateAction<number |  null>>;
   cardId: string;
   setCardId: React.Dispatch<React.SetStateAction<string>>;
+  coupon: string | null;
+  setCoupon: React.Dispatch<React.SetStateAction<string | null>>;
   method: string;
   setMethod: React.Dispatch<React.SetStateAction<string>>;
   dataAddress:  AddressI[];
   setDataAddress: React.Dispatch<React.SetStateAction< AddressI[]>>;
-  dataProducts:  ProductI[] | null;
-  setDataProducts: React.Dispatch<React.SetStateAction< ProductI[] | null>>;
   handleAddressDefalt: Function;
   handleDeleteAddress: Function;
   handleDataAddress: Function;

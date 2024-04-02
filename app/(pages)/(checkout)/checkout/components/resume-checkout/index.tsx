@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useContext, useEffect } from "react";
 import { TbShoppingCartDollar } from "react-icons/tb";
 import { ContextCart } from "@/contexts/ContextCart";

@@ -43,12 +43,11 @@ function RedirectApprove() {
     }
 
     const ids = cartResume?.products?.map((product) => product.id);
-    console.log(user?.user_id);
-    
     await PaymentPixApi({
       user_id: 2,
       products_ids: ids!,
       coupon: coupon,
+      products: cartResume?.products!,
     });
 
     // window.location.href = "/checkout/approve";

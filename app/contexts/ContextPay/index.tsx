@@ -7,12 +7,10 @@ import React, {
   useContext,
 } from "react";
 
-import { ContextPayProps, Product } from "./types/index";
+import { ContextPayProps } from "./types/index";
 import { AddressReadApi } from "../../services/user/address/read";
 import { AddressI } from "../../interfaces/address";
 import { ContextCart } from "../ContextCart/index";
-import { ProductI } from "../../interfaces/product/card";
-import { ProductsByIdsApi } from "../../services/products-by-ids";
 import { ContextUser } from "../ContextUser";
 
 const ContextPay = createContext<ContextPayProps | undefined>(undefined);
@@ -42,6 +40,8 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (res.data?.address && res.data?.address?.length > 0) {
           setAddress(res.data.address[0]?.address_id);
           setDataAddress(res.data.address);
+          console.log(res.data);
+          
         }
       }
     };

@@ -50,7 +50,7 @@ function CardV({ data }: CardProps) {
   const parcelas = parseFloat(data.price) / 6;
   return (
     <div
-      className="shadow-snipped rounded-md relative w-full group transition-transform ease-in-out duration-200 transform"
+      className="shadow-snipped rounded-md relative max-w-[164px] w-full group transition-transform ease-in-out duration-200 transform"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

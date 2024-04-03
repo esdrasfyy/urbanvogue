@@ -16,7 +16,7 @@ function Search() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <main
-      className={`relative min-h-screen min-w-full flex flex-col items-center justify-center pt-[76px]`}
+      className={`relative min-h-screen min-w-min flex flex-col items-center justify-center pt-[76px]`}
     >
       <Filter
         isOpen={isOpen}

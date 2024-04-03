@@ -42,10 +42,10 @@ function RedirectApprove() {
       return;
     }
 
-    const ids = cartResume?.products?.map((product) => product.id);
     await PaymentPixApi({
       user_id: 2,
-      products_ids: ids!,
+      address_id: address || 1,
+      payment_method: "pix",
       coupon: coupon,
       products: cartResume?.products!,
     });

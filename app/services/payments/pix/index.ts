@@ -1,15 +1,17 @@
 import { ProductCartI } from "@/contexts/ContextCart/types";
 import axios from "axios";
 async function PaymentPixApi({
+  payment_method,
+  address_id,
   user_id,
-  products_ids,
   coupon,
-  products
+  products,
 }: {
   user_id: number;
-  products_ids: number[];
+  address_id: number;
+  payment_method: string;
   coupon: string | null;
-  products: ProductCartI[]
+  products: ProductCartI[];
 }) {
   const api = process.env.API;
   try {
@@ -18,12 +20,13 @@ async function PaymentPixApi({
     }
     const response = await axios.post(`${api}payment/pix`, {
       user_id,
-      products_ids,
       coupon,
-      products
+      products,
+      payment_method,
+      address_id,
     });
 
-    console.log(response.data)
+    console.log(response.data);
   } catch (error: any) {
     console.log(error);
   }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext, useEffect } from "react";
 import { TbShoppingCartDollar } from "react-icons/tb";
 import { ContextCart } from "@/contexts/ContextCart";
@@ -6,6 +6,7 @@ import { ContextPay } from "@/contexts/ContextPay";
 import { CouponResume } from "@/(pages)/(checkout)/checkout/components/resume-checkout/sub-components/coupon-resume/index";
 import { FreightageResume } from "@/(pages)/(checkout)/checkout/components/resume-checkout/sub-components/freightage-resume/index";
 import { RedirectApprove } from "./sub-components/redirect-approve";
+import { ImSpinner9 } from "react-icons/im";
 function ResumeCheckout() {
   const contextCart = useContext(ContextCart);
   const contextPay = useContext(ContextPay);
@@ -27,10 +28,16 @@ function ResumeCheckout() {
     return;
   }
   const { cartResume } = contextCart;
-  const { discount, total } = contextPay;
+  const { discount, total, loading } = contextPay;
 
   return (
-    <div>
+    <div className="relative">
+      {loading && (
+        <div className="text-custom-pink flex justify-center items-center w-full h-full top-0 left-0 absolute bg-custom-grayTwo/60 z-20">
+          <ImSpinner9 className="animate-spin text-8xl" />
+        </div>
+      )}
+
       <div className="text-xl flex gap-3 items-center">
         <span className="text-2xl text-custom-pink">
           <TbShoppingCartDollar />
@@ -73,7 +80,7 @@ function ResumeCheckout() {
           </div>
         </div>
       </div>
-     <RedirectApprove/>
+      <RedirectApprove />
     </div>
   );
 }

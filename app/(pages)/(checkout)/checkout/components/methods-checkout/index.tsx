@@ -9,7 +9,7 @@ import { Radio, RadioGroup } from "@chakra-ui/react";
 import { ContextUser } from "@/contexts/ContextUser";
 import { ContextPay } from "@/contexts/ContextPay";
 import { BiSolidBank } from "react-icons/bi";
-import { ImBarcode } from "react-icons/im";
+import { ImBarcode, ImSpinner9 } from "react-icons/im";
 import { MdPix } from "react-icons/md";
 
 interface Card {
@@ -46,10 +46,15 @@ function MethodsCheckout() {
   if (!contextPay) {
     return;
   }
-  const { method, setMethod } = contextPay;
+  const { method, setMethod, loading } = contextPay;
 
   return (
-    <div className="bg-custom-grayTwo rounded-md flex flex-col gap-5 shadow-snipped px-5 py-4 pb-8">
+    <div className="bg-custom-grayTwo rounded-md flex flex-col gap-5 shadow-snipped px-5 py-4 pb-8 relative">
+      {loading && (
+        <div className="text-custom-pink flex justify-center items-center w-full h-full top-0 left-0 absolute bg-custom-grayTwo/60 z-20">
+          <ImSpinner9 className="animate-spin text-8xl" />
+        </div>
+      )}
       <h3 className="flex gap-3 items-center text-xl">
         <span className="text-custom-pink text-2xl">
           <RiMoneyDollarCircleLine />

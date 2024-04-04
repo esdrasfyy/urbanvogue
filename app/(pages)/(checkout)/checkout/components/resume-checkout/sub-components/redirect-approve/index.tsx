@@ -13,7 +13,8 @@ function RedirectApprove() {
 
   const toast = useToast();
   if (!contextPay || !contextCart || !contextUser) return;
-  const { address, method, cardId, total, coupon } = contextPay;
+  const { address, method, cardId, total, coupon, loading, setLoading } =
+    contextPay;
   const { cartResume } = contextCart;
   const { user } = contextUser;
   const verifyData = async () => {
@@ -41,16 +42,43 @@ function RedirectApprove() {
       });
       return;
     }
-
-    await PaymentPixApi({
-      user_id: 2,
-      address_id: address || 1,
-      payment_method: "pix",
-      coupon: coupon,
-      products: cartResume?.products!,
-    });
-
-    // window.location.href = "/checkout/approve";
+    try {
+      setLoading(true);
+      const res = await PaymentPixApi({
+        user_id: 2,
+        address_id: address || 1,
+        payment_method: "pix",
+        coupon: coupon,
+        products: cartResume?.products!,
+      });
+      if (res.status === 201) {
+        toast({
+          title: "Created Payment",
+          description: "Order created successfully.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          variant: "left-accent",
+          position: "top-right",
+        });
+        setLoading(false);
+        return (window.location.href = `/checkout/approve/pix/${res.data?.order_id}/${res.data?.payment_id}`);
+      }
+      toast({
+        title: "Failed to create order",
+        description:
+          res.data?.msg ||
+          "An error occurred with your order, please try again.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

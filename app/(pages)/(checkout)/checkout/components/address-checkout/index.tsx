@@ -6,6 +6,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { ContextPay } from "@/contexts/ContextPay";
 import { SiGooglemaps } from "react-icons/si";
 import React, { useContext } from "react";
+import { ImSpinner9 } from "react-icons/im";
 
 function AddressCheckout() {
   const { onOpen, onClose, isOpen } = useDisclosure();
@@ -14,10 +15,15 @@ function AddressCheckout() {
   if (!contextPay) {
     return null;
   }
-  const { address, dataAddress } = contextPay;
+  const { address, dataAddress, loading } = contextPay;
   return (
     <>
-      <div className="bg-custom-grayTwo rounded-md flex flex-col gap-5 shadow-snipped px-5 py-4 pb-8">
+      <div className="bg-custom-grayTwo rounded-md flex flex-col gap-5 shadow-snipped px-5 py-4 pb-8 relative">
+      {loading && (
+        <div className="text-custom-pink flex justify-center items-center w-full h-full top-0 left-0 absolute bg-custom-grayTwo/60 z-20">
+          <ImSpinner9 className="animate-spin text-8xl" />
+        </div>
+      )}
         <h3 className="flex gap-3 items-center text-xl">
           <span className="text-custom-pink">
             <SiGooglemaps />

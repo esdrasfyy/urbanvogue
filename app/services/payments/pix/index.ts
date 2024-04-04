@@ -1,34 +1,62 @@
-import { ProductCartI } from "@/contexts/ContextCart/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import {
+  PaymentPixApiProps,
+  PaymentPixApiReq,
+  PaymentPixResponse,
+} from "./types";
+
 async function PaymentPixApi({
   payment_method,
   address_id,
   user_id,
   coupon,
   products,
-}: {
-  user_id: number;
-  address_id: number;
-  payment_method: string;
-  coupon: string | null;
-  products: ProductCartI[];
-}) {
+}: PaymentPixApiProps): Promise<PaymentPixResponse> {
   const api = process.env.API;
   try {
-    if (!user_id) {
-      throw new Error("user_id parameter is empty or undefined.");
-    }
-    const response = await axios.post(`${api}payment/pix`, {
-      user_id,
-      coupon,
-      products,
-      payment_method,
-      address_id,
-    });
+    const response: AxiosResponse<PaymentPixApiReq | null> = await axios.post(
+      `${api}payment/pix`,
+      {
+        user_id,
+        coupon,
+        products,
+        payment_method,
+        address_id,
+      }
+    );
 
-    console.log(response.data);
+    if (response.status === 201 && response.data && response.data) {
+      return {
+        data: {
+          msg: response.data.msg,
+          status: response.status,
+          payment_id: response.data.payment_id,
+          order_id: response.data.order_id
+        },
+        error: null,
+        status: response.status,
+      };
+    } else {
+      return {
+        data: {
+          msg: response?.data?.msg || "Unknown error.",
+          status: response.status
+        },
+        error: response.data
+          ? response.data.msg || "Unknown error."
+          : "Unknown error.",
+        status: response.status,
+      };
+    }
   } catch (error: any) {
-    console.log(error);
+    return {
+      data: {
+        msg: error.response?.data?.msg || null,
+        status: error.response?.status || 500,
+      },
+      error: error.response?.data?.msg || "Unknown error.",
+      status: error.response?.status || 500,
+    };
   }
 }
 export { PaymentPixApi };

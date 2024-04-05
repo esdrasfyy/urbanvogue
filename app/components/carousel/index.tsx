@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CardV } from "../card/vertical/index";
 import { ProductQueryApi } from "../../services/product-query/index";
 import { ProductI } from "../../interfaces/product/card/index";
@@ -9,6 +9,7 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import "@splidejs/react-splide/css/core";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 interface CarrosselShopProps {
   query: string;
@@ -24,7 +25,8 @@ function SlideProducts({
   notArrow,
 }: CarrosselShopProps) {
   const [data, setData] = useState<ProductI[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const [error, setError] = useState<unknown | null>(null);
 
   useEffect(() => {
@@ -60,7 +62,7 @@ function SlideProducts({
       <Splide
         hasTrack={false}
         options={{
-          arrows:!notArrow,
+          arrows: !notArrow,
           autoplay: true,
           perPage: 1,
           type: "loop",

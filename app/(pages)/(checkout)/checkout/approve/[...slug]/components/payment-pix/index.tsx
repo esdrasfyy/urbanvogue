@@ -1,8 +1,7 @@
+"use client";
 import { Divider } from "@chakra-ui/react";
-import React from "react";
-import { FaPager } from "react-icons/fa";
-import { HiClipboardList, HiOutlineInformationCircle } from "react-icons/hi";
-import { FiInfo } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import { HiClipboardList } from "react-icons/hi";
 import {
   TbCircleNumber1,
   TbCircleNumber2,
@@ -11,11 +10,71 @@ import {
   TbInfoHexagonFilled,
 } from "react-icons/tb";
 import Link from "next/link";
-import qrcode from "@/assets/qrcode2.png";
-import Image from "next/image";
 import { HiMiniCamera } from "react-icons/hi2";
 import { MdContentCopy } from "react-icons/md";
-function PaymentPix() {
+import { PaymentFindI } from "./types";
+import { FindPaymentApi } from "@/services/payments/find-payment";
+import { useRouter } from "next/navigation";
+import { calculateTimeDifference, formatBrazilianDate } from "@/masks/date";
+import { QrCode } from "@/components/qrcode";
+import copy from "clipboard-copy";
+
+function PaymentPix({
+  method,
+  order_id,
+  payment_id,
+}: {
+  method: "pix" | "credit" | "debit" | "bank";
+  order_id: string;
+  payment_id: string;
+}) {
+  const [data, setData] = useState<PaymentFindI | null>(null);
+  const [created, setCreated] = useState<string | null>(null);
+  const [expiration, setExpiration] = useState<string>("--:--:--"); // Inicialmente, definimos o tempo restante como "--:--:--"
+  const router = useRouter();
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    async function getData() {
+      const {
+        data: res,
+        status,
+        error,
+      } = await FindPaymentApi({ method, order_id, payment_id });
+      if (status === 200 && !error && res?.response) {
+        const formatedDate = formatBrazilianDate(
+          res?.response?.payment_pix[0]?.date_created!
+        );
+        setCreated(formatedDate);
+        return setData(res?.response);
+      }
+      return router.back();
+    }
+
+    if (!data) {
+      getData();
+    }
+
+    return () => clearInterval(intervalId);
+  }, [method, order_id, payment_id]);
+
+  useEffect(() => {
+    if (data?.payment_pix[0]?.date_of_expiration) {
+      const intervalId = setInterval(() => {
+        const formatExpiration = calculateTimeDifference(
+          data?.payment_pix[0]?.date_of_expiration!
+        );
+        setExpiration(formatExpiration);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [data]);
+
+  const handlecopy = () =>{
+    copy(data?.payment_pix[0]?.qr_code!);
+  }
   return (
     <main className="max-w-[1100px] w-full flex mt-36 px-4 ">
       <div className="flex gap-5 max-lg:flex-col w-full">
@@ -27,32 +86,34 @@ function PaymentPix() {
             ORDER INFORMATION
           </h2>
           <div className="flex w-full gap-3 items-center mt-5 font-semibold">
-            <p className="flex items-center gap-2">Order accepted, awaiting payment <span className="text-custom-pink mt-0.5">
-              {" "}
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
+            <p className="flex items-center gap-2">
+              Order accepted, awaiting payment{" "}
+              <span className="text-custom-pink mt-0.5">
+                {" "}
+                <svg
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
-                  d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"
-                />
-                <path
-                  fill="#fff"
-                  d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"
-                />
-              </svg>
-            </span></p>
-            
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill="currentColor"
+                    d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"
+                  />
+                  <path
+                    fill="#fff"
+                    d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"
+                  />
+                </svg>
+              </span>
+            </p>
           </div>
           <div className="mt-5 text-custom-textColor/70 text-sm">
             <p>
               Your code expires in{" "}
               <span className="text-custom-pink font-semibold mx-1">
-                00:20:46
+                {expiration}
               </span>
               , make payment within the deadline.
             </p>
@@ -60,9 +121,13 @@ function PaymentPix() {
           <div className="mt-3 text-custom-textColor/70 text-sm">
             <p>
               Page diretamente em uma pagina do{" "}
-              <span className="text-custom-pink font-semibold text-sm">
+              <Link
+                href={`${data?.payment_pix[0]?.ticket_url}`}
+                target="blank"
+                className="text-custom-pink font-semibold text-sm underline"
+              >
                 MERCADO PAGO.
-              </span>
+              </Link>
             </p>
           </div>
           <Divider className="my-5" />
@@ -79,35 +144,39 @@ function PaymentPix() {
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Order number:</span> 983923013302
+              <span className="font-semibold">Payment number:</span>{" "}
+              {data?.payment_pix[0].payment_id}
             </p>
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Order created:</span> 2024-03-07
-              08:52
+              <span className="font-semibold">Order created:</span> {created}
             </p>
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Price:</span> $60,89
+              <span className="font-semibold">Price:</span>{" "}
+              {data?.payment_pix[0]?.currency +
+                " " +
+                data?.payment_pix[0]?.transaction_amount.toFixed(2)}
             </p>
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Status:</span> pending
+              <span className="font-semibold">Status:</span>{" "}
+              {data?.payment_pix[0]?.status}
             </p>
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Street:</span> Rua Vereda Alfa
+              <span className="font-semibold">Street:</span> {data?.street}
             </p>
             <p className="mt-3 text-sm">
-              <span className="font-semibold">Number:</span> 35
+              <span className="font-semibold">Number:</span> {data?.number}
             </p>
             <p className="mt-3 text-sm">
-              <span className="font-semibold">CEP:</span> 08450-384 | Sao Paulo,
-              SP
+              <span className="font-semibold">CEP:</span> {data?.cep} |{" "}
+              {data?.city},{data?.state}
             </p>
           </div>
         </div>
@@ -171,7 +240,7 @@ function PaymentPix() {
           </div>
           <div className="flex gap-5 max-sm:flex-col">
             <div className="bg-custom-grayTwo rounded-md shadow-snipped p-5 text-custom-textColor flex items-center justify-center max-w-2/5 w-full gap-2">
-              <Image alt="qrcode" src={qrcode} width={170} />
+              <QrCode url={data?.payment_pix[0].qr_code!}/>
               <h3 className="flex items-center writing2 uppercase">
                 SCAM{" "}
                 <span className="text-custom-pink">
@@ -182,14 +251,13 @@ function PaymentPix() {
             <div className="bg-custom-grayTwo rounded-md shadow-snipped p-5 text-custom-textColor flex gap-5 flex-col items-start w-3/5 max-sm:w-full">
               <div className="flex w-full justify-between">
                 <h3 className="text-xl">PIX COPY AND PASTE</h3>
-                <button className="text-xl text-custom-pink">
+                <button className="text-xl text-custom-pink" onClick={() => handlecopy()}>
                   <MdContentCopy />
                 </button>
               </div>
               <div className="flex h-full w-full">
                 <p className="max-w-full text-sm text-custom-textColor/70">
-                  00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b6152040000530398654041.005802BR5910ES1TBSky246012S?ympg
-                  Mkylo62230519mpqrinter13173548886304086E
+                  {data?.payment_pix[0]?.qr_code}
                 </p>
               </div>
             </div>

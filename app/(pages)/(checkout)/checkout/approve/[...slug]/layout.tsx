@@ -1,9 +1,9 @@
-import React from "react";
+  import React from "react";
 
-export default async function ApproveLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>
-}
+  export default async function ApproveLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return <>{children}</>
+  }

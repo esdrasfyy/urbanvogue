@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ButtonPassUi } from "@/components/ui/buttons/button-password";
 import { ImSpinner9 } from "react-icons/im";
@@ -9,6 +9,7 @@ import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { ForgotPassReset } from "@/services/user/forgot-password/reset-password";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 interface NewPasswordProps {
   id: number;
@@ -36,8 +37,9 @@ function ResetPassword({
 }: {
   handleCount: (value: number) => void;
 }) {
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const [showPass, setShowPass] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const showPassword = () => setShowPass(!showPass);
   const showConfirmPassword = () => setShowConfirmPass(!showConfirmPass);
@@ -99,49 +101,44 @@ function ResetPassword({
   };
   return (
     <>
-        {loading && (
-        <div className="text-custom-pink bg-custom-grayOne/75 left-0 top-0 absolute w-full h-full flex justify-center items-center">
-          <ImSpinner9 className="animate-spin text-8xl" />
-        </div>
-      )}
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col pb-4 w-full max-w-96 mx-auto"
-    >
-      <div
-        className={` ${errors?.passwordConfirm?.message ? "pb-6" : "pb-10"}`}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col pb-4 w-full max-w-96 mx-auto"
       >
-        <ButtonPassUi
-          label="Password"
-          classname={`w-full text-textColor text-2xl ${
-            errors?.password?.message ? "mb-0" : "mb-4"
-          }`}
-          name="password"
-          show={showPass}
-          handleClick={showPassword}
-          register={register}
-          error={errors?.password?.message}
-          disabled={loading ? true : false}
-        />{" "}
-        <ButtonPassUi
-          label="Confirm"
-          classname="w-full text-textColor text-2xl"
-          name="passwordConfirm"
-          show={showConfirmPass}
-          handleClick={showConfirmPassword}
-          register={register}
-          error={errors?.passwordConfirm?.message}
-          disabled={loading ? true : false}
+        <div
+          className={` ${errors?.passwordConfirm?.message ? "pb-6" : "pb-10"}`}
+        >
+          <ButtonPassUi
+            label="Password"
+            classname={`w-full text-textColor text-2xl ${
+              errors?.password?.message ? "mb-0" : "mb-4"
+            }`}
+            name="password"
+            show={showPass}
+            handleClick={showPassword}
+            register={register}
+            error={errors?.password?.message}
+            disabled={loading ? true : false}
+          />{" "}
+          <ButtonPassUi
+            label="Confirm"
+            classname="w-full text-textColor text-2xl"
+            name="passwordConfirm"
+            show={showConfirmPass}
+            handleClick={showConfirmPassword}
+            register={register}
+            error={errors?.passwordConfirm?.message}
+            disabled={loading ? true : false}
+          />
+        </div>
+        <ButtonIconUi
+          type="submit"
+          content="Reset"
+          icon="FaArrowRight"
+          classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear`}
         />
-      </div>
-      <ButtonIconUi
-        type="submit"
-        content="Reset"
-        icon="FaArrowRight"
-        classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear`}
-      />
-    </form>
-        </>
+      </form>
+    </>
   );
 }
 

@@ -10,14 +10,6 @@ import Link from "next/link";
 
 
 function Register() {
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const handleLoading = (load: boolean) => {
-    setLoading(load);
-  };
-
-
-
   return (
     <section className="w-full bg-custom-grayOne flex justify-center items-center pt-32">
       <div className=" max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex  shadow-snipped rounded-md">
@@ -35,13 +27,7 @@ function Register() {
           </figure>
         </aside>
         <div className="  w-[100%] sm:w-[70%] relative">
-          {loading ? (
-            <div className="absolute w-full h-full bg-custom-grayOne/90 z-40 flex justify-center text-custom-pink items-center">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            ""
-          )}
+        
           <nav className="flex w-full justify-between px-6 text-custom-textColor pb-4 pt-8">
             <Link href="/login">
               <HiMiniArrowUturnLeft className="text-2xl hover-snipped max-sm:text-xl" />
@@ -50,7 +36,7 @@ function Register() {
           <h2 className="w-full text-center text-custom-pink text-3xl max-sm:text-2xl mb-2">
             Register
           </h2>
-          <FormRegister handleLoading={handleLoading} loading={loading} />
+          <FormRegister/>
         </div>
       </div>
     </section>

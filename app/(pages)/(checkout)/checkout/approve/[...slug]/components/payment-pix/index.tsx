@@ -1,6 +1,6 @@
 "use client";
 import { Divider } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HiClipboardList } from "react-icons/hi";
 import {
   TbCircleNumber1,
@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { calculateTimeDifference, formatBrazilianDate } from "@/masks/date";
 import { QrCode } from "@/components/qrcode";
 import copy from "clipboard-copy";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 function PaymentPix({
   method,
@@ -28,6 +29,7 @@ function PaymentPix({
   order_id: string;
   payment_id: string;
 }) {
+  const contextLoading = useContext(ContextLoading)!;
   const [data, setData] = useState<PaymentFindI | null>(null);
   const [created, setCreated] = useState<string | null>(null);
   const [expiration, setExpiration] = useState<string>("--:--:--"); // Inicialmente, definimos o tempo restante como "--:--:--"
@@ -35,21 +37,27 @@ function PaymentPix({
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-
+    const { setLoading, loading } = contextLoading;
     async function getData() {
-      const {
-        data: res,
-        status,
-        error,
-      } = await FindPaymentApi({ method, order_id, payment_id });
-      if (status === 200 && !error && res?.response) {
-        const formatedDate = formatBrazilianDate(
-          res?.response?.payment_pix[0]?.date_created!
-        );
-        setCreated(formatedDate);
-        return setData(res?.response);
+      try {
+        setLoading(true);
+        const {
+          data: res,
+          status,
+          error,
+        } = await FindPaymentApi({ method, order_id, payment_id });
+        if (status === 200 && !error && res?.response) {
+          const formatedDate = formatBrazilianDate(
+            res?.response?.payment_pix[0]?.date_created!
+          );
+          setCreated(formatedDate);
+          return setData(res?.response);
+        }
+        return router.back();
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
-      return router.back();
     }
 
     if (!data) {
@@ -72,9 +80,9 @@ function PaymentPix({
     }
   }, [data]);
 
-  const handlecopy = () =>{
+  const handlecopy = () => {
     copy(data?.payment_pix[0]?.qr_code!);
-  }
+  };
   return (
     <main className="max-w-[1100px] w-full flex mt-36 px-4 ">
       <div className="flex gap-5 max-lg:flex-col w-full">
@@ -240,7 +248,7 @@ function PaymentPix({
           </div>
           <div className="flex gap-5 max-sm:flex-col">
             <div className="bg-custom-grayTwo rounded-md shadow-snipped p-5 text-custom-textColor flex items-center justify-center max-w-2/5 w-full gap-2">
-              <QrCode url={data?.payment_pix[0].qr_code!}/>
+              <QrCode url={data?.payment_pix[0].qr_code!} />
               <h3 className="flex items-center writing2 uppercase">
                 SCAM{" "}
                 <span className="text-custom-pink">
@@ -251,7 +259,10 @@ function PaymentPix({
             <div className="bg-custom-grayTwo rounded-md shadow-snipped p-5 text-custom-textColor flex gap-5 flex-col items-start w-3/5 max-sm:w-full">
               <div className="flex w-full justify-between">
                 <h3 className="text-xl">PIX COPY AND PASTE</h3>
-                <button className="text-xl text-custom-pink" onClick={() => handlecopy()}>
+                <button
+                  className="text-xl text-custom-pink"
+                  onClick={() => handlecopy()}
+                >
                   <MdContentCopy />
                 </button>
               </div>

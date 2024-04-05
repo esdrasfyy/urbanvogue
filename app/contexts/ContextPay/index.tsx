@@ -23,7 +23,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [coupon, setCoupon] = useState<string | null>(null);
   const [total, setTotal] = useState<number>(0);
   const [discount, setDiscount] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const context = useContext(ContextCart);
   const contextUser = useContext(ContextUser);
@@ -82,8 +81,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setTotal,
     discount,
     setDiscount,
-    loading,
-    setLoading,
   };
 
   return (

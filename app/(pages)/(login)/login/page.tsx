@@ -1,32 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import { useDisclosure, Modal } from "@chakra-ui/react";
 import { HiMiniArrowUturnLeft } from "react-icons/hi2";
 import { FaFacebookF } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { FormLogin } from "@/(pages)/(login)/login/components/form/index";
-import { LoadingSpinner } from "@/components/ui/loading/index";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
 import logo from "@/assets/urban-vogue/logo-big.png";
 import { OAuthGoogle } from "./components/oauth/google";
 import { OAuthGithub } from "./components/oauth/github";
 
 function Login() {
-  const [loading, setLoading] = useState(false);
-  const handleLoading = (load: boolean) => {
-    setLoading(load);
-  };
-
   return (
     <section className="w-full bg-custom-grayOne flex justify-center items-center pt-32">
       <div className="max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex shadow-snipped rounded-md">
         <div className="w-[100%] relative sm:w-[70%]">
-          {loading && (
-            <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
-              <LoadingSpinner />
-            </div>
-          )}
           <nav className="flex w-full justify-between px-6 text-custom-textColor py-4 pt-8">
             <Link href="/">
               <HiMiniArrowUturnLeft className="text-2xl hover-snipped max-sm:text-xl" />
@@ -41,7 +28,7 @@ function Login() {
           <h2 className="w-full text-center mb-8 text-custom-pink text-3xl max-sm:text-2xl">
             Login
           </h2>
-          <FormLogin handleLoading={handleLoading} loading={loading} />
+          <FormLogin />
           <div className="flex items-center gap-4 text-3xl justify-center mt-5">
             <OAuthGoogle />
             <button

@@ -5,26 +5,35 @@ import { RightSide } from "./components/right-side";
 import Comments from "./components/comments/index";
 import { LeftSide } from "./components/left-side";
 import Loading from "./loading";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { ProductPageI } from "@/interfaces/product/card";
 import { ProductByIdApi } from "@/services/products-by-ids";
 import { RatingView } from "@/components/ui/rating/rating-view";
 import { SlideProducts } from "@/components/carousel";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 function Page({ params }: any) {
   const [dataCard, setDataCard] = useState<ProductPageI | null>(null);
-
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading } = contextLoading;
   useEffect(() => {
     const fetchData = async () => {
-      const id = params.slug[0];
+      try {
+        setLoading(true);
+        const id = params.slug[0];
 
-      await ProductByIdApi({ id }).then((response) => {
-        if (response.status === 200) {
-          if (response?.data?.product) {
-            setDataCard(response.data.product);
+        await ProductByIdApi({ id }).then((response) => {
+          if (response.status === 200) {
+            if (response?.data?.product) {
+              setDataCard(response.data.product);
+            }
           }
-        }
-      });
+        });
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

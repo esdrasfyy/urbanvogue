@@ -11,12 +11,14 @@ import { useToast } from "@chakra-ui/react";
 import { ForgotPassSendEmail } from "@/services/user/forgot-password/send-email";
 import { ContextUser } from "@/contexts/ContextUser";
 import { Inputs, SendEmailProps, schema } from "./types";
+import { ContextLoading } from "@/contexts/ContextLoading";
 axios.defaults.withCredentials = true;
 
 function SendEmail({ handleCount }: SendEmailProps) {
   const context = useContext(ContextUser);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const toast = useToast();
-  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -65,11 +67,6 @@ function SendEmail({ handleCount }: SendEmailProps) {
 
   return (
     <>
-      {loading && (
-        <div className="text-custom-pink bg-custom-grayOne/75 left-0 top-0 absolute w-full h-full flex justify-center items-center">
-          <ImSpinner9 className="animate-spin text-8xl" />
-        </div>
-      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-96 mx-auto pb-4"

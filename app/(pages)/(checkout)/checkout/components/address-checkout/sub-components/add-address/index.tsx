@@ -9,19 +9,23 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {Inputs, schema} from "@/(pages)/(checkout)/checkout/components/address-checkout/sub-components/add-address/types/index"
+import {
+  Inputs,
+  schema,
+} from "@/(pages)/(checkout)/checkout/components/address-checkout/sub-components/add-address/types/index";
 import { AddressCreateApi } from "@/services/user/address/create/index";
 import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
 import { types } from "@/constants/type-of-address/index";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {LoadingSpinner} from "@/components/ui/loading";
-import {InputUi} from "@/components/ui/inputs/default";
+import { LoadingSpinner } from "@/components/ui/loading";
+import { InputUi } from "@/components/ui/inputs/default";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContextUser } from "@/contexts/ContextUser";
 import React, { useContext, useState } from "react";
 import { ContextPay } from "@/contexts/ContextPay";
 import { states } from "@/constants/states/index";
 import { ImSpinner9 } from "react-icons/im";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 function AddAddress() {
   const [arrow1, setArrow1] = useState<boolean>(false);
@@ -29,9 +33,10 @@ function AddAddress() {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [selectType, setSelectType] = useState<string>("House");
   const [selectState, setSelectState] = useState<string>("SP");
-  const [loading, setLoading] = useState<boolean>(false);
   const contextPay = useContext(ContextPay);
   const context = useContext(ContextUser);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   
   const {
     register,
@@ -40,9 +45,9 @@ function AddAddress() {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const toast = useToast();
-  
+
   const handleFormSubmit: SubmitHandler<Inputs> = async (data) => {
-    if(!contextPay){
+    if (!contextPay) {
       return;
     }
     const { handleAddressDefalt, handleDataAddress } = contextPay;
@@ -92,7 +97,8 @@ function AddAddress() {
       console.error("Erro ao adicionar endereço:", error);
       toast({
         title: "Erro ao adicionar endereço!",
-        description: "Ocorreu um erro ao tentar adicionar o endereço. Por favor, tente novamente mais tarde.",
+        description:
+          "Ocorreu um erro ao tentar adicionar o endereço. Por favor, tente novamente mais tarde.",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -108,10 +114,18 @@ function AddAddress() {
 
   return (
     <>
-      <button className="hover:text-custom-pink duration-300 ease-linear" onClick={onOpen}>
+      <button
+        className="hover:text-custom-pink duration-300 ease-linear"
+        onClick={onOpen}
+      >
         NEW ADDRESS
       </button>
-      <Modal isCentered onClose={onClose} isOpen={isOpen} motionPreset="slideInBottom">
+      <Modal
+        isCentered
+        onClose={onClose}
+        isOpen={isOpen}
+        motionPreset="slideInBottom"
+      >
         <ModalOverlay />
         <ModalContent backgroundColor={"#1d2123"} color={"#d9d9d9"}>
           {loading && (
@@ -125,7 +139,10 @@ function AddAddress() {
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div className="flex gap-3">
                 <div className="w-1/2">
-                  <label className={`mb-2 text-sm text-custom-textColor`} htmlFor={"type"}>
+                  <label
+                    className={`mb-2 text-sm text-custom-textColor`}
+                    htmlFor={"type"}
+                  >
                     Type of address*
                   </label>
                   <Select
@@ -191,7 +208,10 @@ function AddAddress() {
               </div>
               <div className="flex gap-3 -mt-3">
                 <div className="w-1/2 mt-4">
-                  <label className={`mb-2 text-sm text-custom-textColor`} htmlFor={"State"}>
+                  <label
+                    className={`mb-2 text-sm text-custom-textColor`}
+                    htmlFor={"State"}
+                  >
                     State*
                   </label>
                   <Select
@@ -250,16 +270,16 @@ function AddAddress() {
                 >
                   Cancel
                 </button>
-                  {loading ? (
-                    <ImSpinner9 className="animate-spin text-3xl" />
-                  ) : (
-                    <button
-                      type="submit"
-                      className="py-2 px-6 bg-custom-pink rounded-md hover:bg-custom-pink duration-300 ease-linear"
-                    >
-                      Add
-                    </button>
-                  )}
+                {loading ? (
+                  <ImSpinner9 className="animate-spin text-3xl" />
+                ) : (
+                  <button
+                    type="submit"
+                    className="py-2 px-6 bg-custom-pink rounded-md hover:bg-custom-pink duration-300 ease-linear"
+                  >
+                    Add
+                  </button>
+                )}
               </div>
             </form>
           </ModalBody>

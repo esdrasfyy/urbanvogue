@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 import favicon from "@/favicon.ico";
 import { Cart } from "./components/cart/index";
 import { Footer } from "./components/footer";
+import { LoadingGlobal } from "./components/loading";
 
 export default async function RootLayout({
   children,
@@ -28,6 +29,7 @@ export default async function RootLayout({
         className={`${inter.className} flex flex-col min-w-full items-center justify-end min-h-screen bg-custom-grayOne`}
       >
         <Providers>
+          <LoadingGlobal/>
           <Cart />
           <Header />
           {children}

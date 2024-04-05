@@ -18,11 +18,11 @@ import { ImSpinner9 } from "react-icons/im";
 import { formatCpf } from "@/masks/cpf";
 import Image from "next/image";
 import { LoadingSpinner } from "@/components/ui/loading";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 function FormEdit() {
   const [imgUrl, setImgUrl] = useState<string>(profileDefault);
   const [selectedImage, setSelectedImage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [cpf, setCpf] = useState<string>("");
   const [gender, setGender] = useState<string>("Other");
   const router = useRouter();
@@ -35,9 +35,10 @@ function FormEdit() {
   } = useForm<InputsEdit>({
     resolver: yupResolver(schema),
   });
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
 
   const onSubmit: SubmitHandler<InputsEdit> = async (data) => {
-    setLoading(true);
     
     const file = data.file;
     if (!context) {
@@ -45,6 +46,7 @@ function FormEdit() {
     }
     const { user, setUser } = context;
     try {
+      setLoading(true);
       if (!file || file.length === 0) {
         const res = await UpdateUserApi({
           userId: Number(user?.user_id),
@@ -192,11 +194,6 @@ function FormEdit() {
       className="z-10 flex items-center justify-center w-full flex-col px-20 max-sm:px-4 relative"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {loading ? (
-        <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
-          <LoadingSpinner />
-        </div>
-      ): ""}
       <div className="relative mt-8">
         <Image
           alt="profile logo"

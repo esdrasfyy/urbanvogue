@@ -1,6 +1,7 @@
 "use client";
 import { CardH } from "@/components/card/horizontal";
 import { ContextCart } from "@/contexts/ContextCart";
+import { ContextLoading } from "@/contexts/ContextLoading";
 import { ContextPay } from "@/contexts/ContextPay";
 import React, { useContext } from "react";
 import { HiClipboardList } from "react-icons/hi";
@@ -9,11 +10,12 @@ import { ImSpinner9 } from "react-icons/im";
 function ProductsGridCheckout() {
   const contextCart = useContext(ContextCart);
   const contextPay = useContext(ContextPay);
+  const contextLoading = useContext(ContextLoading)!;
   if (!contextCart || !contextPay) {
     return;
   }
+  const { loading } = contextLoading;
   const { cartResume } = contextCart;
-  const {loading} = contextPay
   return (
     <>
       {loading && (

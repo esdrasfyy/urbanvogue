@@ -1,9 +1,5 @@
 "use client";
-import {
-  Inputs,
-  FormLoginProps,
-  schema,
-} from "@/(pages)/(login)/login/components/form/types";
+import { Inputs, schema } from "@/(pages)/(login)/login/components/form/types";
 import { ButtonPassUi } from "@/components/ui/buttons/button-password/index";
 import { ButtonIconUi } from "@/components/ui/buttons/button-icon/index";
 import { InputUi } from "@/components/ui/inputs/default/index";
@@ -13,17 +9,19 @@ import { ContextUser } from "@/contexts/ContextUser";
 import { LoginApi } from "@/services/login";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { ForgotPassword } from "../forgot-password";
 import { Recaptcha } from "@/components/recaptcha";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
-function FormLogin({ loading, handleLoading }: FormLoginProps) {
+function FormLogin() {
   const [show, setShow] = React.useState(false);
   const router = useRouter();
   const toast = useToast();
-  
-  const context = useContext(ContextUser);
 
+  const context = useContext(ContextUser);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const {
     register,
     handleSubmit,
@@ -33,19 +31,19 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
   if (!context) {
     return;
   }
-  const { setUser, user } = context;
+  const { setUser } = context;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const credential = data.credential;
     const password = data.password;
     const token = window.grecaptcha.execute();
-    const secretKey = 'YOUR_SECRET_KEY';
+    const secretKey = "YOUR_SECRET_KEY";
     const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
-  
+
     try {
-      handleLoading(!loading);
-      const {data, status, error} = await LoginApi({ credential, password });
-   
+      setLoading(true);
+      const { data, status, error } = await LoginApi({ credential, password });
+
       if (status === 200) {
         setUser(data!.user);
         toast({
@@ -59,7 +57,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         });
         setInterval(() => {
           if (router) {
-            router.push("/account")
+            router.push("/account");
           }
         }, 2000);
       }
@@ -73,7 +71,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
           variant: "left-accent",
           position: "top-right",
         });
-        handleLoading(false);
+        setLoading(false);
       }
       if (status === 401) {
         toast({
@@ -85,7 +83,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
           variant: "left-accent",
           position: "top-right",
         });
-        handleLoading(false);
+        setLoading(false);
       }
     } catch (error) {
       throw new Error("Erro ao buscar usuario");
@@ -121,7 +119,7 @@ function FormLogin({ loading, handleLoading }: FormLoginProps) {
         disabled={loading ? true : false}
       />
       <ForgotPassword />
-      <Recaptcha/>
+      <Recaptcha />
       <ButtonIconUi
         type="submit"
         content="Login"

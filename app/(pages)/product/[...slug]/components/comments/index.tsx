@@ -30,6 +30,7 @@ function Comments({
 
   useEffect(() => {
     const fetchData = async () => {
+      
       if (id !== 0) {
         const res = await CommentsReadApi({ id });
         console.log(res);

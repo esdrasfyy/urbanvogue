@@ -28,16 +28,10 @@ function ResumeCheckout() {
     return;
   }
   const { cartResume } = contextCart;
-  const { discount, total, loading } = contextPay;
+  const { discount, total } = contextPay;
 
   return (
     <div className="relative">
-      {loading && (
-        <div className="text-custom-pink flex justify-center items-center w-full h-full top-0 left-0 absolute bg-custom-grayTwo/60 z-20">
-          <ImSpinner9 className="animate-spin text-8xl" />
-        </div>
-      )}
-
       <div className="text-xl flex gap-3 items-center">
         <span className="text-2xl text-custom-pink">
           <TbShoppingCartDollar />

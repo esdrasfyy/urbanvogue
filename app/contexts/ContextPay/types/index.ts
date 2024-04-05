@@ -36,8 +36,6 @@ export interface ContextPayProps {
   setCoupon: React.Dispatch<React.SetStateAction<string | null>>;
   method: string;
   setMethod: React.Dispatch<React.SetStateAction<string>>;
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   dataAddress:  AddressI[];
   setDataAddress: React.Dispatch<React.SetStateAction< AddressI[]>>;
   handleAddressDefalt: Function;

@@ -14,14 +14,16 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@chakra-ui/react";
 import { LoginApi } from "@/services/login";
 import React, { useContext } from "react";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
-function FormRegister({ handleLoading, loading }: FormRegisterProps) {
+function FormRegister() {
   const router = useRouter();
   const toast = useToast();
   const [show, setShow] = React.useState(false);
 
   const context = useContext(ContextUser);
-
+  const contextLoading = useContext(ContextLoading)!;
+      const { setLoading, loading } = contextLoading;
   const {
     register,
     handleSubmit,
@@ -38,7 +40,7 @@ function FormRegister({ handleLoading, loading }: FormRegisterProps) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { password, fullname, username, email } = data;
     try {
-      handleLoading(true);
+      setLoading(true);
       const { data, error, status } = await RegisterApi({
         password,
         fullname,
@@ -80,7 +82,7 @@ function FormRegister({ handleLoading, loading }: FormRegisterProps) {
           variant: "left-accent",
           position: "top-right",
         });
-        handleLoading(false);
+        setLoading(false);
       }
       if (status !== 201 && status !== 401) {
         toast({
@@ -92,7 +94,7 @@ function FormRegister({ handleLoading, loading }: FormRegisterProps) {
           variant: "left-accent",
           position: "top-right",
         });
-        handleLoading(false);
+        setLoading(false);
       }
     } catch {
       throw new Error("erro");

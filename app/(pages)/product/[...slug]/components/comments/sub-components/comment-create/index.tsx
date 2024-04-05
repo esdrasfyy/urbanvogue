@@ -21,6 +21,7 @@ import { storage } from "../../../../../../../services/firebase/index";
 import { CreateCommentApi } from "../../../../../../../services/comments/create/index";
 import { LoadingSpinner } from "../../../../../../../components/ui/loading/index";
 import { ContextUser } from "../../../../../../../contexts/ContextUser";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 type Inputs = {
   recommend: boolean;
@@ -44,8 +45,8 @@ interface CreateCommentProps {
 }
 function CreateComment({ img, title, id }: CreateCommentProps) {
   const context = useContext(ContextUser);
-
-  const [loading, setLoading] = useState(false);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const [recommendValue, setRecommendValue] = useState(true);
   const [rating, setRating] = useState(1);
   const toast = useToast();
@@ -90,7 +91,6 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
         },
         urls: [{ url: url }],
       });
-      console.log(result);
 
       if (result && !result.error && result.status === 201) {
         toast({
@@ -270,11 +270,6 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
               </div>
             </form>
           </div>
-          {loading && (
-            <div className="absolute w-full h-full bg-custom-grayTwo/80 text-custom-pink  rounded-md flex items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          )}
         </ModalContent>
       </Modal>
     </div>

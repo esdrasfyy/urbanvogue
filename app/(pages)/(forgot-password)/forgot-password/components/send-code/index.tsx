@@ -1,4 +1,5 @@
 import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
+import { ContextLoading } from "@/contexts/ContextLoading";
 import { ContextUser } from "@/contexts/ContextUser";
 import { ForgotPassSendCode } from "@/services/user/forgot-password/send-code";
 import {
@@ -8,15 +9,15 @@ import {
   PinInputField,
   useToast,
 } from "@chakra-ui/react";
-import axios, { AxiosResponse } from "axios";
 import React, { FormEvent, useContext, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 
 function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
   const toast = useToast();
   const [valueInput, setValueInput] = useState("");
-  const [loading, setLoading] = useState(false);
   const context = useContext(ContextUser);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading, loading } = contextLoading;
   const handleChange = (value: string) => {
     setValueInput(value);
   };
@@ -47,7 +48,9 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
       handleCount(3);
       return toast({
         title: "Validated code!",
-        description: res?.data?.msg || "Your code has been validated, go to the next step.",
+        description:
+          res?.data?.msg ||
+          "Your code has been validated, go to the next step.",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -62,11 +65,6 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
   };
   return (
     <>
-      {loading && (
-        <div className="text-custom-pink bg-custom-grayOne/75 left-0 top-0 absolute w-full h-full flex justify-center items-center">
-          <ImSpinner9 className="animate-spin text-8xl" />
-        </div>
-      )}
       <form
         onSubmit={onSubmit}
         className="flex flex-col justify-between w-full max-w-96 mx-auto pb-4"

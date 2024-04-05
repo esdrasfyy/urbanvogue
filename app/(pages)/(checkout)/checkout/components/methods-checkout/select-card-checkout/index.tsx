@@ -6,8 +6,6 @@ import elo from "@/assets/networks/elo.webp";
 import { ContextPay } from "@/contexts/ContextPay";
 import { SelectCardProps, networkImageMap } from "./types";
 
-
-
 function SelectCard({ data, type, getData }: SelectCardProps) {
   const contextPay = useContext(ContextPay);
 

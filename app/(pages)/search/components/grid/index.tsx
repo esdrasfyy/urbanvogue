@@ -1,10 +1,11 @@
 import { CardV } from "../../../../components/card/vertical";
 import { ProductI } from "../../../../interfaces/product/card/index";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FiltersI } from "../../types";
 import { useSearchParams } from "next/navigation";
 import { ProductSearchApi } from "../../../../services/product-search";
 import { Intersection } from "../intersection";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 interface GridSearchProps {
   handleFilters: Function;
@@ -12,7 +13,8 @@ interface GridSearchProps {
 
 function GridSearch({ handleFilters }: GridSearchProps) {
   const [data, setData] = useState<ProductI[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const contextLoading = useContext(ContextLoading)!;
+  const { setLoading } = contextLoading;
   const [errorFetch, setErrorFetch] = useState<string | null>(null);
   const componentRef = useRef(null);
   const offsetRef = useRef<number>(1);
@@ -21,8 +23,8 @@ function GridSearch({ handleFilters }: GridSearchProps) {
 
   const searchParams = useSearchParams();
   let search = searchParams.get("query");
-  const orderBy = searchParams.get("orderBy")
-  
+  const orderBy = searchParams.get("orderBy");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,12 +56,11 @@ function GridSearch({ handleFilters }: GridSearchProps) {
     fetchData();
   }, [searchParams, orderBy]);
 
-  const handleData = (newData:ProductI[]) =>{
+  const handleData = (newData: ProductI[]) => {
     setData((prevData) => {
       return [...(prevData || []), ...(newData || [])];
     });
-
-  }
+  };
 
   return (
     <section className="grid-search">

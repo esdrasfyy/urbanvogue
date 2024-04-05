@@ -1,4 +1,5 @@
 import { ContextCart } from "@/contexts/ContextCart";
+import { ContextLoading } from "@/contexts/ContextLoading";
 import { ContextPay } from "@/contexts/ContextPay";
 import { ContextUser } from "@/contexts/ContextUser";
 import { PaymentPixApi } from "@/services/payments/pix";
@@ -7,16 +8,16 @@ import React, { useContext } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 function RedirectApprove() {
+  const toast = useToast();
   const contextPay = useContext(ContextPay);
   const contextCart = useContext(ContextCart);
   const contextUser = useContext(ContextUser);
-
-  const toast = useToast();
+  const contextLoading = useContext(ContextLoading)!;
   if (!contextPay || !contextCart || !contextUser) return;
-  const { address, method, cardId, total, coupon, loading, setLoading } =
-    contextPay;
+  
+  const { address, method, cardId, total, coupon } = contextPay;
+  const { setLoading } = contextLoading;
   const { cartResume } = contextCart;
-  const { user } = contextUser;
   const verifyData = async () => {
     const errorMessages = [];
 

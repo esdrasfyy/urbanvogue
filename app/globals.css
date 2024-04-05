@@ -208,6 +208,11 @@ body {
   font-size: 1.7em;
 }
 
+.writing2 {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 1.5em;
+}
 @media (max-width: 550px) {
   .writing {
     font-size: 1.3em !important;

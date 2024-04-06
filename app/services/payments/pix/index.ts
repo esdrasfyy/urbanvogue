@@ -11,17 +11,19 @@ async function PaymentPixApi({
   user_id,
   coupon,
   products,
+  card_id
 }: PaymentPixApiProps): Promise<PaymentPixResponse> {
   const api = process.env.API;
   try {
     const response: AxiosResponse<PaymentPixApiReq | null> = await axios.post(
-      `${api}payment/pix`,
+      `${api}payment/${payment_method}`,
       {
         user_id,
         coupon,
         products,
-        payment_method,
         address_id,
+        card_id,
+        payment_method
       }
     );
 

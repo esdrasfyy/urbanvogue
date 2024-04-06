@@ -26,7 +26,6 @@ function MethodsCheckout() {
   const [dataCards, setDataCards] = useState<Card[]>([]);
   const contextPay = useContext(ContextPay);
   const contextLoading = useContext(ContextLoading)!;
-  
   const getData = async () => {
     if (!context) {
       return;
@@ -41,9 +40,10 @@ function MethodsCheckout() {
     }
     return;
   };
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [context?.user]);
 
   if (!contextPay) {
     return;
@@ -92,8 +92,8 @@ function MethodsCheckout() {
             </div>
             {method === "credit_card" && (
               <SelectCard
-                data={dataCards.filter((card) => card.type === "credit")}
-                type="credit"
+                data={dataCards.filter((card) => card.type === "credit_card")}
+                type="credit_card"
                 getData={getData}
               />
             )}
@@ -121,15 +121,15 @@ function MethodsCheckout() {
 
             {method === "debit_card" && (
               <SelectCard
-                data={dataCards.filter((card) => card.type === "debit")}
-                type="debit"
+                data={dataCards.filter((card) => card.type === "debit_card")}
+                type="debit_card"
                 getData={getData}
               />
             )}
           </li>
           <li className="flex items-center w-full">
             <div className="w-full bg-white/5 px-3 py-2 rounded-md shadow-snipped flex">
-              <Radio value="bank_slip" display={"flex"} width={"100%"}>
+              <Radio value="bank_slip" display={"flex"} width={"100%"} isDisabled>
                 <span className="flex text-sm items-center gap-2 w-full">
                   <span className="text-2xl">
                     <ImBarcode />
@@ -141,7 +141,7 @@ function MethodsCheckout() {
           </li>
           <li className="flex items-center w-full">
             <div className="w-full bg-white/5 px-3 py-2 rounded-md shadow-snipped flex">
-              <Radio value="lottery" width={"100%"}>
+              <Radio value="lottery" width={"100%"} isDisabled>
                 <span className="flex text-sm items-center gap-2 w-full">
                   <span className="text-2xl">
                     <BiSolidBank />

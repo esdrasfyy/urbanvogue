@@ -2,6 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import { CardReadApiRes, CardReadApiReq } from "@/services/user/card/read/types/index";
 
 async function CardReadApi(id: number): Promise<CardReadApiRes> {
+  console.log("teste");
+  
   const api = process.env.API;
   try {
     if (!id) {
@@ -10,7 +12,8 @@ async function CardReadApi(id: number): Promise<CardReadApiRes> {
     const response: AxiosResponse<CardReadApiReq | null> = await axios.get(
       `${api}card/${id}`
     );
-
+    console.log(response);
+    
     if (response.status === 200) {
       return {
         data: {

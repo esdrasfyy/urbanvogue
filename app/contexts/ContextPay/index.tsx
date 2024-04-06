@@ -40,7 +40,6 @@ const PayProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (res.data?.address && res.data?.address?.length > 0) {
           setAddress(res.data.address[0]?.address_id);
           setDataAddress(res.data.address);
-          console.log(res.data);
         }
       }
     };

@@ -16,6 +16,7 @@ export interface PaymentPixApiProps {
   user_id: number;
   address_id: number;
   payment_method: string;
+  card_id: number | null;
   coupon: string | null;
   products: ProductCartI[];
 }

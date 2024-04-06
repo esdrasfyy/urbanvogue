@@ -11,7 +11,7 @@ export interface FindPaymentResponse {
 }
 
 export interface FindPaymentApiProps {
-  method: "pix" | "credit" | "debit" | "bank";
+  method: "pix" | "credit_card" | "debit_card" | "bank";
   order_id: string;
   payment_id: string;
 }

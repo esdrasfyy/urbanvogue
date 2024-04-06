@@ -56,7 +56,7 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
       exp_year,
       name_holder,
     } = data;
-    console.log(data);
+    
     const user_id = user?.user_id || 1;
     try {
       setLoading(true);

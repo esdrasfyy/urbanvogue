@@ -19,6 +19,8 @@ function RedirectApprove() {
   const { setLoading } = contextLoading;
   const { cartResume } = contextCart;
   const verifyData = async () => {
+    console.log(method);
+    
     const errorMessages = [];
 
     if (!address) errorMessages.push("Please add a delivery address.");
@@ -45,13 +47,16 @@ function RedirectApprove() {
     }
     try {
       setLoading(true);
+      console.log(method);
       const res = await PaymentPixApi({
         user_id: 2,
         address_id: address || 1,
-        payment_method: "pix",
+        payment_method: method,
         coupon: coupon,
         products: cartResume?.products!,
+        card_id: method === "credit_card" || method === "debit_card" ? +cardId : null
       });
+      
       if (res.status === 201) {
         toast({
           title: "Created Payment",
@@ -63,7 +68,7 @@ function RedirectApprove() {
           position: "top-right",
         });
         setLoading(false);
-        return (window.location.href = `/checkout/approve/pix/${res.data?.order_id}/${res.data?.payment_id}`);
+        return (window.location.href = `/checkout/approve/${method}/${res.data?.order_id}/${res.data?.payment_id}`);
       }
       toast({
         title: "Failed to create order",

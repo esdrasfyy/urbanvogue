@@ -44,7 +44,6 @@ function SelectOther({ onOpen, onClose, isOpen }: SelectOtherProps) {
 
     try {
       const { status, data } = await AddressDeleteApi({ address_id, user_id });
-      console.log(status);
       if (status !== 204) {
         toast({
           title: "Error deleting address!",

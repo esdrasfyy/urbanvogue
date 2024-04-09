@@ -166,7 +166,7 @@ function PaymentPix({
               <span className="font-semibold">Price:</span>{" "}
               {data?.payment_pix[0]?.currency +
                 " " +
-                data?.payment_pix[0]?.transaction_amount.toFixed(2)}
+                data?.payment_pix[0]?.transaction_amount}
             </p>
           </div>
           <div className="mt-3 text-sm">

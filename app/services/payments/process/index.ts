@@ -1,21 +1,21 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  PaymentPixApiProps,
-  PaymentPixApiReq,
-  PaymentPixResponse,
+  PaymentProcessApiProps,
+  PaymentProcessApiReq,
+  PaymentProcessApiResponse,
 } from "./types";
 
-async function PaymentPixApi({
+async function PaymentProcessApi({
   payment_method,
   address_id,
   user_id,
   coupon,
   products,
   card_id
-}: PaymentPixApiProps): Promise<PaymentPixResponse> {
+}: PaymentProcessApiProps): Promise<PaymentProcessApiResponse> {
   const api = process.env.API;
   try {
-    const response: AxiosResponse<PaymentPixApiReq | null> = await axios.post(
+    const response: AxiosResponse<PaymentProcessApiReq | null> = await axios.post(
       `${api}payment/${payment_method}`,
       {
         user_id,
@@ -61,4 +61,4 @@ async function PaymentPixApi({
     };
   }
 }
-export { PaymentPixApi };
+export { PaymentProcessApi };

@@ -1,18 +1,18 @@
 import { ProductCartI } from "@/contexts/ContextCart/types";
 
-export interface PaymentPixApiReq {
+export interface PaymentProcessApiReq {
   msg: string;
   status: number;
   order_id?: number;
   payment_id?: number;
 }
-export interface PaymentPixResponse {
-  data: PaymentPixApiReq | null;
+export interface PaymentProcessApiResponse {
+  data: PaymentProcessApiReq | null;
   error: string | null;
   status: number;
 }
 
-export interface PaymentPixApiProps {
+export interface PaymentProcessApiProps {
   user_id: number;
   address_id: number;
   payment_method: string;

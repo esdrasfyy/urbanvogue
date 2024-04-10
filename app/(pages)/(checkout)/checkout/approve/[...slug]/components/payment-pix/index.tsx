@@ -1,5 +1,5 @@
 "use client";
-import { Divider } from "@chakra-ui/react";
+import { Divider, useToast } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { HiClipboardList } from "react-icons/hi";
 import {
@@ -12,29 +12,27 @@ import {
 import Link from "next/link";
 import { HiMiniCamera } from "react-icons/hi2";
 import { MdContentCopy } from "react-icons/md";
-import { PaymentFindI } from "./types";
-import { FindPaymentApi } from "@/services/payments/find-payment";
+import { FindPaymentPixApi } from "@/services/payments/find-payment/pix";
 import { useRouter } from "next/navigation";
 import { calculateTimeDifference, formatBrazilianDate } from "@/masks/date";
 import { QrCode } from "@/components/qrcode";
 import copy from "clipboard-copy";
 import { ContextLoading } from "@/contexts/ContextLoading";
+import { PaymentFindPixI } from "@/services/payments/find-payment/pix/types";
 
 function PaymentPix({
-  method,
   order_id,
   payment_id,
 }: {
-  method: "pix" | "credit_card" | "debit_card" | "bank";
   order_id: string;
   payment_id: string;
 }) {
   const contextLoading = useContext(ContextLoading)!;
-  const [data, setData] = useState<PaymentFindI | null>(null);
+  const [data, setData] = useState<PaymentFindPixI | null>(null);
   const [created, setCreated] = useState<string | null>(null);
-  const [expiration, setExpiration] = useState<string>("--:--:--"); // Inicialmente, definimos o tempo restante como "--:--:--"
+  const [expiration, setExpiration] = useState<string>("--:--:--");
   const router = useRouter();
-
+  const toast = useToast()
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     const { setLoading, loading } = contextLoading;
@@ -45,11 +43,9 @@ function PaymentPix({
           data: res,
           status,
           error,
-        } = await FindPaymentApi({ method, order_id, payment_id });
+        } = await FindPaymentPixApi({order_id, payment_id });
         if (status === 200 && !error && res?.response) {
-          const formatedDate = formatBrazilianDate(
-            res?.response?.payment_pix[0]?.date_created!
-          );
+          const formatedDate = formatBrazilianDate(res?.response?.payment_pix[0]?.date_created!)
           setCreated(formatedDate);
           return setData(res?.response);
         }
@@ -65,7 +61,7 @@ function PaymentPix({
     }
 
     return () => clearInterval(intervalId);
-  }, [method, order_id, payment_id]);
+  }, [order_id, payment_id]);
 
   useEffect(() => {
     if (data?.payment_pix[0]?.date_of_expiration) {
@@ -82,6 +78,15 @@ function PaymentPix({
 
   const handlecopy = () => {
     copy(data?.payment_pix[0]?.qr_code!);
+    toast({
+      title: "Copied!",
+      description: "Code copy and paste copied.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top-right",
+    });
   };
   return (
     <main className="max-w-[1100px] w-full flex mt-36 px-4 ">
@@ -163,7 +168,7 @@ function PaymentPix({
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Price:</span>{" "}
+              <span className="font-semibold">Price:</span>{" "}BRL
               {data?.payment_pix[0]?.currency +
                 " " +
                 data?.payment_pix[0]?.transaction_amount}

@@ -9,10 +9,7 @@ function Approve({ params }: any) {
 
   let component;
   const isValidMethod =
-    method === "pix" ||
-    method === "bank" ||
-    method === "credit_card" ||
-    method === "debit_card";
+    method === "pix" || method === "bank" || method === "card";
 
   if (!isValidMethod) {
     return <div>Error: Invalid payment method</div>;
@@ -20,18 +17,14 @@ function Approve({ params }: any) {
 
   switch (method) {
     case "pix":
-      return (
-        <PaymentPix method={method} order_id={orderId} payment_id={paymentId} />
-      );
+      return <PaymentPix order_id={orderId} payment_id={paymentId} />;
 
     case "bank":
       return <>Nao disponivel</>;
-    case "credit_card":
-      return <PaymentCard />;
-    case "debit_card":
-      return <PaymentCard />;
+    case "card":
+      return <PaymentCard order_id={orderId} payment_id={paymentId} />;
     default:
-      <PaymentPix method={method} order_id={orderId} payment_id={paymentId} />;
+      <PaymentPix order_id={orderId} payment_id={paymentId} />;
       break;
   }
   return <>Nao disponivel</>;

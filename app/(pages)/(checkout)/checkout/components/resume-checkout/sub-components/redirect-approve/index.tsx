@@ -2,7 +2,7 @@ import { ContextCart } from "@/contexts/ContextCart";
 import { ContextLoading } from "@/contexts/ContextLoading";
 import { ContextPay } from "@/contexts/ContextPay";
 import { ContextUser } from "@/contexts/ContextUser";
-import { PaymentPixApi } from "@/services/payments/pix";
+import { PaymentProcessApi } from "@/services/payments/process/index";
 import { useToast } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { FaArrowRight } from "react-icons/fa";
@@ -19,7 +19,6 @@ function RedirectApprove() {
   const { setLoading } = contextLoading;
   const { cartResume } = contextCart;
   const verifyData = async () => {
-    console.log(method);
     
     const errorMessages = [];
 
@@ -47,8 +46,7 @@ function RedirectApprove() {
     }
     try {
       setLoading(true);
-      console.log(method);
-      const res = await PaymentPixApi({
+      const res = await PaymentProcessApi({
         user_id: 2,
         address_id: address || 1,
         payment_method: method,
@@ -68,7 +66,8 @@ function RedirectApprove() {
           position: "top-right",
         });
         setLoading(false);
-        return (window.location.href = `/checkout/approve/${method}/${res.data?.order_id}/${res.data?.payment_id}`);
+        const realMethod = method === "credit_card" || method === "debit_card" ? method.split("_")[1] : method
+        return (window.location.href = `/checkout/approve/${realMethod}/${res.data?.order_id}/${res.data?.payment_id}`);
       }
       toast({
         title: "Failed to create order",

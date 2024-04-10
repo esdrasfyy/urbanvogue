@@ -1,19 +1,18 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  FindPaymentApiProps,
-  FindPaymentApiReq,
-  FindPaymentResponse,
+  FindPaymentPixApiProps,
+  FindPaymentPixApiReq,
+  FindPaymentPixResponse,
 } from "./types";
 
-async function FindPaymentApi({
-  method,
+async function FindPaymentPixApi({
   order_id,
   payment_id,
-}: FindPaymentApiProps): Promise<FindPaymentResponse> {
+}: FindPaymentPixApiProps): Promise<FindPaymentPixResponse> {
   const api = process.env.API;
   try {
-    const url = `${api}payment/find/${method}/${order_id}/${payment_id}`;
-    const response: AxiosResponse<FindPaymentApiReq | null> = await axios.get(url);
+    const url = `${api}payment/find/pix/${order_id}/${payment_id}`;
+    const response: AxiosResponse<FindPaymentPixApiReq | null> = await axios.get(url);
     
     if (response.status === 200 && response.data && response.data) {
       return {
@@ -47,4 +46,4 @@ async function FindPaymentApi({
     };
   }
 }
-export { FindPaymentApi };
+export { FindPaymentPixApi };

@@ -14,6 +14,7 @@ import favicon from "@/favicon.ico";
 import { Cart } from "./components/cart/index";
 import { Footer } from "./components/footer";
 import { LoadingGlobal } from "./components/loading";
+import { Voice } from "./components/voice";
 
 export default async function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default async function RootLayout({
           <Cart />
           <Header />
           {children}
+          <Voice/>
           <Footer />
         </Providers>
       </body>

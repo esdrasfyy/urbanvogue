@@ -51,7 +51,7 @@ function FormEdit() {
         const res = await UpdateUserApi({
           userId: Number(user?.user_id),
           gender: data?.gender,
-          profile: imgUrl,
+          profile: null,
           fullname: data.fullname,
           username: data.username,
           email: data.email,

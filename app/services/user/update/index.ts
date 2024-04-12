@@ -29,7 +29,7 @@ async function UpdateUserApi({
         fullname,
         gender,
         phone,
-        profile_img: profile,
+        profile_img: profile || null,
         user_id: userId,
         username,
       }

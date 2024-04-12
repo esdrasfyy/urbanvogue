@@ -3,7 +3,7 @@ import { UserI } from "@/interfaces/user";
 export interface UpdateUserApiProps {
   userId: number;
   gender: string;
-  profile: string;
+  profile: string | null;
   fullname: string;
   username: string;
   email: string;

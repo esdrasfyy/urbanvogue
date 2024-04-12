@@ -18,49 +18,45 @@ function GridSearch({ handleFilters }: GridSearchProps) {
   const [errorFetch, setErrorFetch] = useState<string | null>(null);
   const componentRef = useRef(null);
   const offsetRef = useRef<number>(1);
-  const limitRef = useRef<number>(11);
+  const limitRef = useRef<number>(30);
   const count = useRef<number>(0);
 
   const searchParams = useSearchParams();
   let search = searchParams.get("query");
   const orderBy = searchParams.get("orderBy");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        search = searchParams.get("query");
-        const { data, status, error } = await ProductSearchApi({
-          search: searchParams.toString(),
-          offset: offsetRef.current,
-          limit: limitRef.current,
-        });
-
-        if (status === 200 && data) {
-          offsetRef.current = 1;
-          count.current = 0;
-          setData(data.products);
-          handleFilters(data.filters);
-          return;
-        }
-        if (error) {
-          setErrorFetch(error);
-        }
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      search = searchParams.get("query");
+      const { data, status, error } = await ProductSearchApi({
+        search: searchParams.toString(),
+        offset: offsetRef.current,
+        limit: limitRef.current,
+      });
+      
+      if (status === 200 && data) {
+        offsetRef.current = 1;
+        count.current = 0;
+        setData(data.products);
+        handleFilters(data.filters);
+        return;
       }
-    };
-
-    fetchData();
-  }, [searchParams, orderBy]);
-
-  const handleData = (newData: ProductI[]) => {
-    setData((prevData) => {
-      return [...(prevData || []), ...(newData || [])];
-    });
+      if (error) {
+        setErrorFetch(error);
+      }
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+    console.log(offsetRef.current);
+    
+  }, [searchParams.toString(), orderBy, offsetRef]);
 
   return (
     <section className="grid-search">
@@ -95,7 +91,6 @@ function GridSearch({ handleFilters }: GridSearchProps) {
         offsetRef={offsetRef}
         limitRef={limitRef}
         count={count}
-        handleData={handleData}
       />
     </section>
   );

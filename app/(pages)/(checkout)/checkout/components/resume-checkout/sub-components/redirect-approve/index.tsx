@@ -18,6 +18,7 @@ function RedirectApprove() {
   const { address, method, cardId, total, coupon } = contextPay;
   const { setLoading } = contextLoading;
   const { cartResume } = contextCart;
+  const {user} = contextUser
   const verifyData = async () => {
     
     const errorMessages = [];
@@ -26,6 +27,7 @@ function RedirectApprove() {
     if (!method) errorMessages.push("Please add a payment method.");
     if (!cartResume) errorMessages.push("Your shopping cart is empty.");
     if (!total) errorMessages.push("Interna Error.");
+    if(!user?.email) errorMessages.push("Please add a email your account.")
     if ((method === "credit_card" || method === "debit_card") && !cardId) {
       errorMessages.push("Please select a card to continue.");
     }

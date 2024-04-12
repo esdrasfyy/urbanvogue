@@ -32,7 +32,7 @@ function PaymentPix({
   const [created, setCreated] = useState<string | null>(null);
   const [expiration, setExpiration] = useState<string>("--:--:--");
   const router = useRouter();
-  const toast = useToast()
+  const toast = useToast();
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     const { setLoading, loading } = contextLoading;
@@ -43,9 +43,11 @@ function PaymentPix({
           data: res,
           status,
           error,
-        } = await FindPaymentPixApi({order_id, payment_id });
+        } = await FindPaymentPixApi({ order_id, payment_id });
         if (status === 200 && !error && res?.response) {
-          const formatedDate = formatBrazilianDate(res?.response?.payment_pix[0]?.date_created!)
+          const formatedDate = formatBrazilianDate(
+            res?.response?.payment_pix[0]?.date_created!
+          );
           setCreated(formatedDate);
           return setData(res?.response);
         }
@@ -133,7 +135,7 @@ function PaymentPix({
           </div>
           <div className="mt-3 text-custom-textColor/70 text-sm">
             <p>
-              Page diretamente em uma pagina do{" "}
+              Page directly on a page{" "}
               <Link
                 href={`${data?.payment_pix[0]?.ticket_url}`}
                 target="blank"
@@ -168,7 +170,7 @@ function PaymentPix({
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Price:</span>{" "}BRL
+              <span className="font-semibold">Price:</span> BRL
               {data?.payment_pix[0]?.currency +
                 " " +
                 data?.payment_pix[0]?.transaction_amount}
@@ -207,7 +209,7 @@ function PaymentPix({
                 <TbCircleNumber1 />
               </span>
               <p className="text-sm text-custom-textColor/70">
-                Acesse o app do seu banco ou internet banking de preferência.
+              Access your preferred bank or internet banking app.
               </p>
             </div>
             <div className="flex gap-3 mt-4 items-center">
@@ -215,7 +217,7 @@ function PaymentPix({
                 <TbCircleNumber2 />
               </span>
               <p className="text-sm text-custom-textColor/70">
-                Escolha pagar via Pix.
+              Choose to pay via Pix.
               </p>
             </div>
             <div className="flex gap-3 mt-4 items-center">
@@ -223,7 +225,7 @@ function PaymentPix({
                 <TbCircleNumber3 />
               </span>
               <p className="text-sm text-custom-textColor/70">
-                Escaneie o QR Code ou copie e cole o código Pix acima.
+              Scan the QR Code or copy and paste the Pix code above.
               </p>
             </div>
             <div className="flex gap-3 mt-4 items-center">
@@ -231,13 +233,13 @@ function PaymentPix({
                 <TbCircleNumber4 />
               </span>
               <p className="text-sm text-custom-textColor/70">
-                Seu pagamento será aprovado em alguns segundos.{" "}
+              Your payment will be approved in a few seconds.{" "}
               </p>
             </div>
             <div className="flex mt-5">
               <p className="text-custom-textColor/30 text-xs">
-                Confira alguns cuidados ao efetuar pagamentos via pix, e evite
-                cair em golpes ou fraudes. Acesse
+              Check out some precautions when making payments via pix, and avoid
+                falling for scams or fraud. Access
                 <Link
                   href={
                     "https://www.serasa.com.br/premium/blog/golpes-e-fraudes-com-pix/"

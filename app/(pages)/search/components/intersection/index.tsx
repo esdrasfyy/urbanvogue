@@ -8,7 +8,6 @@ interface IntersectionProps {
   offsetRef: React.MutableRefObject<number>;
   limitRef: React.MutableRefObject<number>;
   count: React.MutableRefObject<number>;
-  handleData: Function;
 }
 
 function Intersection({
@@ -16,29 +15,13 @@ function Intersection({
   limitRef,
   offsetRef,
   count,
-  handleData,
 }: IntersectionProps) {
-  const searchParams = useSearchParams();
   useEffect(() => {
-    const fetchData = async () => {
-      const { data, status, error } = await ProductSearchApi({
-        search: searchParams.toString(),
-        offset: offsetRef.current,
-        limit: limitRef.current,
-      });
-  
-      if (status === 200 && data) {
-        handleData(data.products);
-        return;
-      }
-    };
-  
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting) {
         count.current += 1;
         offsetRef.current = count.current * limitRef.current;
-        fetchData();
       }
     };
   
@@ -52,12 +35,14 @@ function Intersection({
       observer.observe(currentComponentRef);
     }
   
+    console.log("Observed" + count.current);
     return () => {
       if (currentComponentRef) {
         observer.unobserve(currentComponentRef);
       }
     };
-  }, [componentRef, limitRef, offsetRef, count, handleData, searchParams]);
+    
+  }, [componentRef]);
   
 
   return (

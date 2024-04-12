@@ -1,7 +1,19 @@
 "use client";
-
-// Import necessary modules and components
-import { useEffect, useState, useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import Lottie from "lottie-react";
+import gif from "@/assets/gifs/Animation - 1712939579857.json";
+import { MdKeyboardVoice } from "react-icons/md";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 // Declare a global interface to add the webkitSpeechRecognition property to the Window object
 declare global {
@@ -10,38 +22,15 @@ declare global {
   }
 }
 
-// Export the MicrophoneComponent function component
+// Export the Voice component
 function Voice() {
-  // State variables to manage recording status, completion, and transcript
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingComplete, setRecordingComplete] = useState(false);
-  const [transcript, setTranscript] = useState("");
+  const lottieRef = useRef<any>(); // Ref para o componente Lottie
+  const [isRecording, setIsRecording] = useState(false); // Estado para controlar a gravação
+  const [transcript, setTranscript] = useState(""); // Estado para armazenar o texto transcrito
+  const [isPlaying, setIsPlaying] = useState(false); // Inicia a animação como pausada
 
-  // Reference to store the SpeechRecognition instance
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<any>(null); // Ref para armazenar o objeto de reconhecimento de voz
 
-  // Function to start recording
-  const startRecording = () => {
-    setIsRecording(true);
-    // Create a new SpeechRecognition instance and configure it
-    recognitionRef.current = new window.webkitSpeechRecognition();
-    recognitionRef.current.continuous = true;
-    recognitionRef.current.interimResults = true;
-
-    // Event handler for speech recognition results
-    recognitionRef.current.onresult = (event: any) => {
-      const { transcript } = event.results[event.results.length - 1][0];
-
-      // Log the recognition results and update the transcript state
-      console.log(event.results);
-      setTranscript(transcript);
-    };
-
-    // Start the speech recognition
-    recognitionRef.current.start();
-  };
-
-  // Cleanup effect when the component unmounts
   useEffect(() => {
     if (!window.webkitSpeechRecognition) {
       console.log("Speech recognition not supported in this browser");
@@ -72,91 +61,86 @@ function Voice() {
     };
   }, []);
 
-  // Function to stop recording
+  useEffect(() => {
+    if (lottieRef.current) {
+      if (isPlaying) {
+        lottieRef.current.play(); // Se isPlaying for verdadeiro, reproduz a animação
+      } else {
+        lottieRef.current.pause(); // Se isPlaying for falso, pausa a animação
+      }
+    }
+  }, [isPlaying]); // Atualiza sempre que isPlaying mudar
+
+  // Função para iniciar a gravação
+  const startRecording = () => {
+    setIsRecording(true);
+    // Código para iniciar a gravação...
+  };
+
+  // Função para parar a gravação
   const stopRecording = () => {
-    if (recognitionRef.current) {
-      // Stop the speech recognition and mark recording as complete
-      recognitionRef.current.stop();
-      setRecordingComplete(true);
-    }
+    setIsRecording(false);
+    // Código para parar a gravação...
   };
 
-  // Toggle recording state and manage recording actions
-  const handleToggleRecording = () => {
-    setIsRecording(!isRecording);
-    if (!isRecording) {
-      startRecording();
-    } else {
-      stopRecording();
-    }
-  };
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
-  // Render the microphone component with appropriate UI based on recording state
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-screen w-full">
-      <div className="w-full">
-        {(isRecording || transcript) && (
-          <div className="w-1/4 m-auto rounded-md border p-4 bg-white">
-            <div className="flex-1 flex w-full justify-between">
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  {recordingComplete ? "Recorded" : "Recording"}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {recordingComplete
-                    ? "Thanks for talking."
-                    : "Start speaking..."}
-                </p>
-              </div>
-              {isRecording && (
-                <div className="rounded-full w-4 h-4 bg-red-400 animate-pulse" />
+    <>
+      {/* Botão de microfone */}
+      <span
+        className="absolute right-3 z-10 top-[50%] translate-y-[-50%] text-white text-2xl duration-200 transition-all ease-linear hover:text-custom-pink max-md:text-2xl cursor-pointer"
+        onClick={onOpen}
+      >
+        <MdKeyboardVoice />
+      </span>
+      {/* Modal de gravação */}
+      <Modal isOpen={isOpen} onClose={() =>{
+        stopRecording()
+        onClose()
+        
+        }} isCentered >
+        <ModalOverlay />
+        <ModalContent
+          background={"#1d2123"}
+          textColor={"#d9d9d9"}
+          margin={"0px 16px"}
+        >
+          <ModalBody>
+            <div className="flex items-center justify-center flex-col my-10">
+              {isRecording ? (
+                <h3 className="uppercase font-semibold text-xl">Speak now</h3>
+              ) : (
+                <h3 className="uppercase font-semibold text-xl">Start press</h3>
               )}
+              {/* Componente Lottie */}
+              <Lottie
+                animationData={gif}
+                width={200}
+                height={200}
+                renderer="svg"
+                lottieRef={lottieRef}
+              />
+              <p className="text-custom-textColor/50 text-lg mb-10">
+                {transcript ? transcript : " Say your search..."}
+              </p>
+              {/* Botão de microfone */}
+              <button
+                onClick={isRecording ? stopRecording : startRecording}
+                className={`text-2xl p-4 rounded-full ${
+                  isRecording
+                    ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
+                    : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
+                } duration-300 ease-linear`}
+              >
+                {/* Ícone do microfone */}
+                {isRecording ? <BiMicrophone /> : <BiMicrophoneOff />}
+              </button>
             </div>
-
-            {transcript && (
-              <div className="border rounded-md p-2 h-fullm mt-4">
-                <p className="mb-0">{transcript}</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        <div className="flex items-center w-full">
-          {isRecording ? (
-            // Button for stopping recording
-            <button
-              onClick={handleToggleRecording}
-              className="mt-10 m-auto flex items-center justify-center bg-red-400 hover:bg-red-500 rounded-full w-20 h-20 focus:outline-none"
-            >
-              <svg
-                className="h-12 w-12 "
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            </button>
-          ) : (
-            // Button for starting recording
-            <button
-              onClick={handleToggleRecording}
-              className="mt-10 m-auto flex items-center justify-center bg-blue-400 hover:bg-blue-500 rounded-full w-20 h-20 focus:outline-none"
-            >
-              <svg
-                viewBox="0 0 256 256"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-12 text-white"
-              >
-                <path
-                  fill="currentColor" // Change fill color to the desired color
-                  d="M128 176a48.05 48.05 0 0 0 48-48V64a48 48 0 0 0-96 0v64a48.05 48.05 0 0 0 48 48ZM96 64a32 32 0 0 1 64 0v64a32 32 0 0 1-64 0Zm40 143.6V232a8 8 0 0 1-16 0v-24.4A80.11 80.11 0 0 1 48 128a8 8 0 0 1 16 0a64 64 0 0 0 128 0a8 8 0 0 1 16 0a80.11 80.11 0 0 1-72 79.6Z"
-                />
-              </svg>
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
 

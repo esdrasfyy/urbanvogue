@@ -38,12 +38,8 @@ function Cart() {
         />
         <DrawerContent backgroundColor={"#  "} textColor={"#d9d9d9"}>
           <DrawerCloseButton className="hover:text-custom-pink" />
-          <DrawerHeader className="shadow-snipped bg-custom-grayTwo">
-            SHOPPING CART
-          </DrawerHeader>
-          <Divider />
           <DrawerBody backgroundColor={"#171a1b"}>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 mt-12">
               {context.cartResume?.products?.map(
                 (product: ProductCartI, index, array) => {
                   const isLastItem = index === array.length - 1;

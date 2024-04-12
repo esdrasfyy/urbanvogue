@@ -1,9 +1,24 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { HiSearch } from "react-icons/hi";
 import { MdKeyboardVoice } from "react-icons/md";
 import { SearchInputProps } from "./types";
 import { useRouter, useSearchParams } from "next/navigation";
+import gif from "@/assets/gifs/Animation - 1712939579857.json";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import Lottie from "lottie-react";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import { Voice } from "@/components/voice";
 
 function SearchInputUi({ classname }: SearchInputProps) {
   const router = useRouter();
@@ -18,6 +33,22 @@ function SearchInputUi({ classname }: SearchInputProps) {
       return router.push(`/search?query=${value}&page=1`);
     }
   };
+  const lottieRef = useRef<any>(); // Ref para o componente Lottie
+  const [isPlaying, setIsPlaying] = useState(true); // Estado para controlar a reprodução da animação
+
+  const togglePlay = () => {
+    if (lottieRef.current) {
+      if (isPlaying) {
+        lottieRef.current.pause(); // Pausa a animação
+      } else {
+        lottieRef.current.play(); // Reproduz a animação
+      }
+      setIsPlaying(!isPlaying); // Inverte o estado de reprodução da animação
+    }
+  };
+
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <form
       className={`relative ${classname} shadow-snipped rounded-full `}
@@ -31,18 +62,16 @@ function SearchInputUi({ classname }: SearchInputProps) {
           onChange={handleChange}
           value={value}
         />
-        <button className="absolute right-3 z-10 top-[50%] translate-y-[-50%] text-white text-2xl duration-200 transition-all ease-linear hover:text-custom-pink max-md:text-2xl ">
-          <MdKeyboardVoice />
-        </button>
         <button
           type="submit"
           className="absolute left-0 top-[50%] -translate-y-1/2 bg-white text-grayOnerounded-full duration-200 transition-all ease-linear hover:opacity-60 z-10 p-[6px] text-2xl rounded-full"
         >
           <HiSearch />
         </button>
+       <Voice/>
       </div>
     </form>
   );
 }
 
-export {SearchInputUi};
+export { SearchInputUi };

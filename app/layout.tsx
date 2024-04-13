@@ -14,7 +14,6 @@ import favicon from "@/favicon.ico";
 import { Cart } from "./components/cart/index";
 import { Footer } from "./components/footer";
 import { LoadingGlobal } from "./components/loading";
-import { Voice } from "./components/voice";
 
 export default async function RootLayout({
   children,
@@ -30,11 +29,10 @@ export default async function RootLayout({
         className={`${inter.className} flex flex-col min-w-full items-center justify-end min-h-screen bg-custom-grayOne`}
       >
         <Providers>
-          <LoadingGlobal/>
+          <LoadingGlobal />
           <Cart />
           <Header />
           {children}
-          <Voice/>
           <Footer />
         </Providers>
       </body>

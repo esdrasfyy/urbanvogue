@@ -13,23 +13,25 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-
-// Declare a global interface to add the webkitSpeechRecognition property to the Window object
+import { IoSearchSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 declare global {
   interface Window {
     webkitSpeechRecognition: any;
   }
 }
 
-// Export the Voice component
-function Voice() {
-  const lottieRef = useRef<any>(); // Ref para o componente Lottie
-  const [isRecording, setIsRecording] = useState(false); // Estado para controlar a gravação
-  const [transcript, setTranscript] = useState(""); // Estado para armazenar o texto transcrito
-  const [isPlaying, setIsPlaying] = useState(false); // Inicia a animação como pausada
-
-  const recognitionRef = useRef<any>(null); // Ref para armazenar o objeto de reconhecimento de voz
+function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
+  const lottieRef = useRef<any>();
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingComplete, setRecordingComplete] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const recognitionRef = useRef<any>(null);
+  const toast = useToast();
+  const audioRef = useRef<any>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (!window.webkitSpeechRecognition) {
@@ -61,59 +63,101 @@ function Voice() {
     };
   }, []);
 
-  useEffect(() => {
-    if (lottieRef.current) {
-      if (isPlaying) {
-        lottieRef.current.play(); // Se isPlaying for verdadeiro, reproduz a animação
-      } else {
-        lottieRef.current.pause(); // Se isPlaying for falso, pausa a animação
-      }
-    }
-  }, [isPlaying]); // Atualiza sempre que isPlaying mudar
-
-  // Função para iniciar a gravação
   const startRecording = () => {
     setIsRecording(true);
-    // Código para iniciar a gravação...
+    recognitionRef.current = new window.webkitSpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
+
+    recognitionRef.current.onresult = (event: any) => {
+      const { transcript } = event.results[event.results.length - 1][0];
+
+      console.log(event.results);
+      setTranscript(transcript);
+    };
+
+    recognitionRef.current.start();
   };
 
-  // Função para parar a gravação
   const stopRecording = () => {
-    setIsRecording(false);
-    // Código para parar a gravação...
+    if (recognitionRef.current) {
+      lottieRef.current.pause();
+      setIsRecording(false);
+      recognitionRef.current.stop();
+      setRecordingComplete(true);
+    }
   };
 
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const handleOpen = () => {
+    if (!window.webkitSpeechRecognition) {
+      toast({
+        title: "Unavailable service.",
+        description: "Speech recognition not supported in this browser",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
+      return;
+    }
+    onOpen();
+  };
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   return (
     <>
-      {/* Botão de microfone */}
       <span
         className="absolute right-3 z-10 top-[50%] translate-y-[-50%] text-white text-2xl duration-200 transition-all ease-linear hover:text-custom-pink max-md:text-2xl cursor-pointer"
-        onClick={onOpen}
+        onClick={handleOpen}
       >
         <MdKeyboardVoice />
       </span>
       {/* Modal de gravação */}
-      <Modal isOpen={isOpen} onClose={() =>{
-        stopRecording()
-        onClose()
-        
-        }} isCentered >
-        <ModalOverlay />
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          lottieRef.current.pause();
+          setIsRecording(false);
+          recognitionRef.current.stop();
+          stopRecording();
+          onClose();
+        }}
+        isCentered
+        size={"xs"}
+      >
+        <ModalOverlay
+          backdropFilter="saturate(150%) blur(4px)"
+          backdropInvert="50%"
+          backdropBlur="3px"
+        />
         <ModalContent
           background={"#1d2123"}
           textColor={"#d9d9d9"}
-          margin={"0px 16px"}
+          margin={"0px 0px"}
         >
+          <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
+          <audio controls>
+            <source
+              src="../../assets/sounds/start.mp3"
+              type="audio/mpeg"
+            />
+            Seu navegador não suporta o elemento de áudio.
+          </audio>
+
           <ModalBody>
             <div className="flex items-center justify-center flex-col my-10">
-              {isRecording ? (
-                <h3 className="uppercase font-semibold text-xl">Speak now</h3>
-              ) : (
-                <h3 className="uppercase font-semibold text-xl">Start press</h3>
-              )}
-              {/* Componente Lottie */}
               <Lottie
                 animationData={gif}
                 width={200}
@@ -121,21 +165,38 @@ function Voice() {
                 renderer="svg"
                 lottieRef={lottieRef}
               />
-              <p className="text-custom-textColor/50 text-lg mb-10">
+              <p className="text-custom-textColor/80 text-xl mb-10">
                 {transcript ? transcript : " Say your search..."}
               </p>
-              {/* Botão de microfone */}
-              <button
-                onClick={isRecording ? stopRecording : startRecording}
-                className={`text-2xl p-4 rounded-full ${
-                  isRecording
-                    ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
-                    : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
-                } duration-300 ease-linear`}
-              >
-                {/* Ícone do microfone */}
-                {isRecording ? <BiMicrophone /> : <BiMicrophoneOff />}
-              </button>
+
+              <div className="flex gap-5">
+                <button
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`text-2xl p-4 rounded-full ${
+                    isRecording
+                      ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
+                      : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
+                  } duration-300 ease-linear`}
+                >
+                  {/* Ícone do microfone */}
+                  {isRecording ? <BiMicrophone /> : <BiMicrophoneOff />}
+                </button>
+                {transcript && !isRecording && (
+                  <button
+                    onClick={() => {
+                      onClose();
+                      handleSubmit(transcript);
+                    }}
+                    className={`text-2xl p-4 rounded-full flex items-center justify-center ${
+                      isRecording
+                        ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
+                        : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
+                    } duration-300 ease-linear`}
+                  >
+                    <IoSearchSharp />
+                  </button>
+                )}
+              </div>
             </div>
           </ModalBody>
         </ModalContent>

@@ -15,6 +15,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
@@ -24,31 +25,29 @@ function SearchInputUi({ classname }: SearchInputProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(searchParams.get("query") || "");
+  const toast = useToast();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    handleSubmit(value)
+  };
+
+  const handleSubmit = (value:string) =>{
     if (value) {
       return router.push(`/search?query=${value}&page=1`);
     }
-  };
-  const lottieRef = useRef<any>(); // Ref para o componente Lottie
-  const [isPlaying, setIsPlaying] = useState(true); // Estado para controlar a reprodução da animação
-
-  const togglePlay = () => {
-    if (lottieRef.current) {
-      if (isPlaying) {
-        lottieRef.current.pause(); // Pausa a animação
-      } else {
-        lottieRef.current.play(); // Reproduz a animação
-      }
-      setIsPlaying(!isPlaying); // Inverte o estado de reprodução da animação
-    }
-  };
-
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
+    toast({
+      title: "Speak your research.",
+      description: "You need to say something before searching.",
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top-right",
+    });
+  }
   return (
     <form
       className={`relative ${classname} shadow-snipped rounded-full `}
@@ -68,7 +67,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
         >
           <HiSearch />
         </button>
-       <Voice/>
+       <Voice handleSubmit={handleSubmit}/>
       </div>
     </form>
   );

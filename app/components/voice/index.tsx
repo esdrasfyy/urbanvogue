@@ -7,16 +7,13 @@ import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 import {
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { IoSearchSharp } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+
 declare global {
   interface Window {
     webkitSpeechRecognition: any;
@@ -30,8 +27,6 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
   const [transcript, setTranscript] = useState("");
   const recognitionRef = useRef<any>(null);
   const toast = useToast();
-  const audioRef = useRef<any>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (!window.webkitSpeechRecognition) {
@@ -105,17 +100,6 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
     onOpen();
   };
 
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   return (
     <>
       <span
@@ -147,15 +131,6 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
           textColor={"#d9d9d9"}
           margin={"0px 0px"}
         >
-          <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
-          <audio controls>
-            <source
-              src="../../assets/sounds/start.mp3"
-              type="audio/mpeg"
-            />
-            Seu navegador não suporta o elemento de áudio.
-          </audio>
-
           <ModalBody>
             <div className="flex items-center justify-center flex-col my-10">
               <Lottie

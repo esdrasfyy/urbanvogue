@@ -34,6 +34,7 @@ export default function Home() {
             <Image
               alt="moda"
               fill
+              className="rounded-md"
               src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan(1).gif?alt=media&token=86f3fb3c-87fe-4ef6-b7d3-f65ac1e472a1"
             />
           </figure>

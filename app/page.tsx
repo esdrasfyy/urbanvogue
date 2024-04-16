@@ -2,7 +2,8 @@ import { SearchInputUi } from "./components/ui/inputs/search/index";
 import React from "react";
 import { GridHome } from "./components/home/grid/index";
 import { SlideProducts } from "./components/carousel/index";
-import { SiNike } from "react-icons/si";
+import { CarrouselBrands } from "./components/home/carrousel-brands";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -22,32 +23,26 @@ export default function Home() {
       />
       <span className="my-5"></span>
       <SlideProducts query="order_by=created_at:desc" category="NEWS" />
-      <section className="w-full mt-14 flex gap-5 flex-col">
-        <div className="w-full">
-          <ul className="flex gap-4 w-full">
-            <li className="gradient-gray text-5xl text-custom-textColor py-6 px-12 rounded-md shadpw-snipped">
-              <SiNike />
-            </li>
-            <li className="gradient-gray text-5xl text-custom-textColor py-6 px-12 rounded-md shadpw-snipped">
-              <SiNike />
-            </li>
-            <li className="gradient-gray text-5xl text-custom-textColor py-6 px-12 rounded-md shadpw-snipped">
-              <SiNike />
-            </li>
-            <li className="gradient-gray text-5xl text-custom-textColor py-6 px-12 rounded-md shadpw-snipped">
-              <SiNike />
-            </li>
-       
-          </ul>
-        </div>
+      <section className="w-full mt-14 flex gap-5 flex-col-reverse">
+        <CarrouselBrands />
         <div>
           <h3 className="font-extralight text-2xl text-custom-textColor mb-4 uppercase">
-          venture into fashion
+            venture into fashion
           </h3>
 
-          <video  autoPlay loop muted src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan.mp4?alt=media&token=ccd60a51-ec55-4358-9c52-a77b92f37105"></video>
+          <figure className="w-full h-[600px] relative rounded-md shadow-snipped max-lg:h-[530px] max-md:h-[470px] max-sm:h-[300px]">
+            <Image
+              alt="moda"
+              fill
+              src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan(1).gif?alt=media&token=86f3fb3c-87fe-4ef6-b7d3-f65ac1e472a1"
+            />
+          </figure>
         </div>
       </section>
+      <span className="my-5"></span>
+      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
+      <span className="my-5"></span>
+      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
     </main>
   );
 }

@@ -69,21 +69,15 @@ function SlideProducts({
           pagination: false,
           rewind: true,
           perMove: 5,
-          padding: { right: "15rem" },
           width: "70%",
           gap: "15px",
           breakpoints: {
             767: {
               width: "100%",
               perPage: 2,
-              padding: { right: "5rem" },
             },
             1000: {
               perPage: 1,
-              padding: { right: "4rem" },
-            },
-            1200: {
-              padding: { right: "8rem" },
             },
           },
         }}

@@ -586,3 +586,11 @@ svg.progressbar {
 .gradient-gray{
   background: linear-gradient(87deg, rgb(0, 0, 0) 0px, rgb(34, 34, 34) 100%);
 }
+.glass{
+  background: rgba(217, 217, 217, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.6px);
+  -webkit-backdrop-filter: blur(4.6px);
+  border: 1px solid rgba(217, 217, 217, 0.3);
+}

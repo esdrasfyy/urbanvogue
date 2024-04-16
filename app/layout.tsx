@@ -24,6 +24,7 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href={`${favicon}`} />
+        <title>Urban Vogue</title>
       </head>
       <body
         className={`${inter.className} flex flex-col min-w-full items-center justify-end min-h-screen bg-custom-grayOne`}

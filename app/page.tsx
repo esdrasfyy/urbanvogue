@@ -4,6 +4,8 @@ import { GridHome } from "./components/home/grid/index";
 import { SlideProducts } from "./components/carousel/index";
 import { CarrouselBrands } from "./components/home/carrousel-brands";
 import Image from "next/image";
+import adOne from "@/assets/home/propaganda1.webp"
+import adTwo from "@/assets/home/propaganda2.webp"
 
 export default function Home() {
   return (
@@ -24,6 +26,10 @@ export default function Home() {
       <span className="my-5"></span>
       <SlideProducts query="order_by=created_at:desc" category="NEWS" />
       <section className="w-full mt-14 flex gap-5 flex-col-reverse">
+        <div className="flex gap-5 mt-8">
+          <Image src={adOne} alt="ad" className="w-full grayscale rounded-md shadow-snipped"/>
+          <Image src={adTwo} alt="ad" className="w-full grayscale rounded-md shadow-snipped" />
+        </div>
         <CarrouselBrands />
         <div>
           <h3 className="font-extralight text-2xl text-custom-textColor mb-4 uppercase">

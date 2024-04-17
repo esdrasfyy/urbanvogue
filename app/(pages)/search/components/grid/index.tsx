@@ -18,7 +18,7 @@ function GridSearch({ handleFilters }: GridSearchProps) {
   const [errorFetch, setErrorFetch] = useState<string | null>(null);
   const componentRef = useRef(null);
   const offsetRef = useRef<number>(1);
-  const limitRef = useRef<number>(30);
+  const limitRef = useRef<number>(100);
   const count = useRef<number>(0);
 
   const searchParams = useSearchParams();

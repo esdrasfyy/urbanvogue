@@ -19,7 +19,7 @@ async function ProductSearchApi({
     const response: AxiosResponse<ProductSearchApiApiReq | null> =
       await axios.get(
         `${api}product/search?${search}&offset=${offset || 0}&limit=${
-          limit || 11
+          limit || 100
         }`
       );
     if (

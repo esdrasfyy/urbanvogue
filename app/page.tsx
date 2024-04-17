@@ -30,14 +30,7 @@ export default function Home() {
             venture into fashion
           </h3>
 
-          <figure className="w-full h-[600px] relative rounded-md shadow-snipped max-lg:h-[530px] max-md:h-[470px] max-sm:h-[300px]">
-            <Image
-              alt="moda"
-              fill
-              className="rounded-md"
-              src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan(1).gif?alt=media&token=86f3fb3c-87fe-4ef6-b7d3-f65ac1e472a1"
-            />
-          </figure>
+         <video src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan.mp4?alt=media&token=f806cf48-9b51-4266-bfaf-ca36ff514ce8" muted controls={false} loop autoPlay></video>
         </div>
       </section>
       <span className="my-5"></span>

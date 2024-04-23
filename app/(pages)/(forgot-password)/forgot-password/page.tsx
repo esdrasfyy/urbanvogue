@@ -6,9 +6,10 @@ import Link from "next/link";
 import { Stepper } from "@/components/stepper";
 import { SendCode } from "./components/send-code";
 import { ResetPassword } from "./components/reset-password";
+import { NextPage } from "next";
 
-function ForgotPassword() {
-  const [stepCount, setStepCount] = useState<number>(1);
+const ForgotPassword:NextPage = () => {
+  const [stepCount, setStepCount] = useState<number>(2);
 
   const handleCount = (value: number) => {
     setStepCount(value);
@@ -36,7 +37,7 @@ function ForgotPassword() {
 
   const listSteps = ["Send Email", "Send Code", "Reset Passoword"];
   return (
-    <main className="m-auto max-w-xl w-full mx-4 text-custom-textColor">
+    <main className="m-auto max-w-xl w-full mx-4 text-custom-textColor pt-32">
       <Stepper steps={listSteps} stepCount={stepCount} />
       <section className="shadow-snipped rounded-md p-4 bg-custom-grayTwo relative">
         <div className="w-fit">

@@ -8,7 +8,6 @@ function isLogged() {
   const token = cookieStore.get("jwt");
 
   if (!token) {
-    console.log("Token not set");
     return false;
   }
   return true;
@@ -24,21 +23,11 @@ export async function middleware(request: NextRequest) {
 
   const appOthersRoutes = Object.values(APP_ROUTES.others);
   const isOtherRoute = appOthersRoutes.includes(pathname);
-  console.log(
-    `A rota ${pathname} é publica? ${isPublicRoute} e o usuario esta logado? ${isLogged()}`
-  );
 
   if (isOtherRoute && isLogged()) {
-    console.log(
-      "Rota de login ou registro, usuario com login sera redirecionado"
-    );
-    console.log(host);
-
     return NextResponse.redirect(`${host}account`);
   }
   if (!isPublicRoute && !isOtherRoute && !isLogged()) {
-    console.log(host);
-    console.log("Rota privada, usuario sem login sera redirecionado");
     return NextResponse.redirect(`${host}login`);
   }
   return NextResponse.next();

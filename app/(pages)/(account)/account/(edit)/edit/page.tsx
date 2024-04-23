@@ -1,7 +1,8 @@
+import { NextPage } from "next";
 import {FormEdit} from "./sub-components/form";
 import React from "react";
 
-function Edit() {
+const Edit:NextPage = () => {
   return (
     <>
       <section className="min-h-screen w-full flex items-start justify-center bg-custom-grayOne px-4">

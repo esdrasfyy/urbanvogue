@@ -58,7 +58,17 @@ function SendEmail({ handleCount }: SendEmailProps) {
         variant: "left-accent",
         position: "top-right",
       });
-    } catch (error) {
+    } catch (error:any) {
+      toast({
+        title: "Error in sending.",
+        description:
+          error.data.message || "Error sending the code to your email.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
       console.error(error);
     } finally {
       setLoading(false);

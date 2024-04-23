@@ -9,7 +9,7 @@ import logo from "@/assets/urban-vogue/logo-big.png";
 import { OAuthGoogle } from "./components/oauth/google";
 import { OAuthGithub } from "./components/oauth/github";
 
-function Login() {
+const Login = () => {
   return (
     <section className="w-full bg-custom-grayOne flex justify-center items-center pt-32">
       <div className="max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex shadow-snipped rounded-md">

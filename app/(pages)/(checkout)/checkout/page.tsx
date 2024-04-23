@@ -2,8 +2,9 @@ import { AddressCheckout } from "@/(pages)/(checkout)/checkout/components/addres
 import { ProductsGridCheckout } from "./components/products-grid-checkout";
 import { MethodsCheckout } from "./components/methods-checkout";
 import { ResumeCheckout } from "./components/resume-checkout";
+import { NextPage } from "next";
 
-function Checkout() {
+const Checkout:NextPage = () => {
   return (
     <>
       <main className="flex mt-36 w-full justify-center items-start gap-5 max-w-[1050px] text-custom-textColor mx-3 max-md:flex-col max-md:px-4">

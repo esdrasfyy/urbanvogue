@@ -1,15 +1,15 @@
 "use client";
 import bg from "@/assets/urban-vogue/bg-gray-login.jpg";
-import {LoadingSpinner} from "@/components/ui/loading";
 import { HiMiniArrowUturnLeft } from "react-icons/hi2";
 import logo from "@/assets/urban-vogue/logo-big.png";
 import {FormRegister} from "./components/form";
-import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import { NextPage } from "next";
 
 
-function Register() {
+const Register:NextPage = () => {
   return (
     <section className="w-full bg-custom-grayOne flex justify-center items-center pt-32">
       <div className=" max-w-[1050px] w-full mx-4 bg-custom-grayTwo flex  shadow-snipped rounded-md">

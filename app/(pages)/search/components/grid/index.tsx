@@ -1,7 +1,6 @@
 import { CardV } from "../../../../components/card/vertical";
 import { ProductI } from "../../../../interfaces/product/card/index";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FiltersI } from "../../types";
 import { useSearchParams } from "next/navigation";
 import { ProductSearchApi } from "../../../../services/product-search";
 import { Intersection } from "../intersection";
@@ -54,7 +53,31 @@ function GridSearch({ handleFilters }: GridSearchProps) {
 
   useEffect(() => {
     fetchData();
-    console.log(offsetRef.current);
+    if (searchParams.toString()) {
+      document.title = `${searchParams.toString()} - Urban Vogue`;
+      const metaDescription = document.querySelector(
+        `meta[name="description"]`
+      );
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          `content`,
+          `You searched for: ${searchParams.toString()}. Browse and look for the product that best suits you`
+        );
+      }
+      const ogTitle = document.querySelector(`meta[property="og:title"]`);
+      if (ogTitle) {
+        ogTitle.setAttribute(`content`, `${searchParams.toString()} - Urban Vogue`);
+      }
+      const ogDescription = document.querySelector(
+        `meta[property="og:description"]`
+      );
+      if (ogDescription) {
+        ogDescription.setAttribute(
+          `content`,
+          `You searched for: ${searchParams.toString()}. Browse and look for the product that best suits you`
+        );
+      }
+    }
     
   }, [searchParams.toString(), orderBy, offsetRef]);
 

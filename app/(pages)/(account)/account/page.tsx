@@ -4,8 +4,9 @@ import { MoreOptions } from "./sub-components/more-options";
 import { Navigation } from "./sub-components/navigation";
 import Image from "next/image";
 import React, { useContext } from "react";
+import { NextPage } from "next";
 
-function Account() {
+const Account:NextPage = () => {
   const context = useContext(ContextUser);
   if (!context) {
     return;

@@ -11,12 +11,39 @@ import { ProductByIdApi } from "@/services/products-by-ids";
 import { RatingView } from "@/components/ui/rating/rating-view";
 import { SlideProducts } from "@/components/carousel";
 import { ContextLoading } from "@/contexts/ContextLoading";
+import { NextPage } from "next";
 
-function Page({ params }: any) {
+const Page: NextPage = ({ params }: any) => {
   const [dataCard, setDataCard] = useState<ProductPageI | null>(null);
   const contextLoading = useContext(ContextLoading)!;
   const { setLoading } = contextLoading;
   useEffect(() => {
+    if (params.slug[1]) {
+      document.title = `${params.slug[1]} - Urban Vogue`;
+      const metaDescription = document.querySelector(
+        `meta[name="description"]`
+      );
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          `content`,
+          `You are on the product page: ${params.slug[1]} , enjoy our offer`
+        );
+      }
+      const ogTitle = document.querySelector(`meta[property="og:title"]`);
+      if (ogTitle) {
+        ogTitle.setAttribute(`content`, `${params.slug[1]} - Urban Vogue`);
+      }
+      const ogDescription = document.querySelector(
+        `meta[property="og:description"]`
+      );
+      if (ogDescription) {
+        ogDescription.setAttribute(
+          `content`,
+          `You are on the product page: ${params.slug[1]} , enjoy our offer`
+        );
+      }
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -113,6 +140,6 @@ function Page({ params }: any) {
       </main>
     </>
   );
-}
+};
 
 export default Page;

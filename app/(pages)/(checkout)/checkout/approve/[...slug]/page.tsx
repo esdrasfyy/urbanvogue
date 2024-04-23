@@ -2,12 +2,11 @@ import React from "react";
 import { PaymentPix } from "./components/payment-pix";
 import { PaymentCard } from "./components/payment-card";
 
-function Approve({ params }: any) {
+ const Approve = ({ params }: any) => {
   const method = params.slug[0];
   const orderId = params.slug[1];
   const paymentId = params.slug[2];
 
-  let component;
   const isValidMethod =
     method === "pix" || method === "bank" || method === "card";
 

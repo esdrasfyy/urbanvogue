@@ -31,6 +31,7 @@ const ForgotPassword:NextPage = () => {
       componentStep = <SendEmail handleCount={handleCount} />;
       break;
   }
+  
   useEffect(() => {
     console.log(stepCount);
   }, [stepCount]);

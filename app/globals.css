@@ -594,3 +594,14 @@ svg.progressbar {
   -webkit-backdrop-filter: blur(4.6px);
   border: 1px solid rgba(217, 217, 217, 0.3);
 }
+
+.order-card-details {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  max-height: 0;
+}
+
+.order-card-details.details-visible {
+  transition: max-height 0.5s ease-in;
+  max-height: 1000px;
+}

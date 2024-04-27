@@ -12,7 +12,7 @@ function Navigation() {
               <ul className="w-full flex justify-between items-center h-full px-3">
                 <li className="text-custom-pink text-3xl hover:bg-custom-grayThree/10 hover:scale-105 hover:shadow-snipped rounded-md duration-300 ease-linear ">
                   <Link
-                    href={"/teste"}
+                    href={"/account/orders"}
                     className="flex items-center justify-center p-4"
                   >
                     <GoChecklist />

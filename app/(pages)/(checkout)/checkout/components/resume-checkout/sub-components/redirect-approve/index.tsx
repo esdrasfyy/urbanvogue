@@ -17,7 +17,7 @@ function RedirectApprove() {
   
   const { address, method, cardId, total, coupon } = contextPay;
   const { setLoading } = contextLoading;
-  const { cartResume } = contextCart;
+  const { cartResume,setCartResume, setProductsInCart } = contextCart;
   const {user} = contextUser
   const verifyData = async () => {
     
@@ -49,7 +49,7 @@ function RedirectApprove() {
     try {
       setLoading(true);
       const res = await PaymentProcessApi({
-        user_id: 2,
+        user_id: user?.user_id!,
         address_id: address || 1,
         payment_method: method,
         coupon: coupon,
@@ -58,6 +58,9 @@ function RedirectApprove() {
       });
       
       if (res.status === 201) {
+        setProductsInCart([])
+        setCartResume(null)
+        localStorage.setItem("MyCart", JSON.stringify([]));
         toast({
           title: "Created Payment",
           description: "Order created successfully.",

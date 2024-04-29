@@ -603,5 +603,5 @@ svg.progressbar {
 
 .order-card-details.details-visible {
   transition: max-height 0.5s ease-in;
-  max-height: 1000px;
+  max-height: 1500px;
 }

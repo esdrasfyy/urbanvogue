@@ -9,7 +9,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { InputUi } from "@/components/ui/inputs/default";
 import { UpdateUserApi } from "@/services/user/update";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DateUi } from "@/components/ui/inputs/date";
 import { ContextUser } from "@/contexts/ContextUser";
 import { storage } from "@/services/firebase/index";
 import { InputsEdit, schema } from "./types";
@@ -17,11 +16,9 @@ import { useRouter } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
 import { formatCpf } from "@/masks/cpf";
 import Image from "next/image";
-import { LoadingSpinner } from "@/components/ui/loading";
 import { ContextLoading } from "@/contexts/ContextLoading";
 
 function FormEdit() {
-  const [imgUrl, setImgUrl] = useState<string>(profileDefault);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
   const [gender, setGender] = useState<string>("Other");

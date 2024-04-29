@@ -170,7 +170,7 @@ function PaymentPix({
           </div>
           <div className="mt-3 text-sm">
             <p>
-              <span className="font-semibold">Price:</span> BRL
+              <span className="font-semibold">Price: </span> 
               {data?.payment_pix[0]?.currency +
                 " " +
                 data?.payment_pix[0]?.transaction_amount}
@@ -282,18 +282,18 @@ function PaymentPix({
           </div>
           <div className="w-full flex items-center text-custom-textColor gap-5 max-md:flex-wrap">
             <div className="flex gap-5 w-full">
-              <button className="py-2 w-full font-semibold bg-custom-grayTwo text-xs rounded-md shadow-snipped uppercase">
+              <button  className="border-[1px] border-custom-pink uppercase border-solid h-fit py-2.5 px-3 rounded-md text-xs duration-300 ease-linear hover:bg-custom-pink w-full">
                 order details
               </button>
-              <button className="py-2 w-full font-semibold bg-custom-grayTwo text-xs rounded-md shadow-snipped uppercase">
+              <button  className="border-[1px] border-custom-pink uppercase border-solid h-fit py-2.5 px-3 rounded-md text-xs duration-300 ease-linear hover:bg-custom-pink w-full">
                 Check Payment
               </button>
             </div>
             <div className="flex gap-5 w-full">
-              <button className="py-2 w-full font-semibold bg-custom-grayTwo text-xs rounded-md shadow-snipped uppercase">
+              <Link href={"/account/orders"}   className="border-[1px] border-custom-pink uppercase border-solid h-fit py-2.5 px-3 text-center rounded-md text-xs duration-300 ease-linear hover:bg-custom-pink w-full">
                 My orders
-              </button>
-              <button className="py-2 w-full font-semibold bg-custom-grayTwo text-xs rounded-md shadow-snipped uppercase">
+              </Link>
+              <button  className="border-[1px] border-custom-pink uppercase border-solid h-fit py-2.5 px-3 rounded-md text-xs duration-300 ease-linear hover:bg-custom-pink w-full">
                 help
               </button>
             </div>

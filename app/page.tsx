@@ -48,9 +48,10 @@ const Home: NextPage = () => {
           <video
             src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan.mp4?alt=media&token=f806cf48-9b51-4266-bfaf-ca36ff514ce8"
             muted
-            controls={false}
+            playsInline
             loop
             autoPlay
+            className="rounded-md shadow-snipped"
           ></video>
         </div>
       </section>

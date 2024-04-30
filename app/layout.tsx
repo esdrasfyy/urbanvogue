@@ -9,6 +9,7 @@ import favicon from "@/favicon.ico";
 import { Cart } from "./components/cart/index";
 import { Footer } from "./components/footer";
 import { LoadingGlobal } from "./components/loading";
+import { CookiesPrivacy } from "./components/cookies";
 
 export default async function RootLayout({
   children,
@@ -27,8 +28,14 @@ export default async function RootLayout({
         <meta property="og:title" content="Urban Vogue" />
         <meta property="og:site_name" content="Urban Vogue" />
         <meta property="og:type" content="website" />
-        <meta name="description" content="Welcome to Urban Vogue, the largest urban fashion store in Latin America. We're here to help you with all your urban fashion needs!" />
-        <meta property="og:description" content="Welcome to Urban Vogue, the largest urban fashion store in Latin America. We're here to help you with all your urban fashion needs!" />
+        <meta
+          name="description"
+          content="Welcome to Urban Vogue, the largest urban fashion store in Latin America. We're here to help you with all your urban fashion needs!"
+        />
+        <meta
+          property="og:description"
+          content="Welcome to Urban Vogue, the largest urban fashion store in Latin America. We're here to help you with all your urban fashion needs!"
+        />
         <link rel="canonical" href="https://urbanvogue.cloud/" />
         <meta property="og:url" content="https://urbanvogue.cloud/" />
         <meta property="og:image" content={`${favicon}`} />
@@ -41,6 +48,7 @@ export default async function RootLayout({
           <Cart />
           <Header />
           {children}
+          <CookiesPrivacy />
           <Footer />
         </Providers>
       </body>

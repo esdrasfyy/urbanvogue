@@ -605,3 +605,16 @@ svg.progressbar {
   transition: max-height 0.5s ease-in;
   max-height: 1500px;
 }
+
+.cookies-privacy {
+  bottom: -100%;
+  transition: bottom 0.5s ease;
+}
+
+.cookies-privacy.slide-in {
+  bottom: 10px;
+}
+
+.cookies-privacy.slide-out {
+  bottom: -100%;
+}

@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       <span className="my-5"></span>
       <GridHome />
       <span className="my-5"></span>
-      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
+      <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
 
       <span className="my-5"></span>
       <SlideProducts
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         category="FITNESS FASHION"
       />
       <span className="my-5"></span>
-      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
+      <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
       <section className="w-full mt-14 flex gap-5 flex-col-reverse">
         <div className="flex gap-5 mt-8 max-md:flex-wrap">
           <Image
@@ -56,9 +56,9 @@ const Home: NextPage = () => {
         </div>
       </section>
       <span className="my-5"></span>
-      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
+      <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
       <span className="my-5"></span>
-      <SlideProducts query="order_by=created_at:desc" category="NEWS" />
+      <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
     </main>
   );
 };

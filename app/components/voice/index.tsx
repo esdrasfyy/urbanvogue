@@ -1,4 +1,6 @@
+// Adicione "use client"; para indicar que este arquivo deve ser executado apenas no navegador
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import Lottie from "lottie-react";
 import gif from "@/assets/gifs/Animation - 1712939579857.json";
@@ -29,9 +31,7 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
   const toast = useToast();
 
   useEffect(() => {
-    if (!window.webkitSpeechRecognition) {
-      console.log("Speech recognition not supported in this browser");
-    } else {
+    if (typeof window !== "undefined" && window.webkitSpeechRecognition) {
       recognitionRef.current = new window.webkitSpeechRecognition();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
@@ -49,6 +49,8 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
       recognitionRef.current.onend = () => {
         setIsRecording(false);
       };
+    } else {
+      console.log("Speech recognition not supported in this browser");
     }
 
     return () => {
@@ -60,18 +62,18 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
 
   const startRecording = () => {
     setIsRecording(true);
-    recognitionRef.current = new window.webkitSpeechRecognition();
-    recognitionRef.current.continuous = true;
-    recognitionRef.current.interimResults = true;
+    if (typeof window !== "undefined" && window.webkitSpeechRecognition) {
+      recognitionRef.current = new window.webkitSpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
 
-    recognitionRef.current.onresult = (event: any) => {
-      const { transcript } = event.results[event.results.length - 1][0];
+      recognitionRef.current.onresult = (event: any) => {
+        const { transcript } = event.results[event.results.length - 1][0];
+        setTranscript(transcript);
+      };
 
-      console.log(event.results);
-      setTranscript(transcript);
-    };
-
-    recognitionRef.current.start();
+      recognitionRef.current.start();
+    }
   };
 
   const stopRecording = () => {
@@ -85,7 +87,7 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
 
   const { isOpen, onClose, onOpen } = useDisclosure();
   const handleOpen = () => {
-    if (!window.webkitSpeechRecognition) {
+    if (typeof window !== "undefined" && !window.webkitSpeechRecognition) {
       toast({
         title: "Unavailable service.",
         description: "Speech recognition not supported in this browser",

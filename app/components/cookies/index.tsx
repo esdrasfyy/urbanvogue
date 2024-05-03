@@ -42,8 +42,7 @@ function CookiesPrivacy() {
   );
 
   return (
-    <aside className="mt-80">
-      <Button onClick={onToggle}>Click Me</Button>
+    <aside>
       <Slide direction="bottom" in={isOpen} style={{ zIndex: 10 }} className="flex justify-center items-center w-full">
         <Box
          className="mb-3 rounded-md shadow-snipped bg-custom-grayTwo/95 z-40 w-[98vw] flex justify-between items-center py-4 px-[3vw] gap-5 max-md:flex-col"

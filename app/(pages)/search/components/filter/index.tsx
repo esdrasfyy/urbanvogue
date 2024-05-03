@@ -11,9 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TbArrowBadgeDown, TbArrowBadgeUp } from "react-icons/tb";
 import { FiltersI } from "../../types";
+import { ContextLoading } from "@/contexts/ContextLoading";
 
 interface FilterProps {
   isOpen: boolean;
@@ -22,7 +23,8 @@ interface FilterProps {
   filters: FiltersI | null;
 }
 function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
-  const [loading, setLoading] = useState(false);
+  const contextLoading = useContext(ContextLoading)!;
+  const { loading } = contextLoading;
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get("query");
@@ -36,24 +38,23 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
   const [max, setMax] = useState<number>(999);
   const pathname = usePathname();
 
-  useEffect(() =>{
-    if (searchParams.has('brand')) {
-      setBrand(searchParams.get('brand') || "Brands");
+  useEffect(() => {
+    if (searchParams.has("brand")) {
+      setBrand(searchParams.get("brand") || "Brands");
     }
-    if (searchParams.has('category')) {
-      setCategory(searchParams.get('category') || "Categories");
+    if (searchParams.has("category")) {
+      setCategory(searchParams.get("category") || "Categories");
     }
-    if (searchParams.has('orderBy')) {
-      setOrder(searchParams.get('orderBy') || "Relevance");
+    if (searchParams.has("orderBy")) {
+      setOrder(searchParams.get("orderBy") || "Relevance");
     }
-    if (searchParams.has('min')) {
-      setMin(parseInt(searchParams.get('min') || '0'));
+    if (searchParams.has("min")) {
+      setMin(parseInt(searchParams.get("min") || "0"));
     }
-    if (searchParams.has('max')) {
-      setMax(parseInt(searchParams.get('max') || '999'));
+    if (searchParams.has("max")) {
+      setMax(parseInt(searchParams.get("max") || "999"));
     }
-  }, [searchParams])
-
+  }, [searchParams]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -69,11 +70,17 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
     if (category !== "Categories") {
       params.set("category", category);
     }
-    if (min !== 0 && min !== 999 && !isNaN(min) && min > 0 && min < 999) {
+    if (!isNaN(min) && min > 0 && min < 999 && min < max) {
       params.set("min", `${min}`);
+      if (!params.get("max")) {
+        params.set("max", `${max}`);
+      }
     }
-    if (max !== 0 && max !== 999 && !isNaN(max) && max < 999 && max > 0) {
+    if (!isNaN(max) && max < 999 && max > 0 && min < max) {
       params.set("max", `${max}`);
+      if (!params.get("min")) {
+        params.set("min", `${min}`);
+      }
     }
     params.set("query", search);
     params.set("page", pageQuery || "1");
@@ -101,11 +108,13 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
         <DrawerHeader className="shadow-snipped">Filter & Order </DrawerHeader>
         <Divider />
         <DrawerBody backgroundColor={"#171a1b"}>
-          <section className="h-full flex flex-col justify-between">
+          <section className="h-full flex flex-col justify-between mb-16">
             <div>
               <div>
                 <div>
-                  <h4 className="text-base font-semibold mt-4 mb-2">Category</h4>
+                  <h4 className="text-base font-semibold mt-4 mb-2">
+                    Category
+                  </h4>
                   <Select
                     iconColor="#ed145b"
                     icon={arrow2 ? <TbArrowBadgeUp /> : <TbArrowBadgeDown />}
@@ -159,7 +168,11 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
                     </option>
                     {filters &&
                       Object.keys(filters.brands).map((brand) => (
-                        <option key={brand} value={brand} className="select-css">
+                        <option
+                          key={brand}
+                          value={brand}
+                          className="select-css"
+                        >
                           {brand}
                         </option>
                       ))}
@@ -173,7 +186,7 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
                       label="min:"
                       pleaceholder="min"
                       name="min"
-                      defaultvalue={0}
+                      defaultvalue={min}
                       disabled={loading ? true : false}
                       handleMinMax={handleMin}
                     />
@@ -185,7 +198,7 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
                       label="max:"
                       pleaceholder="max"
                       name="max"
-                      defaultvalue={999}
+                      defaultvalue={max}
                       disabled={loading ? true : false}
                       handleMinMax={handleMax}
                     />
@@ -221,11 +234,11 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
               </Select>
               <div>
                 <h4 className="text-base font-semibold mt-5 mb-2">Sizes</h4>
-                <ul className="flex flex-wrap w-full gap-3 items-start text-sm">
+                <ul className="flex flex-wrap w-full gap-3 items-start text-[10px]">
                   {filters &&
                     Object.keys(filters.sizes).map((size) => (
                       <li
-                        className="px-2 py-1 bg-custom-grayThree border-[1px] border-custom-textColor rounded-md"
+                        className="px-2 py-0.5 gradient-gray border-[1px] border-custom-pink rounded-md"
                         key={size}
                       >
                         {size}
@@ -235,14 +248,14 @@ function Filter({ onClose, isOpen, onOpen, filters }: FilterProps) {
               </div>
               <div>
                 <h4 className="text-base font-semibold mt-5 mb-2">Colors</h4>
-                <ul className="flex flex-wrap w-full gap-3 items-start text-sm">
+                <ul className="flex flex-wrap w-full gap-3 items-start text-[10px]">
                   {filters &&
                     Object.keys(filters.colors).map((color) => (
                       <li
-                        className="px-2 py-1 bg-custom-grayThree border-[1px] border-custom-textColor rounded-md"
+                        className="p-1 gradient-gray border-[1px] border-custom-pink  rounded-md"
                         key={color}
                       >
-                        {color}
+                        {color.toUpperCase()}
                       </li>
                     ))}
                 </ul>

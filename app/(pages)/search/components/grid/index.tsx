@@ -33,7 +33,7 @@ function GridSearch({ handleFilters }: GridSearchProps) {
         offset: offsetRef.current,
         limit: limitRef.current,
       });
-      
+
       if (status === 200 && data) {
         offsetRef.current = 1;
         count.current = 0;
@@ -53,20 +53,22 @@ function GridSearch({ handleFilters }: GridSearchProps) {
 
   useEffect(() => {
     fetchData();
-    if (searchParams.toString()) {
-      document.title = `${searchParams.toString()} - Urban Vogue`;
+
+    const title = searchParams.get("query")?.split("-").join(" ");
+    if (title) {
+      document.title = `${title} - Urban Vogue`;
       const metaDescription = document.querySelector(
         `meta[name="description"]`
       );
       if (metaDescription) {
         metaDescription.setAttribute(
           `content`,
-          `You searched for: ${searchParams.toString()}. Browse and look for the product that best suits you`
+          `You searched for: ${title}. Browse and look for the product that best suits you`
         );
       }
       const ogTitle = document.querySelector(`meta[property="og:title"]`);
       if (ogTitle) {
-        ogTitle.setAttribute(`content`, `${searchParams.toString()} - Urban Vogue`);
+        ogTitle.setAttribute(`content`, `${title} - Urban Vogue`);
       }
       const ogDescription = document.querySelector(
         `meta[property="og:description"]`
@@ -74,11 +76,10 @@ function GridSearch({ handleFilters }: GridSearchProps) {
       if (ogDescription) {
         ogDescription.setAttribute(
           `content`,
-          `You searched for: ${searchParams.toString()}. Browse and look for the product that best suits you`
+          `You searched for: ${title}. Browse and look for the product that best suits you`
         );
       }
     }
-    
   }, [searchParams.toString(), orderBy, offsetRef]);
 
   return (

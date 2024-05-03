@@ -1,24 +1,9 @@
 "use client";
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { HiSearch } from "react-icons/hi";
-import { MdKeyboardVoice } from "react-icons/md";
 import { SearchInputProps } from "./types";
 import { useRouter, useSearchParams } from "next/navigation";
-import gif from "@/assets/gifs/Animation - 1712939579857.json";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
-import Lottie from "lottie-react";
-import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import { useToast } from "@chakra-ui/react";
 import { Voice } from "@/components/voice";
 
 function SearchInputUi({ classname }: SearchInputProps) {
@@ -31,12 +16,13 @@ function SearchInputUi({ classname }: SearchInputProps) {
   };
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    handleSubmit(value)
+    handleSubmit(value);
   };
 
-  const handleSubmit = (value:string) =>{
+  const handleSubmit = (value: string) => {
     if (value) {
-      return router.push(`/search?query=${value}&page=1`);
+      const newValue = value.split(" ").join("-")
+      return router.push(`/search?query=${newValue}&page=1`);
     }
     toast({
       title: "Speak your research.",
@@ -47,7 +33,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
       variant: "left-accent",
       position: "top-right",
     });
-  }
+  };
   return (
     <form
       className={`relative ${classname} shadow-snipped rounded-full `}
@@ -59,7 +45,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
           className={`shadow-snipped duration-300 ease-linear relative bg-custom-grayThree border-custom-grayThree border-2 rounded-3xl py-[3px] pl-16 text-white transition-all hover:opacity-70 w-full outline-none searchInput text-lg max-[400px]:pl-12 focus:outline-none focus:ring-0 focus:border-custom-pink focus:border-2  ring-0`}
           placeholder="ex: Camisa"
           onChange={handleChange}
-          value={value}
+          value={value.split("-").join(" ")}
         />
         <button
           type="submit"
@@ -67,7 +53,7 @@ function SearchInputUi({ classname }: SearchInputProps) {
         >
           <HiSearch />
         </button>
-       <Voice handleSubmit={handleSubmit}/>
+        <Voice handleSubmit={handleSubmit} />
       </div>
     </form>
   );

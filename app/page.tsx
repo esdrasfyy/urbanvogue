@@ -27,16 +27,18 @@ const Home: NextPage = () => {
       <span className="my-5"></span>
       <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
       <section className="w-full mt-14 flex gap-5 flex-col-reverse">
-        <div className="flex gap-5 mt-8 max-md:flex-wrap">
+        <div className="flex gap-5 mt-8 max-md:flex-wrap relative">
           <Image
             src={adOne}
             alt="ad"
-            className="w-full grayscale rounded-md shadow-snipped"
+            unoptimized
+            className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped"
           />
           <Image
             src={adTwo}
             alt="ad"
-            className="w-full grayscale rounded-md shadow-snipped"
+            unoptimized
+            className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped"
           />
         </div>
         <CarrouselBrands />

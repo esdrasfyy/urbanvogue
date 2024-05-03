@@ -1,11 +1,8 @@
-// Adicione "use client"; para indicar que este arquivo deve ser executado apenas no navegador
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Lottie from "lottie-react";
-import gif from "@/assets/gifs/Animation - 1712939579857.json";
 import { MdKeyboardVoice } from "react-icons/md";
-import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import { dotWave } from "ldrs";
 import {
   Modal,
   ModalBody,
@@ -14,7 +11,6 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { IoSearchSharp } from "react-icons/io5";
 
 declare global {
   interface Window {
@@ -23,48 +19,43 @@ declare global {
 }
 
 function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
-  const lottieRef = useRef<any>();
   const [isRecording, setIsRecording] = useState(false);
-  const [recordingComplete, setRecordingComplete] = useState(false);
   const [transcript, setTranscript] = useState("");
   const recognitionRef = useRef<any>(null);
   const toast = useToast();
+  const [audioStart, setAudioStart] = useState<HTMLAudioElement | null>(null);
+  const [audioPause, setAudioPause] = useState<HTMLAudioElement | null>(null);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.webkitSpeechRecognition) {
-      recognitionRef.current = new window.webkitSpeechRecognition();
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
-
-      recognitionRef.current.onresult = (event: any) => {
-        const { transcript } = event.results[event.results.length - 1][0];
-        setTranscript(transcript);
-      };
-
-      recognitionRef.current.onerror = (event: any) => {
-        console.error("Speech recognition error:", event.error);
-        setIsRecording(false);
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsRecording(false);
-      };
-    } else {
-      console.log("Speech recognition not supported in this browser");
+      dotWave.register();
+      const startAudio = new Audio("/resources/start.mp3");
+      const pauseAudio = new Audio("/resources/pause.mp3");
+      setAudioStart(startAudio);
+      setAudioPause(pauseAudio);
     }
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-    };
   }, []);
 
+  const handleTranscript = () => {
+    setTimeout(() => {
+      if (transcript) {
+        handleSubmit(transcript.toLowerCase());
+        stopRecording();
+      }
+    }, 3000);
+  };
+
+  useEffect(() => {
+    handleTranscript();
+  }, [transcript]);
+
   const startRecording = () => {
+    audioStart?.play();
     setIsRecording(true);
     if (typeof window !== "undefined" && window.webkitSpeechRecognition) {
       recognitionRef.current = new window.webkitSpeechRecognition();
-      recognitionRef.current.continuous = true;
+      recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = true;
 
       recognitionRef.current.onresult = (event: any) => {
@@ -78,14 +69,13 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
 
   const stopRecording = () => {
     if (recognitionRef.current) {
-      lottieRef.current.pause();
+      audioPause?.play();
       setIsRecording(false);
       recognitionRef.current.stop();
-      setRecordingComplete(true);
+      onClose();
     }
   };
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
   const handleOpen = () => {
     if (typeof window !== "undefined" && !window.webkitSpeechRecognition) {
       toast({
@@ -99,6 +89,8 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
       });
       return;
     }
+    setTranscript("");
+    startRecording();
     onOpen();
   };
 
@@ -110,15 +102,11 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
       >
         <MdKeyboardVoice />
       </span>
-      {/* Modal de gravação */}
       <Modal
         isOpen={isOpen}
         onClose={() => {
-          lottieRef.current.pause();
-          setIsRecording(false);
-          recognitionRef.current.stop();
-          stopRecording();
           onClose();
+          stopRecording();
         }}
         isCentered
         size={"xs"}
@@ -132,48 +120,33 @@ function Voice({ handleSubmit }: { handleSubmit: (value: string) => void }) {
           background={"#1d2123"}
           textColor={"#d9d9d9"}
           margin={"0px 0px"}
+          className="shadow-snipped"
         >
           <ModalBody>
             <div className="flex items-center justify-center flex-col my-10">
-              <Lottie
-                animationData={gif}
-                width={200}
-                height={200}
-                renderer="svg"
-                lottieRef={lottieRef}
-              />
-              <p className="text-custom-textColor/80 text-xl mb-10">
-                {transcript ? transcript : " Say your search..."}
-              </p>
-
-              <div className="flex gap-5">
-                <button
-                  onClick={isRecording ? stopRecording : startRecording}
-                  className={`text-2xl p-4 rounded-full ${
-                    isRecording
-                      ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
-                      : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
-                  } duration-300 ease-linear`}
-                >
-                  {/* Ícone do microfone */}
-                  {isRecording ? <BiMicrophone /> : <BiMicrophoneOff />}
-                </button>
-                {transcript && !isRecording && (
-                  <button
-                    onClick={() => {
-                      onClose();
-                      handleSubmit(transcript);
-                    }}
-                    className={`text-2xl p-4 rounded-full flex items-center justify-center ${
-                      isRecording
-                        ? "border-[1px] border-transparent bg-custom-pink hover:bg-custom-pink/50"
-                        : "border-[1px] border-custom-textColor hover:bg-custom-pink/50"
-                    } duration-300 ease-linear`}
-                  >
-                    <IoSearchSharp />
-                  </button>
+              <div className="h-16 flex justify-end mb-6">
+                {isRecording ? (
+                  <span className="mt-2">
+                    <l-dot-wave size="75" speed="1" color="white"></l-dot-wave>
+                  </span>
+                ) : (
+                  <span className=" text-[48px] flex gap-1.5 text-white">
+                    <span>•</span>
+                    <span>•</span>
+                    <span>•</span>
+                    <span>•</span>
+                  </span>
                 )}
               </div>
+              {transcript ? (
+                <p className="text-custom-pink text-xl font-semibold">
+                  {transcript}
+                </p>
+              ) : (
+                <p className="text-custom-pink text-xl font-semibold">
+                  Say your search...
+                </p>
+              )}
             </div>
           </ModalBody>
         </ModalContent>

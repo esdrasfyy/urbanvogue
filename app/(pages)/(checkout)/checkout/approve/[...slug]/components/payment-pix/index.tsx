@@ -7,7 +7,7 @@ import {
   TbCircleNumber2,
   TbCircleNumber3,
   TbCircleNumber4,
-  TbInfoHexagonFilled,
+  TbInfoHexagon,
 } from "react-icons/tb";
 import Link from "next/link";
 import { HiMiniCamera } from "react-icons/hi2";
@@ -200,7 +200,7 @@ function PaymentPix({
           <div className="w-full bg-custom-grayTwo rounded-md shadow-snipped p-5 text-custom-textColor">
             <h2 className="flex gap-3 items-center text-xl">
               <span className="text-custom-pink text-2xl">
-                <TbInfoHexagonFilled />
+                <TbInfoHexagon />
               </span>
               PIX PAYMENT GUIDE
             </h2>

@@ -68,7 +68,7 @@ const Page: NextPage = ({ params }: any) => {
 
   return (
     <>
-      <main className="h-full w-full max-w-[1050px] flex flex-col items-center justify-center overflow-hidden px-4">
+      <main className="h-full w-full max-w-[850px] flex flex-col items-center justify-center overflow-hidden px-4">
         {dataCard && (
           <Suspense fallback={<Loading />}>
             <section className="h-full mt-28 bg-custom-grayTwo max-w-[1050px] w-full mx-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor rounded-md">
@@ -115,14 +115,14 @@ const Page: NextPage = ({ params }: any) => {
                 />
               )}
             </section>
-            <section className="mt-2 border-solid border-4 border-custom-grayTwo h-full bg-custom-grayOne max-w-[1050px] w-full mx-12 pb-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-12 rounded-md">
+            <section className="mt-5 bg-custom-grayTwo max-w-[1050px] w-full mx-12 pb-12 max-md:mx-2 p-4 shadow-snipped text-custom-textColor flex flex-col gap-12 pt-12 rounded-md">
               <SlideProducts
-                query="order_by=created_at:desc"
+                query="order_by=createdAt:desc"
                 category="NEWS"
                 notArrow={true}
               />
               <SlideProducts
-                query="order_by=created_at:desc"
+                query="order_by=createdAt:desc"
                 category="NEWS"
                 notArrow={true}
               />

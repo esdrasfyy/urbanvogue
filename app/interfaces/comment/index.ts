@@ -18,7 +18,7 @@ export interface CommentI {
     product_id: number;
     username: string;
     rating: string;
-    timespost:Date;
     recommend: boolean;
     urls:Urls[]
+    createdAt: Date
   }

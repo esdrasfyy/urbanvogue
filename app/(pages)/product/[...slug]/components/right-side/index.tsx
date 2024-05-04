@@ -28,23 +28,14 @@ function RightSide({dataProduct}:RightSideProps) {
     const [selectColor, setSelectColor] = useState<string>(dataProduct?.colors[0]?.name_color);
     const [selectSize, setSelectSize] = useState<string>(dataProduct?.sizes[0]?.size);
     const [qtd, setQtd] = useState(1);
-    const [price, setPrice] = useState<number>(priceValue);
-    const [installment, setInstallment] = useState<number>(installmentValue);
-  const {
+
+    const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const cep = data.cep;
-    try {
-      alert("cep pesquisado");
-    } catch (error) {
-      alert("cep nao pesquisado");
-    } finally {
-    }
-  };
+
 
     const [heart, setHeart] = useState<boolean>(false);
     const context = useContext(ContextCart);
@@ -57,7 +48,7 @@ function RightSide({dataProduct}:RightSideProps) {
     
         const data: ProductCartI = {
           id: dataProduct?.id,
-          price: price.toString(),
+          price: dataProduct.price,
           quantity: qtd,
           size: selectSize,
           color: selectColor,
@@ -108,16 +99,22 @@ function RightSide({dataProduct}:RightSideProps) {
     <div className="flex gap-8 mt-4 items-center flex-wrap  ">
       <div>
         <p className="text-3xl text-custom-pink">
-          $ {(price.toFixed(2))}
+          $ {parseFloat(dataProduct.price).toFixed(2)}
         </p>
       </div>
       <div> or </div>
       <div>
         <p className="text-base text-custom-textColor/60">
-          6x of {installment?.toFixed(2)}
+          6x of {installmentValue}
         </p>
       </div>
     </div>
+    <menu id='menu'>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </menu>
     <form className="flex-col mt-4">
       <div className="w-full flex gap-2 items-center relative">
         <div className="flex w-full flex-col relative">

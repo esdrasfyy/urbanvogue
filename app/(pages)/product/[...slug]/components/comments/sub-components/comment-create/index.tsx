@@ -19,7 +19,6 @@ import { FaAngry, FaGrinHearts } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../../../../../services/firebase/index";
 import { CreateCommentApi } from "../../../../../../../services/comments/create/index";
-import { LoadingSpinner } from "../../../../../../../components/ui/loading/index";
 import { ContextUser } from "../../../../../../../contexts/ContextUser";
 import { ContextLoading } from "@/contexts/ContextLoading";
 
@@ -103,6 +102,7 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
           position: "top-right",
         });
         setInterval(() => {
+          setLoading(false)
           onClose();
         }, 2500);
       }
@@ -117,6 +117,7 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
           position: "top-right",
         });
         setInterval(() => {
+          setLoading(false)
           onClose();
         }, 2500);
       }
@@ -136,7 +137,15 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
     const { user } = context;
 
     if (!user) {
-      return alert("necessario fazer login");
+     return toast({
+        title: "Login required.",
+        description: "You need to log in first",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
     }
     onOpen();
   };
@@ -157,6 +166,7 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
         finalFocusRef={finalRef}
         isOpen={isOpen}
         size={"3xl"}
+        isCentered
         onClose={onClose}
       >
         <ModalOverlay
@@ -170,10 +180,11 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
           textColor={"#d9d9d9"}
           borderRadius={"4px"}
           position={"relative"}
+          margin={"0px 14px"}
         >
           <ModalHeader>Make your comment</ModalHeader>
           <ModalCloseButton />
-          <div className="px-7 mt-3">
+          <div className="px-7  mt-3">
             <div className="flex gap-3 line-clamp-2">
               <div>
                 <Image

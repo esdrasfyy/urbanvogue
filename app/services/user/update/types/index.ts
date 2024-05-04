@@ -6,8 +6,6 @@ export interface UpdateUserApiProps {
   profile: string | null;
   fullname: string;
   username: string;
-  email: string;
-  phone: string;
   birthdate: Date;
   cpf: string;
 }

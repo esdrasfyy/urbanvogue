@@ -8,10 +8,8 @@ import {
 async function UpdateUserApi({
   birthdate,
   cpf,
-  email,
   fullname,
   gender,
-  phone,
   profile,
   userId,
   username,
@@ -25,10 +23,8 @@ async function UpdateUserApi({
       `${api}user/update`,{
         birthdate,
         cpf,
-        email,
         fullname,
         gender,
-        phone,
         profile_img: profile || null,
         user_id: userId,
         username,

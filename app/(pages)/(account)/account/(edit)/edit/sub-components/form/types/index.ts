@@ -2,10 +2,8 @@ import * as yup from "yup";
 export interface InputsEdit {
     fullname: string;
     username: string;
-    email: string;
-    phone: string;
     gender: string;
-    cpf: string;
+    cpf?: string;
     file?: FileList;
     birthdate: Date;
   }
@@ -32,12 +30,7 @@ export interface InputsEdit {
       .string()
       .required("Este campo é obrigatório!")
       .min(5, "O mínimo de caracteres são 5."),
-    email: yup
-      .string()
-      .email("Deve ser um email válido!")
-      .required("Este campo é obrigatório!"),
-    phone: phoneSchema.required("O número de telefone é obrigatório"),
-    cpf: cpfSchema.required("This field is required!"),
+    cpf: cpfSchema,
     birthdate: yup
       .date()
       .required("A data de nascimento é obrigatória.")

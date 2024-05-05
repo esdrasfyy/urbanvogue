@@ -18,11 +18,14 @@ function InputUi({
   disabled,
   change,
   focus,
-  defaultvalue
+  defaultvalue,
 }: inputProps) {
   return (
     <>
-      <label className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`} htmlFor={name}>
+      <label
+        className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}
+        htmlFor={name}
+      >
         {label}
       </label>
       <Input
@@ -37,23 +40,30 @@ function InputUi({
         onFocus={focus}
         value={value}
         defaultValue={defaultvalue}
-        onChange={(e:any) => change!(e.target.value)}
+        onChange={(e: any) => change!(e.target.value)}
         maxLength={maxLength}
         disabled={disabled}
         className={`${classname} ${
           error ? "mb-0" : "mb-4"
         } py-5 shadow-snipped`}
-        {...register(`${name}`, { required, maxLength, minLength, onChange:change})}
+        {...register(`${name}`, {
+          required,
+          maxLength,
+          minLength,
+          onChange: change,
+        })}
       />
-      <span
-        className={`text-custom-red text-sm italic text-right mr-2 ${
-          error ? "mb-4" : "mb-0"
-        }`}
-      >
-        {error}
-      </span>
+      {error && (
+        <span
+          className={`text-custom-red text-sm italic text-right mr-2 ${
+            error ? "mb-4" : "mb-0"
+          }`}
+        >
+          {error}
+        </span>
+      )}
     </>
   );
 }
 
-export {InputUi};
+export { InputUi };

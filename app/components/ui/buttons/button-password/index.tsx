@@ -24,7 +24,7 @@ function ButtonPassUi({
           <Input
             pr="4.5rem"
             type={show ? "text" : "password"}
-            placeholder="Enter password"
+            placeholder="••••••••••••"
             borderWidth="1px"
             borderRadius={"4px"}
             id={name}

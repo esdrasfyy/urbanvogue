@@ -16,6 +16,9 @@ import { formatCpf } from "@/masks/cpf";
 import Image from "next/image";
 import { ContextLoading } from "@/contexts/ContextLoading";
 import { format } from "date-fns";
+import { ChangesEmail } from "../changes/email";
+import { ChangesPhone } from "../changes/phone";
+import { ChangesPassword } from "../changes/password";
 
 function FormEdit() {
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -164,7 +167,7 @@ function FormEdit() {
       return;
     }
     const { user } = context;
-    if(user?.cpf){
+    if (user?.cpf) {
       setCpf(user?.cpf);
     }
     setGender(user?.gender || "");
@@ -181,7 +184,7 @@ function FormEdit() {
   const { user } = context;
 
   return (
-    <section className="px-20 max-sm:px-4 ">
+    <section>
       <form
         className="z-10 flex items-center justify-center w-full flex-col relative"
         onSubmit={handleSubmit(onSubmit)}
@@ -235,7 +238,9 @@ function FormEdit() {
             disabled={loading}
             defaultvalue={user?.fullname}
           />
-
+          <ChangesEmail />
+          <ChangesPhone />
+          <ChangesPassword />
           <div className="flex justify-between w-full gap-9 max-sm:flex-wrap max-sm:gap-0">
             <div className="w-1/2 flex gap-[1px] flex-col max-sm:w-full">
               <InputUi
@@ -270,7 +275,9 @@ function FormEdit() {
             </div>
           </div>
           <div>
-            <label className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}>
+            <label
+              className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}
+            >
               Gender
             </label>
             <RadioGroup onChange={setGender} value={gender}>

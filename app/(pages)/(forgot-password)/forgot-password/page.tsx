@@ -9,7 +9,7 @@ import { ResetPassword } from "./components/reset-password";
 import { NextPage } from "next";
 
 const ForgotPassword:NextPage = () => {
-  const [stepCount, setStepCount] = useState<number>(2);
+  const [stepCount, setStepCount] = useState<number>(1);
 
   const handleCount = (value: number) => {
     setStepCount(value);

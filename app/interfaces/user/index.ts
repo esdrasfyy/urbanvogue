@@ -1,12 +1,19 @@
 export interface UserI {
   user_id: number;
+  google_id: string;
+  facebook_id: number;
+  github_id: string;
   fullname: string;
   username: string;
   email: string;
+  verify_email: boolean;
   profile_img: string;
-  date_of_birth?: Date;
+  password_hash: string;
+  date_of_birth: Date;
   phone: string;
+  verify_phone: boolean;
   gender: string;
   cpf: string;
-  created_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

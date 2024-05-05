@@ -7,9 +7,10 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputEmail, schema } from "./types";
 import { InputUi } from "@/components/ui/inputs/default";
@@ -17,35 +18,26 @@ import { ContextLoading } from "@/contexts/ContextLoading";
 import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { UserI } from "@/interfaces/user";
 import axios from "axios";
+import { ChangesApi } from "@/services/user/changes";
+import { FaArrowRight } from "react-icons/fa";
+import { set } from "date-fns";
+import { LoadingGlobal } from "@/components/loading";
+import SendCodeEmail from "./send-code";
+import { ConfirmCode } from "./confirm-code";
 
 function ModalEmail({
   isOpen,
   onClose,
+  onOpen,
   user,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onOpen: () => void;
   user: UserI;
 }) {
-  const contextLoading = useContext(ContextLoading!)!;
-  const { loading, setLoading } = contextLoading;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<InputEmail>({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit: SubmitHandler<InputEmail> = async (data) => {
-    const res = await axios.post("http://localhost:9090/user/changes",{
-        user_id: user.user_id,
-        change:"email",
-        email: data.email
-    })
-    console.log(res);
-    
-  };
+  const [send, setSend] = useState<boolean>(false);
+  const toast = useToast();
 
   return (
     <Modal
@@ -60,6 +52,7 @@ function ModalEmail({
         backdropInvert="50%"
         backdropBlur="3px"
       />
+      <LoadingGlobal />
       <ModalContent
         backgroundColor={"#171a1b"}
         textColor={"#d9d9d9"}
@@ -70,54 +63,27 @@ function ModalEmail({
         <ModalHeader>
           {" "}
           {(user.email && user.verify_email && "Change your email") ||
-            (user.email && !user.verify_email && "Check your email") || 
-            (!user.email && !user.verify_email && "Add email") 
-            }
+            (user.email && !user.verify_email && "Check your email") ||
+            (!user.email && !user.verify_email && "Add email")}
         </ModalHeader>
-        <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)} className="pb-5">
-            <p className="mb-4 text-sm text-custom-textColor/35">
-              {user.email
-                ? "Enter your new email twice, and we will send you a code to confirm."
-                : "Assign an email address to your account so you can enjoy the latest news"}
-            </p>
-
-            <div className="h-fit">
-              <InputUi
-                type="email"
-                label="Email"
-                pleaceholder="neymarsantos@gmail.com"
-                classname="w-full text-custom-textColor"
-                name="email"
-                register={register}
-                error={errors?.email?.message}
-                disabled={loading}
-              />
-            </div>
-            <div className="mb-5">
-              <InputUi
-                type="repeat"
-                label="repeat"
-                pleaceholder="neymarsantos@gmail.com"
-                classname="w-full text-custom-textColor"
-                name="repeat"
-                register={register}
-                error={errors?.repeat?.message}
-                disabled={loading}
-              />
-            </div>
-            <div>
-              <ButtonIconUi
-                type="submit"
-                content="Next"
-                icon="FaArrowRight"
-                classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear ${
-                  errors.email?.message ? "mt-4" : "mt-0"
-                }`}
-              />
-            </div>
-          </form>
-        </ModalBody>
+        {send ? (
+          <ConfirmCode
+            onClose={onClose}
+            onOpen={onOpen}
+            setSend={setSend}
+            toast={toast}
+            user={user}
+            change="email"
+          />
+        ) : (
+          <SendCodeEmail
+            onClose={onClose}
+            onOpen={onOpen}
+            setSend={setSend}
+            toast={toast}
+            user={user}
+          />
+        )}
       </ModalContent>
     </Modal>
   );

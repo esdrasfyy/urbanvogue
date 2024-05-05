@@ -13,11 +13,11 @@ const phoneSchema = yup
 const schema = yup.object().shape({
   email: yup
     .string()
-    .required("Este campo é obrigatório!")
-    .min(8, "O mínimo de caracteres são 8."),
+    .email("Invalid email format")
+    .required("This field is required!"),
   repeat: yup
     .string()
-    .required("Este campo é obrigatório!")
-    .min(8, "O mínimo de caracteres são 8."),
+    .email("Invalid email format")
+    .required("This field is required!")
 });
 export { schema };

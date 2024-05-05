@@ -1,20 +1,17 @@
 import { UserI } from "@/interfaces/user";
 
-export interface UpdateUserApiProps {
-  userId: number;
-  gender: string;
-  profile: string | null;
-  fullname: string;
-  username: string;
-  birthdate: Date;
-  cpf: string;
+export interface ChangesApiProps {
+  user_id: number;
+  change: "email" | "phone" | "password";
+  email: string | null;
+  password: string | null;
+  phone: string | null;
 }
-export interface UpdateUSerApiReq {
-  user: UserI | null;
+export interface ChangesApiReq {
   msg: string | null;
 }
-export interface UpdateUserApiResponse {
-  data: UpdateUSerApiReq | null;
+export interface ChangesApiResponse {
+  data: ChangesApiReq | null;
   error: string | null;
   status: number;
 }

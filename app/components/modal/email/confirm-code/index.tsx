@@ -1,19 +1,26 @@
-import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { ContextLoading } from "@/contexts/ContextLoading";
-import { ContextUser } from "@/contexts/ContextUser";
-import { ForgotPassSendCode } from "@/services/user/forgot-password/send-code";
-import {
-  HStack,
-  PinInput,
-  PinInputField,
-  useToast,
-} from "@chakra-ui/react";
+import { UserI } from "@/interfaces/user";
+import { HStack, PinInput, PinInputField, useToast } from "@chakra-ui/react";
+import axios from "axios";
 import React, { FormEvent, useContext, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 
-function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
-  const toast = useToast();
+function ConfirmCode({
+  onOpen,
+  onClose,
+  user,
+  toast,
+  setSend,
+  change
+}: {
+  onOpen: () => void;
+  onClose: () => void;
+  user: UserI;
+  toast: Function;
+  setSend: Function;
+  change: "email" | "phone" | "password"
+}) {
   const [valueInput, setValueInput] = useState("");
-  const context = useContext(ContextUser);
   const contextLoading = useContext(ContextLoading)!;
   const { setLoading, loading } = contextLoading;
   const handleChange = (value: string) => {
@@ -22,14 +29,10 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!context) return;
-    const { emailForRecovery } = context;
+    const res = await axios.get(`http://localhost:9090/user/changes?change=${change}&code=${valueInput}`)
     try {
       setLoading(true);
-      const res = await ForgotPassSendCode({
-        email: emailForRecovery || "",
-        code: valueInput,
-      });
+
       if (res.status !== 200) {
         toast({
           title: "Error checking code.",
@@ -43,7 +46,6 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
         });
         return;
       }
-      handleCount(3);
       return toast({
         title: "Validated code!",
         description:
@@ -63,10 +65,7 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
   };
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        className="flex flex-col justify-between w-full max-w-96 mx-auto pb-4"
-      >
+      <form className="flex flex-col justify-between w-full max-w-96 mx-auto pb-4">
         <p
           className={`w-full max-w-96 mx-auto mb-2 text-sm text-custom-textColor/45 uppercase max-md:text-[10px] max-md:mb-1`}
         >
@@ -122,16 +121,24 @@ function SendCode({ handleCount }: { handleCount: (value: number) => void }) {
           <a>I entered the wrong email</a>
         </div>
         <div className="flex w-full justify-between py-8">
-          <ButtonIconUi
-            type="submit"
-            content="Next"
-            icon="FaArrowRight"
-            classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear`}
-          />
+          <button
+            type="reset"
+            className={`w-full group bg-none border-2 border-custom-pink flex text-custom-textColor py-1.5  rounded text-xl duration-300 hover:bg-custom-pink`}
+            disabled={loading}
+            onClick={(e: any) => onSubmit(e)}
+          >
+            <span className="flex justify-between items-center px-3 max-w-[100%] w-full">
+              <span className="ml-[45%] max-sm:ml-[15%]">Next</span>
+              <FaArrowRight
+                size={20}
+                className="transition-all ease-in-out -translate-x-7 group-hover:translate-x-0 duration-1000"
+              />
+            </span>
+          </button>
         </div>
       </form>
     </>
   );
 }
 
-export { SendCode };
+export { ConfirmCode };

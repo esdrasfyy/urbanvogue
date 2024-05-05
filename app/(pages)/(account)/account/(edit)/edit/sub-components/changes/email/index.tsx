@@ -63,7 +63,7 @@ function ChangesEmail() {
         >
           {user?.email && user.verify_email ? <MdEdit /> : <TbMailSearch />}
         </button>
-        {user && <ModalEmail isOpen={isOpen} onClose={onClose} user={user} />}
+        {user && <ModalEmail isOpen={isOpen} onClose={onClose} user={user} onOpen={onOpen}/>}
       </div>
     </div>
   );

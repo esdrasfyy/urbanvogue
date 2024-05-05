@@ -2,7 +2,6 @@
 import React, { createContext, useEffect, useState, ReactNode } from "react";
 
 import { ContextUserProps } from "./types/index";
-import { LoginApi } from "../../services/login";
 import { UserI } from "../../interfaces/user";
 import axios from "axios";
 

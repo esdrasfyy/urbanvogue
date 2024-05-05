@@ -5,4 +5,5 @@ export interface ButtonIconUiProps {
     classname?: string;
     error?: string;
     disabled?: boolean;
+    onClick?: Function
   }

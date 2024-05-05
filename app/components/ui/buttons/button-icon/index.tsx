@@ -14,6 +14,7 @@ function ButtonIconUi({
   content,
   classname,
   disabled,
+  onClick
 }: ButtonIconUiProps) {
   const Icon = iconsMap[icon];
 
@@ -22,6 +23,7 @@ function ButtonIconUi({
       type={type}
       className={`group bg-none border-2 border-custom-pink flex text-custom-textColor py-1.5 ${classname}  rounded text-xl duration-300 hover:bg-custom-pink`}
       disabled={disabled}
+      onClick={() => onClick}
     >
       <span className="flex justify-between items-center px-3 max-w-[100%] w-full">
         <span className="ml-[45%] max-sm:ml-[15%]">{content}</span>

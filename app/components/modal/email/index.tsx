@@ -23,22 +23,23 @@ import { FaArrowRight } from "react-icons/fa";
 import { set } from "date-fns";
 import { LoadingGlobal } from "@/components/loading";
 import SendCodeEmail from "./send-code";
-import { ConfirmCode } from "./confirm-code";
+import { ConfirmCode } from "../sub-components/confirm-code";
 
 function ModalEmail({
   isOpen,
   onClose,
   onOpen,
   user,
+  setUser
 }: {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
   user: UserI;
+  setUser: Function
 }) {
   const [send, setSend] = useState<boolean>(false);
   const toast = useToast();
-
   return (
     <Modal
       blockScrollOnMount={false}
@@ -74,6 +75,7 @@ function ModalEmail({
             toast={toast}
             user={user}
             change="email"
+            setUser={setUser}
           />
         ) : (
           <SendCodeEmail

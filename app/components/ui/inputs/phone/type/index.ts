@@ -4,6 +4,8 @@ export interface PhoneUiProps {
     register: Function;
     focus?: Function;
     change?: Function;
+    handleCountry: Function;
+    country: string;
     maxLength?: number;
     minLength?: number
     required?: boolean;

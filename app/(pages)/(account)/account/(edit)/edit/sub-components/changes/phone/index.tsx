@@ -1,6 +1,7 @@
 "use client";
 import { ModalPhone } from "@/components/modal/phone";
 import { ContextUser } from "@/contexts/ContextUser";
+import { formatPhoneNumber } from "@/masks/phone-input";
 import { Input, useDisclosure } from "@chakra-ui/react";
 import React, { ChangeEvent, useContext, useState } from "react";
 import {
@@ -17,7 +18,10 @@ function ChangesPhone() {
   if (!context) {
     return;
   }
-  const { user } = context;
+  const formatPhone = (number: string) => {
+    formatPhoneNumber(number);
+  };
+  const { user, setUser } = context;
   return (
     <div className="w-full mb-5">
       <label
@@ -30,7 +34,7 @@ function ChangesPhone() {
         <div className="flex w-full relative">
           <Input
             type={"phone"}
-            placeholder={"neymarsantos@gmail.com"}
+            placeholder={"+55 11954321234"}
             id={"phone"}
             borderWidth="1px"
             paddingLeft="10px"
@@ -39,7 +43,7 @@ function ChangesPhone() {
               setPhone(e.target.value)
             }
             focusBorderColor={"#ed145b"}
-            value={phone || user?.phone}
+            value={formatPhoneNumber(user?.phone || phone)}
             defaultValue={user?.phone}
             disabled={true}
             className={`w-full text-custom-textColor py-5 shadow-snipped`}
@@ -63,7 +67,15 @@ function ChangesPhone() {
         >
           {user?.phone && user.verify_phone ? <MdEdit /> : <TbMessageSearch />}
         </button>
-        {user && <ModalPhone isOpen={isOpen} onClose={onClose} user={user} />}
+        {user && (
+          <ModalPhone
+            isOpen={isOpen}
+            onClose={onClose}
+            onOpen={onOpen}
+            user={user}
+            setUser={setUser}
+          />
+        )}
       </div>
     </div>
   );

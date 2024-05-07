@@ -1,14 +1,17 @@
-import { InputUi } from "@/components/ui/inputs/default";
-import React, { useContext } from "react";
-import { InputEmail, schema } from "../types";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FaArrowRight } from "react-icons/fa";
+import React, { useContext, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { InputPassword, schema } from "../types";
 import { ContextLoading } from "@/contexts/ContextLoading";
+import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { UserI } from "@/interfaces/user";
+import axios from "axios";
+import { ButtonPassUi } from "@/components/ui/buttons/button-password";
 import { ChangesApi } from "@/services/user/changes";
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import { FaArrowRight } from "react-icons/fa";
 
-function SendCodeEmail({
+function SendCodePassword({
   onOpen,
   onClose,
   user,
@@ -23,34 +26,31 @@ function SendCodeEmail({
 }) {
   const contextLoading = useContext(ContextLoading!)!;
   const { loading, setLoading } = contextLoading;
+  const [transport, setTransport] = useState<string>("wpp");
+  const [show1, setShow1] = useState<boolean>(false);
+  const [show2, setShow2] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<InputEmail>({
+  } = useForm<InputPassword>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<InputEmail> = async (data) => {
+  const onSubmit: SubmitHandler<InputPassword> = async (data) => {
     try {
       setLoading(true);
       onClose();
-      if (data.email !== data.repeat) {
-        throw new Error("Enter the same email in the fields");
-      }
-      if (user.email && data.email === user.email) {
-        throw new Error("Enter a different email");
-      }
 
       const {
         data: res,
         status,
         error,
       } = await ChangesApi({
-        change: "email",
-        data: data.email,
+        change: "password",
+        data: data.password,
         user_id: user.user_id,
-        transport: null,
+        transport: transport === "wpp" ? "wpp" : "email",
       });
       if (status !== 200) {
         toast({
@@ -65,8 +65,12 @@ function SendCodeEmail({
       }
       setSend(true);
       toast({
-        title: "Code sent to your email!",
-        description: `Check the code in your email and go to the next step`,
+        title: `Code sent to your ${
+          transport === "wpp" ? "WhatsApp" : "Email"
+        }!`,
+        description: `Check the code in your ${
+          transport === "wpp" ? "WhatsApp" : "Email"
+        } and go to the next step`,
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -76,7 +80,7 @@ function SendCodeEmail({
     } catch (error: any) {
       toast({
         title: "Error in fiels!",
-        description: `${error.message || "different emails"}`,
+        description: `${error.message}`,
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -89,31 +93,34 @@ function SendCodeEmail({
     }
   };
 
+  const handleClick1 = () => setShow1(!show1);
+  const handleClick2 = () => setShow2(!show2);
+
   return (
-    <form className="pb-5 px-4">
+    <form className="pb-5">
       <p className="mb-4 text-sm text-custom-textColor/35">
-        {user.email
-          ? "Enter your new email twice, and we will send you a code to confirm."
-          : "Assign an email address to your account so you can enjoy the latest news"}
+        {user.password_hash
+          ? "Enter your new password twice, and we will send you a code to confirm."
+          : "Assign an password address to your account so you can enjoy the latest news"}
       </p>
 
       <div className="h-fit">
-        <InputUi
-          type="email"
-          label="Email"
-          pleaceholder="neymarsantos@gmail.com"
+        <ButtonPassUi
+          show={show1}
+          handleClick={handleClick1}
+          label="password"
           classname="w-full text-custom-textColor"
-          name="email"
+          name="password"
           register={register}
-          error={errors?.email?.message}
+          error={errors?.password?.message}
           disabled={loading}
         />
       </div>
-      <div className="mb-5">
-        <InputUi
-          type="repeat"
+      <div>
+        <ButtonPassUi
+          show={show2}
+          handleClick={handleClick2}
           label="repeat"
-          pleaceholder="neymarsantos@gmail.com"
           classname="w-full text-custom-textColor"
           name="repeat"
           register={register}
@@ -121,8 +128,24 @@ function SendCodeEmail({
           disabled={loading}
         />
       </div>
-      <div className="w-full">
-        <button
+      <div>
+        <label
+          className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}
+        >
+          methods
+        </label>
+        <RadioGroup onChange={setTransport} value={transport}>
+          <Stack spacing={5} direction="row" color={"#fff"} marginTop={"4px"}>
+            <Radio value="wpp">WhatsApp</Radio>
+            <Radio value="email">Email</Radio>
+            <Radio value="sms" isDisabled>
+              SMS
+            </Radio>
+          </Stack>
+        </RadioGroup>
+      </div>
+      <div className="mt-5">
+      <button
           type={"reset"}
           className={`w-full group bg-none border-2 border-custom-pink flex text-custom-textColor py-1.5  rounded text-xl duration-300 hover:bg-custom-pink`}
           disabled={loading}
@@ -140,5 +163,4 @@ function SendCodeEmail({
     </form>
   );
 }
-
-export default SendCodeEmail;
+export default SendCodePassword;

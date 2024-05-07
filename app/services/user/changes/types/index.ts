@@ -1,11 +1,8 @@
-import { UserI } from "@/interfaces/user";
-
 export interface ChangesApiProps {
   user_id: number;
   change: "email" | "phone" | "password";
-  email: string | null;
-  password: string | null;
-  phone: string | null;
+  data: string;
+  transport: "wpp" | "sms" | "email" | null;
 }
 export interface ChangesApiReq {
   msg: string | null;

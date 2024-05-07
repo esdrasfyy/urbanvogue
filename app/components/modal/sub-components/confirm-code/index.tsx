@@ -1,24 +1,24 @@
 import { ContextLoading } from "@/contexts/ContextLoading";
 import { UserI } from "@/interfaces/user";
-import { HStack, PinInput, PinInputField, useToast } from "@chakra-ui/react";
+import { HStack, PinInput, PinInputField } from "@chakra-ui/react";
 import axios from "axios";
 import React, { FormEvent, useContext, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 function ConfirmCode({
-  onOpen,
   onClose,
-  user,
   toast,
   setSend,
-  change
+  change,
+  setUser,
 }: {
   onOpen: () => void;
   onClose: () => void;
   user: UserI;
   toast: Function;
   setSend: Function;
-  change: "email" | "phone" | "password"
+  setUser: Function;
+  change: "email" | "phone" | "password";
 }) {
   const [valueInput, setValueInput] = useState("");
   const contextLoading = useContext(ContextLoading)!;
@@ -29,10 +29,15 @@ function ConfirmCode({
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res = await axios.get(`http://localhost:9090/user/changes?change=${change}&code=${valueInput}`)
+
     try {
       setLoading(true);
-
+      const res = await axios.get(
+        `http://localhost:9090/user/changes?change=${change}&code=${valueInput}`,
+        {
+          withCredentials: true,
+        }
+      );
       if (res.status !== 200) {
         toast({
           title: "Error checking code.",
@@ -46,6 +51,23 @@ function ConfirmCode({
         });
         return;
       }
+      switch (change) {
+        case "email":
+          setUser((prev: any) => ({
+            ...prev,
+            email: res.data.email,
+            verify_email: true,
+          }));
+          break;
+        case "phone":
+          setUser((prev: any) => ({
+            ...prev,
+            phone: res.data.phone,
+            verify_phone: true,
+          }));
+          break;
+      }
+
       return toast({
         title: "Validated code!",
         description:
@@ -57,9 +79,18 @@ function ConfirmCode({
         variant: "left-accent",
         position: "top-right",
       });
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      return toast({
+        title: "Internal Error!",
+        description: error.message || "Try again later.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top-right",
+      });
     } finally {
+      onClose();
       setLoading(false);
     }
   };
@@ -114,13 +145,16 @@ function ConfirmCode({
             />
           </PinInput>
         </HStack>
-        <div className="uppercase text-[10px] underline text-custom-pink mt-5 cursor-pointer">
-          <a>Resend Code</a>
+        <div>
+          <button
+            type="reset"
+            className="uppercase undeline mt-3  text-custom-pink text-sm hover:text-custom-textColor duration-300 ease-linear"
+            onClick={() => setSend(false)}
+          >
+            wrong {change}
+          </button>
         </div>
-        <div className="uppercase text-[10px] underline text-custom-pink mt-2 cursor-pointer">
-          <a>I entered the wrong email</a>
-        </div>
-        <div className="flex w-full justify-between py-8">
+        <div className="flex w-full justify-between my-6">
           <button
             type="reset"
             className={`w-full group bg-none border-2 border-custom-pink flex text-custom-textColor py-1.5  rounded text-xl duration-300 hover:bg-custom-pink`}
@@ -135,6 +169,15 @@ function ConfirmCode({
               />
             </span>
           </button>
+        </div>
+        <div>
+          <p className="text-xs text-custom-textColor/50">
+            {(change === "email" &&
+              "A verification code has been sent to your email address. Please check your inbox and follow the instructions to complete the verification process. ") ||
+              change === "phone" ||
+              (change === "password" &&
+                "A verification code has been sent to you by your chosen carrier. Please check and follow the instructions for next step.")}
+          </p>
         </div>
       </form>
     </>

@@ -20,14 +20,16 @@ async function ChangesApi(data: ChangesApiProps): Promise<ChangesApiResponse> {
       `${api}user/changes`,
       {
         change: data.change,
-        email: data.email,
+        data: data.data,
         user_id: data.user_id,
-        phone: data.phone,
-        password: data.password,
+        transport: data.transport
+      },
+      {
+        withCredentials: true,
       }
     );
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       return {
         data: {
           msg: response?.data?.msg || null,

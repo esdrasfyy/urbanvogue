@@ -5,14 +5,11 @@ export interface InputPhone {
 const phoneSchema = yup
   .string()
   .matches(
-    /^(\+\d{1,2}\s?)?(\(\d{1,4}\)|\d{1,4})([\s.-]?\d{1,}){1,14}$/,
-    "Por favor, insira um número de telefone válido"
+    /^\(?\d{2}\)?\d{4,5}-?\d{4}$/,
+    "incorrect format, follow the example: 11987654321"
   );
 
 const schema = yup.object().shape({
-  phone: yup
-    .string()
-    .required("Este campo é obrigatório!")
-    .min(8, "O mínimo de caracteres são 8."),
+  phone: phoneSchema.required("Este campo é obrigatório!"),
 });
 export { schema };

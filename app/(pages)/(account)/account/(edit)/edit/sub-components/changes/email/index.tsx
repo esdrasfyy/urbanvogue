@@ -17,7 +17,7 @@ function ChangesEmail() {
   if (!context) {
     return;
   }
-  const { user } = context;
+  const { user,setUser } = context;
   return (
     <div className="w-full mb-5">
       <label
@@ -63,7 +63,7 @@ function ChangesEmail() {
         >
           {user?.email && user.verify_email ? <MdEdit /> : <TbMailSearch />}
         </button>
-        {user && <ModalEmail isOpen={isOpen} onClose={onClose} user={user} onOpen={onOpen}/>}
+        {user && <ModalEmail isOpen={isOpen} onClose={onClose} user={user} setUser={setUser} onOpen={onOpen}/>}
       </div>
     </div>
   );

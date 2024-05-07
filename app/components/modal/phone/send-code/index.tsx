@@ -1,14 +1,15 @@
-import { InputUi } from "@/components/ui/inputs/default";
-import React, { useContext } from "react";
-import { InputEmail, schema } from "../types";
+import { ContextLoading } from "@/contexts/ContextLoading";
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
+import { InputPhone, schema } from "../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FaArrowRight } from "react-icons/fa";
-import { ContextLoading } from "@/contexts/ContextLoading";
-import { UserI } from "@/interfaces/user";
 import { ChangesApi } from "@/services/user/changes";
+import { UserI } from "@/interfaces/user";
+import { FaArrowRight } from "react-icons/fa";
+import { PhoneUi } from "@/components/ui/inputs/phone";
 
-function SendCodeEmail({
+function SendCodePhone({
   onOpen,
   onClose,
   user,
@@ -21,36 +22,36 @@ function SendCodeEmail({
   toast: Function;
   setSend: Function;
 }) {
+  const [transport, setTransport] = useState<string>("wpp");
+  const [country, setCountry] = useState<string>("55");
   const contextLoading = useContext(ContextLoading!)!;
   const { loading, setLoading } = contextLoading;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<InputEmail>({
+  } = useForm<InputPhone>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<InputEmail> = async (data) => {
+  const handleCountry = (value: string) => {
+    setCountry(value);
+  };
+
+  const onSubmit: SubmitHandler<InputPhone> = async (data) => {
     try {
       setLoading(true);
       onClose();
-      if (data.email !== data.repeat) {
-        throw new Error("Enter the same email in the fields");
-      }
-      if (user.email && data.email === user.email) {
-        throw new Error("Enter a different email");
-      }
 
       const {
         data: res,
         status,
         error,
       } = await ChangesApi({
-        change: "email",
-        data: data.email,
+        change: "phone",
+        data: `${country}${data.phone}`,
         user_id: user.user_id,
-        transport: null,
+        transport: transport === "wpp" ? "wpp" : "sms",
       });
       if (status !== 200) {
         toast({
@@ -65,8 +66,10 @@ function SendCodeEmail({
       }
       setSend(true);
       toast({
-        title: "Code sent to your email!",
-        description: `Check the code in your email and go to the next step`,
+        title: `Code sent to your ${transport === "wpp" ? "WhatsApp" : "SMS"}!`,
+        description: `Check the code in your ${
+          transport === "wpp" ? "WhatsApp" : "SMS"
+        } and go to the next step`,
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -76,7 +79,7 @@ function SendCodeEmail({
     } catch (error: any) {
       toast({
         title: "Error in fiels!",
-        description: `${error.message || "different emails"}`,
+        description: `${error.message}`,
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -90,38 +93,42 @@ function SendCodeEmail({
   };
 
   return (
-    <form className="pb-5 px-4">
+    <form className="pb-5">
       <p className="mb-4 text-sm text-custom-textColor/35">
-        {user.email
-          ? "Enter your new email twice, and we will send you a code to confirm."
-          : "Assign an email address to your account so you can enjoy the latest news"}
+        {user.phone
+          ? "Enter your new phone twice, and we will send you a code to confirm."
+          : "Assign an phone address to your account so you can enjoy the latest news"}
       </p>
 
       <div className="h-fit">
-        <InputUi
-          type="email"
-          label="Email"
-          pleaceholder="neymarsantos@gmail.com"
-          classname="w-full text-custom-textColor"
-          name="email"
+        <PhoneUi
+          handleCountry={handleCountry}
+          label="phone"
+          pleaceholder="(11) 95343-9141"
+          classname="text-custom-textColor"
+          name="phone"
           register={register}
-          error={errors?.email?.message}
+          error={errors?.phone?.message}
           disabled={loading}
+          country={country}
         />
       </div>
-      <div className="mb-5">
-        <InputUi
-          type="repeat"
-          label="repeat"
-          pleaceholder="neymarsantos@gmail.com"
-          classname="w-full text-custom-textColor"
-          name="repeat"
-          register={register}
-          error={errors?.repeat?.message}
-          disabled={loading}
-        />
+      <div>
+        <label
+          className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}
+        >
+          methods
+        </label>
+        <RadioGroup onChange={setTransport} value={transport}>
+          <Stack spacing={5} direction="row" color={"#fff"} marginTop={"4px"}>
+            <Radio value="wpp">WhatsApp</Radio>
+            <Radio value="sms" isDisabled>
+              SMS
+            </Radio>
+          </Stack>
+        </RadioGroup>
       </div>
-      <div className="w-full">
+      <div className="mt-5">
         <button
           type={"reset"}
           className={`w-full group bg-none border-2 border-custom-pink flex text-custom-textColor py-1.5  rounded text-xl duration-300 hover:bg-custom-pink`}
@@ -141,4 +148,4 @@ function SendCodeEmail({
   );
 }
 
-export default SendCodeEmail;
+export { SendCodePhone };

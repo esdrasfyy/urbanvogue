@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { ChangesEmail } from "../changes/email";
 import { ChangesPhone } from "../changes/phone";
 import { ChangesPassword } from "../changes/password";
+import { formatPhoneNumber } from "@/masks/phone-input";
 
 function FormEdit() {
   const [selectedImage, setSelectedImage] = useState<string>("");

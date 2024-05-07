@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useContext, useState } from "react";
@@ -17,38 +18,24 @@ import { ButtonIconUi } from "@/components/ui/buttons/button-icon";
 import { UserI } from "@/interfaces/user";
 import axios from "axios";
 import { ButtonPassUi } from "@/components/ui/buttons/button-password";
+import SendCodePassword from "./send-code";
+import { ConfirmCode } from "../sub-components/confirm-code";
 
 function ModalPassword({
   isOpen,
   onClose,
+  onOpen,
   user,
+  setUser,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onOpen: () => void;
   user: UserI;
+  setUser: Function;
 }) {
-  const contextLoading = useContext(ContextLoading!)!;
-  const { loading, setLoading } = contextLoading;
-  const [show1, setShow1] = useState<boolean>(false);
-  const [show2, setShow2] = useState<boolean>(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<InputPassword>({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit: SubmitHandler<InputPassword> = async (data) => {
-    const res = await axios.post("http://localhost:9090/user/changes", {
-      user_id: user.user_id,
-      change: "password",
-      password: data.password,
-    });
-    console.log(res);
-  };
-  const handleClick1 = () => setShow1(!show1);
-  const handleClick2 = () => setShow2(!show2);
+  const [send, setSend] = useState<boolean>(false);
+  const toast = useToast();
   return (
     <Modal
       blockScrollOnMount={false}
@@ -74,48 +61,25 @@ function ModalPassword({
           {user.password_hash ? "Change your password" : "Add password"}
         </ModalHeader>
         <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)} className="pb-5">
-            <p className="mb-4 text-sm text-custom-textColor/35">
-              {user.password_hash
-                ? "Enter your new password twice, and we will send you a code to confirm."
-                : "Assign an password address to your account so you can enjoy the latest news"}
-            </p>
-
-            <div className="h-fit">
-              <ButtonPassUi
-                show={show1}
-                handleClick={handleClick1}
-                label="password"
-                classname="w-full text-custom-textColor"
-                name="password"
-                register={register}
-                error={errors?.password?.message}
-                disabled={loading}
-              />
-            </div>
-            <div className="mb-5">
-              <ButtonPassUi
-                show={show2}
-                handleClick={handleClick2}
-                label="repeat"
-                classname="w-full text-custom-textColor"
-                name="repeat"
-                register={register}
-                error={errors?.repeat?.message}
-                disabled={loading}
-              />
-            </div>
-            <div>
-              <ButtonIconUi
-                type="submit"
-                content="Next"
-                icon="FaArrowRight"
-                classname={`justify-end w-full max-sm:justify-start duration-300 ease-linear ${
-                  errors.password?.message ? "mt-4" : "mt-0"
-                }`}
-              />
-            </div>
-          </form>
+          {send ? (
+            <ConfirmCode
+              onClose={onClose}
+              onOpen={onOpen}
+              setSend={setSend}
+              toast={toast}
+              user={user}
+              change="password"
+              setUser={setUser}
+            />
+          ) : (
+            <SendCodePassword
+              onClose={onClose}
+              onOpen={onOpen}
+              setSend={setSend}
+              toast={toast}
+              user={user}
+            />
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>

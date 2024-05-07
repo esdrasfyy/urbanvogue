@@ -11,13 +11,13 @@ import { MdEdit } from "react-icons/md";
 import { TbShieldPlus } from "react-icons/tb";
 
 function ChangesPassword() {
-  const [password, setPassword] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const context = useContext(ContextUser);
   if (!context) {
     return;
 }
-const { user } = context;
+const { user, setUser
+ } = context;
 
 return (
     <div className="w-full mb-5">
@@ -36,12 +36,8 @@ return (
             borderWidth="1px"
             paddingLeft="10px"
             borderRadius={"4px"}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
             focusBorderColor={"#ed145b"}
-            value={password || user?.password_hash}
-            defaultValue={user?.password_hash}
+            defaultValue={"seu palhaco"}
             disabled={true}
             className={`w-full text-custom-textColor py-5 shadow-snipped`}
           />
@@ -64,7 +60,7 @@ return (
         >
           {user?.password_hash ? <MdEdit /> : <TbShieldPlus />}
         </button>
-        {user && <ModalPassword isOpen={isOpen} onClose={onClose} user={user} />}
+        {user && <ModalPassword isOpen={isOpen} onClose={onClose} onOpen={onOpen} user={user} setUser={setUser} />}
       </div>
     </div>
   );

@@ -108,6 +108,7 @@ function PhoneUi({
               <ul>
                 {countryCodes.map((country) => (
                   <li
+                  key={country.name}
                     className="hover:bg-custom-grayThree/50 cursor-pointer py-1 text-sm px-2 duration-300 ease-linear"
                     onClick={() => handleCode(country.code)}
                   >

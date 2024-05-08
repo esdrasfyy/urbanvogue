@@ -10,6 +10,7 @@ import { Cart } from "./components/cart/index";
 import { Footer } from "./components/footer";
 import { LoadingGlobal } from "./components/loading";
 import { CookiesPrivacy } from "./components/cookies";
+import { Notifications } from "./components/notify";
 
 export default async function RootLayout({
   children,
@@ -46,6 +47,7 @@ export default async function RootLayout({
         <Providers>
           <LoadingGlobal />
           <Cart />
+          <Notifications/>
           <Header />
           {children}
           <CookiesPrivacy />

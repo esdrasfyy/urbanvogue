@@ -16,6 +16,7 @@ import { ContextCart } from "../../contexts/ContextCart/index";
 import { CardH } from "../card/horizontal/index";
 import { ProductCartI } from "@/contexts/ContextCart/types";
 import { LinkCheckout } from "./sub-components/link-checkout";
+import { EmptyUi } from "../empty";
 
 function Cart() {
   const context = useContext(ContextCart)!;
@@ -36,40 +37,54 @@ function Cart() {
           backdropInvert="50%"
           backdropBlur="3px"
         />
-        <DrawerContent backgroundColor={"#  "} textColor={"#d9d9d9"}>
+        <DrawerContent backgroundColor={"#171a1b"} textColor={"#d9d9d9"}>
           <DrawerCloseButton className="hover:text-custom-pink" />
-          <DrawerBody backgroundColor={"#171a1b"}>
-            <ul className="flex flex-col gap-2 mt-12">
-              {context.cartResume?.products?.map(
-                (product: ProductCartI, index, array) => {
-                  const isLastItem = index === array.length - 1;
-                  return (
-                    <CardH
-                      key={index}
-                      index={index}
-                      dataId={product}
-                      isLastItem={isLastItem}
-                    />
-                  );
-                }
-              )}
-            </ul>
-          </DrawerBody>
-          <Divider className="shadow-snipped" />
-          <DrawerFooter
-            backgroundColor={"#1d2123"}
-            className="w-full flex justify-between"
-          >
-            <div className="flex justify-between w-full items-center max-sm:">
-              <div className="text-xl text-custom-pink max-sm:text-base">
-                TOTAL{" "}
-                <span className="text-custom-textColor font-medium ml-2 max-sm:ml-0">
-                  ${context?.cartResume?.totalPrice?.toFixed(2)}
-                </span>
+          {context?.cartResume?.products &&
+          context.cartResume?.products?.length > 0 ? (
+            <>
+              <DrawerBody>
+                <ul className="flex flex-col gap-2 mt-12">
+                  {context.cartResume?.products?.map(
+                    (product: ProductCartI, index, array) => {
+                      const isLastItem = index === array.length - 1;
+                      return (
+                        <CardH
+                          key={index}
+                          index={index}
+                          dataId={product}
+                          isLastItem={isLastItem}
+                        />
+                      );
+                    }
+                  )}
+                </ul>
+              </DrawerBody>
+              <Divider className="shadow-snipped" />
+              <DrawerFooter
+                backgroundColor={"#1d2123"}
+                className="w-full flex justify-between"
+              >
+                <div className="flex justify-between w-full items-center max-sm:">
+                  <div className="text-xl text-custom-pink max-sm:text-base">
+                    TOTAL{" "}
+                    <span className="text-custom-textColor font-medium ml-2 max-sm:ml-0">
+                      ${context?.cartResume?.totalPrice?.toFixed(2)}
+                    </span>
+                  </div>
+                  <LinkCheckout />
+                </div>
+              </DrawerFooter>
+            </>
+          ) : (
+            <div className="flex justify-center items-center h-full w-full">
+              <div className="mx-4">
+                <EmptyUi
+                  title="Empty product cart"
+                  message="Add new products to your cart, proceed to payment and live in style!"
+                />
               </div>
-              <LinkCheckout />
             </div>
-          </DrawerFooter>
+          )}
         </DrawerContent>
       </Drawer>
     </>

@@ -1,5 +1,6 @@
 "use client";
 import { OrderCard } from "@/components/card/order";
+import { EmptyUi } from "@/components/empty";
 import { ContextLoading } from "@/contexts/ContextLoading";
 import { ContextUser } from "@/contexts/ContextUser";
 import { OrderI } from "@/interfaces/user/order";
@@ -49,7 +50,9 @@ const Orders: NextPage = () => {
   }, [context]);
 
   return (
-    <main className={`w-full flex flex-col gap-9 max-w-[1050px] bg-custom-grayOne px-4 pt-32 items-start`}>
+    <main
+      className={`w-full flex flex-col gap-9 max-w-[1050px] bg-custom-grayOne px-4 pt-32 items-start`}
+    >
       <aside className="flex w-full justify-between">
         <h2 className="flex items-center font-semibold text-custom-textColor gap-3">
           <span className="text-custom-pink text-2xl">
@@ -84,19 +87,13 @@ const Orders: NextPage = () => {
       <section className="w-full flex items-start justify-center flex-col gap-5">
         {orders.length > 0 ? (
           orders.map((order) => (
-            <OrderCard key={order.order_id} order={order}/>
+            <OrderCard key={order.order_id} order={order} />
           ))
         ) : (
-            <div className="flex flex-col w-full p-4 bg-custom-grayTwo text-custom-textColor justify-center rounded-md shadow-snipped items-center">
-              <div className="text-7xl my-5 text-custom-pink">
-                <VscSurroundWith />
-              </div>
-              <div className="flex flex-col gap-5 mb-5 items-center">
-                <h1 className="uppercase text-xl font-semibold text-custom-textColor">Empty order list</h1>
-                <p className="text-custom-textColor/50 text-center">Fill your cart and complete your purchases so they appear here.</p>
-              </div>
-            </div>
-        
+          <EmptyUi
+            title="Empty order list"
+            message="Fill your cart and complete your purchases so they appear here."
+          />
         )}
       </section>
     </main>

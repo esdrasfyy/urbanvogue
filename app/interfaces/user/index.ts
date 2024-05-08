@@ -13,6 +13,15 @@ export interface UserI {
   phone: string;
   verify_phone: boolean;
   gender: string;
+  role:
+    | "Client"
+    | "Client Vip"
+    | "Product Manager"
+    | "Order Manager"
+    | "Customer Service"
+    | "Accounting and Finance"
+    | "Admin"
+    | "Owner";
   cpf: string;
   createdAt: Date;
   updatedAt: Date;

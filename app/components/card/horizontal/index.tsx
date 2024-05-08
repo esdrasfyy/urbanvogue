@@ -96,7 +96,7 @@ function CardH({
               </Link>
               <div>
                 <p className="text-custom-pink text-xl">
-                  $ {price}{" "}
+                  $ {price.toFixed(2)}{" "}
                   <span className="text-sm text-custom-grayThree">
                     {" "}
                     or in 6x of {installment.toFixed(2)}

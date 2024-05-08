@@ -12,6 +12,9 @@ const APP_ROUTES = {
     account_edit: {
       name: "/account/edit",
     },
+    account_orders: {
+      name: "/account/orders",
+    },
   },
   public: {
     home: "/",

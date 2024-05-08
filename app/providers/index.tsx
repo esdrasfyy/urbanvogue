@@ -5,15 +5,18 @@ import { CartProvider } from "../contexts/ContextCart/index";
 import { UserProvider } from "../contexts/ContextUser";
 import { PayProvider } from "../contexts/ContextPay";
 import { LoadingProvider } from "@/contexts/ContextLoading";
+import { NotificationProvider } from "@/contexts/ContextNotification";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <LoadingProvider>
       <UserProvider>
         <CartProvider>
-          <PayProvider>
-            <ChakraProvider>{children}</ChakraProvider>
-          </PayProvider>
+          <NotificationProvider>
+            <PayProvider>
+              <ChakraProvider>{children}</ChakraProvider>
+            </PayProvider>
+          </NotificationProvider>
         </CartProvider>
       </UserProvider>
     </LoadingProvider>

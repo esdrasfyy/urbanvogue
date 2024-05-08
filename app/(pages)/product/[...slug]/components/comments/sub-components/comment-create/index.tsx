@@ -76,8 +76,6 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
 
         url = await getDownloadURL(uploadTask.snapshot.ref);
       }
-      console.log(typeof user?.user_id);
-
       const result = await CreateCommentApi({
         comment: {
           text_comment: comment,
@@ -104,7 +102,8 @@ function CreateComment({ img, title, id }: CreateCommentProps) {
         setInterval(() => {
           setLoading(false)
           onClose();
-        }, 2500);
+          document.location.reload()
+        }, 1500);
       }
       if (result.status !== 201) {
         toast({

@@ -140,7 +140,6 @@ function FormEdit() {
         );
       }
     } catch (error: any) {
-      console.log(error);
     } finally {
       setLoading(false);
     }

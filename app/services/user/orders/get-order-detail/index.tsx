@@ -17,7 +17,6 @@ async function getOrderDetails({
     const response: AxiosResponse<getOrderDetailsApiReq | null> = await axios.get(
       `${api}order/${user_id}/${order_id}`
     );
-console.log(response.data);
 
     if (response.status === 200) {
       return {

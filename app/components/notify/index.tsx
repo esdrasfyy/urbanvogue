@@ -37,25 +37,27 @@ function Notifications() {
       <DrawerContent backgroundColor={"#171a1b"} textColor={"#d9d9d9"}>
         <DrawerCloseButton className="hover:text-custom-pink" />
         <DrawerBody>
-          <ul className="flex flex-col gap-5 mt-12">
-            {context.notifications ? (
-              context?.notifications
-                ?.sort(
-                  (a, b) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
-                )
-                .map((notification) => {
-                  return (
-                    <CardNotification
-                      notification={notification}
-                      key={notification.notify_id}
-                    />
-                  );
-                })
+          <div className="h-full flex items-center justify-center">
+            {context.notifications && context.notifications.length > 0 ? (
+              <ul className="flex flex-col w-full mt-28 gap-5 h-full">
+                {context?.notifications
+                  ?.sort(
+                    (a, b) =>
+                      new Date(b.createdAt).getTime() -
+                      new Date(a.createdAt).getTime()
+                  )
+                  .map((notification) => {
+                    return (
+                      <CardNotification
+                        notification={notification}
+                        key={notification.notify_id}
+                      />
+                    );
+                  })}
+              </ul>
             ) : (
-              <div className="flex justify-center items-center h-full w-full">
-                <div className="mx-4">
+              <div className="flex justify-center items-center min-h-full w-full">
+                <div className="mx-4 flex justify-center items-center">
                   <EmptyUi
                     title="Empty product cart"
                     message="Add new products to your cart, proceed to payment and live in style!"
@@ -63,7 +65,7 @@ function Notifications() {
                 </div>
               </div>
             )}
-          </ul>
+          </div>
         </DrawerBody>
         {context?.notifications && context?.notifications.length > 0 && (
           <>

@@ -66,7 +66,6 @@ function OrderCardDetails({
       }
       setLoading(false);
     };
-    console.log(values.freight);
     
     if (!orderDetails) {
       fetch();

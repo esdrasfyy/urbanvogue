@@ -30,10 +30,8 @@ function Comments({
 
   useEffect(() => {
     const fetchData = async () => {
-      
       if (id !== 0) {
         const res = await CommentsReadApi({ id });
-        console.log(res);
 
         if (res.status === 200 && res.data?.comments) {
           setDataComments(res?.data?.comments);
@@ -48,7 +46,7 @@ function Comments({
 
   return (
     <>
-    <section className="h-full mt-5 mx-2 bg-custom-grayTwo max-w-[1050px] w-full max-md:mx-5 p-4 shadow-snipped text-custom-textColor rounded-md">
+      <section className="h-full mt-5 mx-2 bg-custom-grayTwo max-w-[1050px] w-full max-md:mx-5 p-4 shadow-snipped text-custom-textColor rounded-md">
         <div className="w-full">
           <div className="flex justify-between">
             <div className="w-full flex mt-3 justify-between">

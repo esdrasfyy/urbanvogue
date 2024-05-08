@@ -33,7 +33,6 @@ const ForgotPassword:NextPage = () => {
   }
   
   useEffect(() => {
-    console.log(stepCount);
   }, [stepCount]);
 
   const listSteps = ["Send Email", "Send Code", "Reset Passoword"];

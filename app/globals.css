@@ -493,11 +493,18 @@ svg.progressbar {
 }
 
 .card {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 230px;
   perspective: 1000px;
 }
 
+@media (max-width: 440px) {
+  .card {
+
+    height: 200px;
+  }
+}
 .front,
 .back {
   border-radius: 10px;

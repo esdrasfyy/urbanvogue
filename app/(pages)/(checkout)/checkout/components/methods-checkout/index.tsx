@@ -9,7 +9,7 @@ import { Radio, RadioGroup } from "@chakra-ui/react";
 import { ContextUser } from "@/contexts/ContextUser";
 import { ContextPay } from "@/contexts/ContextPay";
 import { BiSolidBank } from "react-icons/bi";
-import { ImBarcode, ImSpinner9 } from "react-icons/im";
+import { ImBarcode } from "react-icons/im";
 import { MdPix } from "react-icons/md";
 import { ContextLoading } from "@/contexts/ContextLoading";
 
@@ -49,7 +49,6 @@ function MethodsCheckout() {
     return;
   }
   const { method, setMethod } = contextPay;
-  const { loading } = contextLoading;
   return (
     <div className="bg-custom-grayTwo rounded-md flex flex-col gap-5 shadow-snipped px-5 py-4 pb-8 relative">
       <h3 className="flex gap-3 items-center text-xl">

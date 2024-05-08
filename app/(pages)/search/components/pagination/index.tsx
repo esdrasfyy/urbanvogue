@@ -11,7 +11,6 @@ function ButtonPaginationUi({ page }: { page: string }) {
         const params = new URLSearchParams(searchParams.toString());
         params.set('page', page);
         router.push("/search?" + params.toString())
-        console.log("/search?" + params.toString());
         
     };
   return (

@@ -3,7 +3,6 @@ import React from "react";
 
 function Recaptcha() {
   const onChange = (value:any) => {
-    console.log("Valor Recaptcha: ", value);
     
   };
   const clientKey = process.env.RECAPTCHA_CLIENT as string;

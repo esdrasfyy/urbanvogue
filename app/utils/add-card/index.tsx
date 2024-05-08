@@ -125,7 +125,6 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
   const handleYear: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const yearValue = parseInt(e.target.value);
     if (yearValue > 40 && yearValue < 24) {
-      console.log("Errou em");
     }
     if (String(yearValue).length > 2) {
       const newYear = String(yearValue).slice(0, 2);
@@ -184,7 +183,6 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
   const handleCPF: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     const formattedValue = formatCpf(value);
-    console.log(formattedValue);
     setCpf(formattedValue);
   };
   return (
@@ -199,13 +197,12 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
         Add Card
       </button>
       <Modal
-        isCentered
         onClose={onClose}
         isOpen={isOpen}
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
-        <ModalContent backgroundColor={"#1d2123"} color={"#d9d9d9"} margin={ "0px 15px"}>
+        <ModalContent backgroundColor={"#1d2123"} height={"fit-content"} color={"#d9d9d9"} margin={ "40px 15px 40px"} className="mt-20">
           {loading ? (
             <div className="absolute w-full h-full text-custom-pink bg-custom-grayOne/90 z-40 flex justify-center items-center">
               <LoadingSpinner />
@@ -215,7 +212,7 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
           )}
           <ModalHeader>ADD A NEW CARD</ModalHeader>
           <ModalCloseButton />
-          <div className="flex justify-center items-center w-full my-6">
+          <div className="flex justify-center items-center relative w-full">
             <Card
               back={back}
               cvv={cvv}
@@ -226,7 +223,7 @@ function AddCard({ type, getData }: { type: string; getData: () => void }) {
               network={network}
             />
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="px-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="px-6 max-md:px-4 mt-8">
             <div className="flex flex-col">
               <div className="w-full">
                 <InputUi

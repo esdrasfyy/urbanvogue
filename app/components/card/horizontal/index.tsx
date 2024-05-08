@@ -48,7 +48,6 @@ function CardH({
       setLoadingRemove(true);
       removeItemFromCart(dataId!.id, index);
     } catch (error) {
-      console.log(error);
     } finally {
       setLoadingRemove(false);
     }

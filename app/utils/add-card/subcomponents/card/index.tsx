@@ -33,30 +33,30 @@ function Card({ cvv, month, name, number, year, back, network }: CardProps) {
   const networkImage = networkImageMap[network] || elo;
 
   return (
-    <div className={`card ${back && "backOn"}`}>
+    <div className={`card ${back && "backOn"} mx-4`}>
       <div className="front">
-        <div className="flex justify-between mt-6 px-5 items-center">
+        <div className="flex justify-between mt-6 max-sm:mt-4.5 px-5 items-center">
           <div className="flex">
             <span className="rounded-lg">
               <Image
-                className="rounded-[12px]"
+                className="rounded-[12px] w-12 max-sm:w-10 max-sm:rounded-[5px]"
                 alt="chipset"
-                width={60}
+                width={0}
                 src={chipset}
               />
             </span>
-            <span className="text-2xl rotate-90 ml-2 text-custom-grayThree">
+            <span className="text-2xl rotate-90 ml-2 text-custom-grayThree max-sm:text-xl">
               <FaWifi />
             </span>
           </div>
-          <span className="h-20 flex items-center">
-            <Image alt="network" src={networkImage} width={90} height={90} />
+          <span className="h-20 max-sm:h-14 flex items-center">
+            <Image alt="network" className="w-20" src={networkImage} width={0} height={0} />
           </span>
         </div>
-        <div className="flex w-full justify-between px-9 gap-3 text-3xl font-medium mt-4">
+        <div className="flex w-full justify-center px-3 gap-3 text-3xl font-medium mt-4 max-sm:text-2xl">
           {number ? number : "0000 0000 0000 0000"}
         </div>
-        <div className="flex w-full justify-between px-6 text-white font-semibold items-end mt-8">
+        <div className="flex w-full justify-between px-6 text-white font-semibold items-end mt-8 max-sm:mt-5 max-sm:text-sm">
           <p>{name ? name : "FERNANDO ESDRAS DA S"}</p>
           <p>
             {(month && month.length === 1 && "0" + month) ||

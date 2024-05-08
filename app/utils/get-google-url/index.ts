@@ -1,5 +1,6 @@
 function getGoogleOAuthURL() {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  
   const client_id = process.env.GOOGLE_CLIENT_ID as string;
   const redirect_uri =
     `${process.env.OAUTH_REDIRECT_URL}provider=google` as string;

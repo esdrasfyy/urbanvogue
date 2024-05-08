@@ -35,7 +35,6 @@ function Intersection({
       observer.observe(currentComponentRef);
     }
   
-    console.log("Observed" + count.current);
     return () => {
       if (currentComponentRef) {
         observer.unobserve(currentComponentRef);

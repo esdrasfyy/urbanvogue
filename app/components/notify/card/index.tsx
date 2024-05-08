@@ -7,7 +7,7 @@ import { PiWarningOctagonBold } from "react-icons/pi";
 
 function CardNotification({ notification }: { notification: UserNotifyI }) {
   const context = useContext(ContextNotification)!;
-  const { notifications, disclosure, NotificationsRead, NotificationsDelete } =
+  const { NotificationsRead, NotificationsDelete } =
     context;
   return (
     <li

@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useEffect, useState, ReactNode, useCallback } from "react";
 
 import { ContextUserProps } from "./types/index";
 import { UserI } from "../../interfaces/user";
@@ -9,33 +9,28 @@ const ContextUser = createContext<ContextUserProps | undefined>(undefined);
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserI | null>(null);
-  const [haveUser, setHaveUser] = useState<boolean>(false);
-  const [emailForRecovery, setEmailForRecovery] = useState<string | null>(null)
+  const [emailForRecovery, setEmailForRecovery] = useState<string | null>(null);
   const api = process.env.API;
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.post(
-        `${api}login/credentials`,
-        {
-          credential: null,
-          password: null,
-        },
+      const res = await axios.get(
+        `${api}login/oauth`,
         {
           withCredentials: true,
         }
       );
       if (res.status === 200 && res?.data?.user) {
         setUser(res.data.user);
-        setHaveUser(true);
         return;
       }
-    } catch (error) {
-      setHaveUser(false);
+    } catch (error:any) {
+      console.log(error.message);
     }
-  };
+  }, [api]);
+
   useEffect(() => {
     fetchUser();
-  }, [api]);
+  }, [fetchUser]);
 
   const contextValue: ContextUserProps = {
     user,

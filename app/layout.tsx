@@ -18,11 +18,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="en-US">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:locale" content="en-US" />
         <meta name="theme-color" content="#ed145b" />
         <link rel="icon" href={`${favicon}`} />
         <title>Urban Vogue</title>

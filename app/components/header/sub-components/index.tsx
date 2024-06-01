@@ -7,8 +7,11 @@ import { LiaUserCircle } from "react-icons/lia";
 import React, { useContext } from "react";
 import Link from "next/link";
 import { ContextNotification } from "@/contexts/ContextNotification";
+import axios from "axios";
+import { AiOutlineDelete } from "react-icons/ai";
 
 function ButtonsHeader() {
+  const api = process.env.API;
   const cart = useContext(ContextCart);
   const notificationContext = useContext(ContextNotification);
   const contextUser = useContext(ContextUser);
@@ -25,9 +28,22 @@ function ButtonsHeader() {
   const { disclosure, notifications } = notificationContext;
 
   const { user } = contextUser;
-
+  const LogoutUser = async () => {
+    const res = await axios.get(`${api}logout`, {
+      withCredentials: true,
+    });
+    console.log(res.data);
+  };
   return (
-    <ul className="flex gap-6 items-center justify-center mt-1">
+    <>
+      <li
+        className="relative text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 group cursor-pointer max-md:text-[28px]"
+        onClick={LogoutUser}
+      >
+        <button className="group-hover:text-custom-pink">
+        <AiOutlineDelete />
+        </button>
+      </li>
       <li
         className="relative text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 group cursor-pointer max-md:text-[28px]"
         onClick={() => disclosure.onOpen()}
@@ -35,14 +51,11 @@ function ButtonsHeader() {
         <button className="group-hover:text-custom-pink">
           <IoMdNotificationsOutline />
         </button>
-        {
-          notifications  && (
-        <span className="w-[22px] h-[22px] flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[9px] font-bold">
-          {notifications.length}
-        </span>
-
-          )
-        }
+        {notifications && (
+          <span className="w-[22px] h-[22px] flex items-center justify-center absolute -top-2 -right-2 border-solid border-4  border-custom-grayTwo bg-red-600 rounded-full text-[9px] font-bold">
+            {notifications.length}
+          </span>
+        )}
       </li>
       <li
         className="relative text-3xl text-white duration-200 transition-all ease-linear hover:-translate-y-1.5 group cursor-pointer max-md:text-[28px]"
@@ -73,7 +86,7 @@ function ButtonsHeader() {
           </span>
         ) : null}
       </li>
-    </ul>
+    </>
   );
 }
 

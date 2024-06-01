@@ -1,20 +1,10 @@
 const APP_ROUTES = {
   private: {
-    checkout: {
-      name: "/checkout",
-    },
-    approve: {
-      name: "/checkout/approve",
-    },
-    account: {
-      name: "/account",
-    },
-    account_edit: {
-      name: "/account/edit",
-    },
-    account_orders: {
-      name: "/account/orders",
-    },
+    checkout: "/checkout",
+    approve: "/checkout/approve",
+    account: "/account",
+    account_edit: "/account/edit",
+    account_orders: "/account/orders",
   },
   public: {
     home: "/",

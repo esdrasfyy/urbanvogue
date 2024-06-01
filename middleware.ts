@@ -6,7 +6,8 @@ import { APP_ROUTES } from "@/constants/app-routes";
 function isLogged() {
   const cookieStore = cookies();
   const token = cookieStore.get("jwt");
-
+  console.log(token);
+  
   if (!token) {
     return false;
   }
@@ -18,8 +19,8 @@ export async function middleware(request: NextRequest) {
   const pathname = url.pathname;
   const host = process.env.HOST;
 
-  const appPublicRoutes = Object.values(APP_ROUTES.public);
-  const isPublicRoute = appPublicRoutes.includes(pathname);
+  const appPrivateRoutes = Object.values(APP_ROUTES.private);
+  const isPrivateRoute = appPrivateRoutes.includes(pathname);
 
   const appOthersRoutes = Object.values(APP_ROUTES.others);
   const isOtherRoute = appOthersRoutes.includes(pathname);
@@ -27,7 +28,7 @@ export async function middleware(request: NextRequest) {
   if (isOtherRoute && isLogged()) {
     return NextResponse.redirect(`${host}account`);
   }
-  if (!isPublicRoute && !isOtherRoute && !isLogged()) {
+  if (isPrivateRoute && !isLogged()) {
     return NextResponse.redirect(`${host}login`);
   }
   return NextResponse.next();

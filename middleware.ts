@@ -3,18 +3,11 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { APP_ROUTES } from "@/constants/app-routes";
 
-function isLogged() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("jwt");
-  console.log(token);
-  
-  if (!token) {
-    return false;
-  }
-  return true;
-}
-
 export async function middleware(request: NextRequest) {
+  const cookieStore = cookies();
+  const isLogged = cookieStore.get("jwt");
+console.log(isLogged);
+
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
   const host = process.env.HOST;
@@ -25,10 +18,10 @@ export async function middleware(request: NextRequest) {
   const appOthersRoutes = Object.values(APP_ROUTES.others);
   const isOtherRoute = appOthersRoutes.includes(pathname);
 
-  if (isOtherRoute && isLogged()) {
+  if (isOtherRoute && isLogged) {
     return NextResponse.redirect(`${host}account`);
   }
-  if (isPrivateRoute && !isLogged()) {
+  if (isPrivateRoute && !isLogged) {
     return NextResponse.redirect(`${host}login`);
   }
   return NextResponse.next();

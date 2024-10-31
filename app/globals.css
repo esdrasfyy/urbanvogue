@@ -50,9 +50,7 @@ body {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #3a3a3a;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -281,8 +279,7 @@ select:not([size]) {
   height: 160px;
   width: 160px;
   padding: 20px;
-  box-shadow: 6px 6px 10px -1px rbga(0, 0, 0, 0.15),
-    -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+  box-shadow: 6px 6px 10px -1px rbga(0, 0, 0, 0.15), -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
   border-radius: 50%;
 }
 .inner {
@@ -291,10 +288,7 @@ select:not([size]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
-    inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px,
-    0px rgba(255, 255, 255, 1), 0.5px 0.5px 0px rgba(0, 0, 0, 0.15),
-    0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2), inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px, 0px rgba(255, 255, 255, 1), 0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
   border-radius: 50%;
 }
 #number {
@@ -501,7 +495,6 @@ svg.progressbar {
 
 @media (max-width: 440px) {
   .card {
-
     height: 200px;
   }
 }
@@ -581,19 +574,19 @@ svg.progressbar {
 }
 @keyframes arrowFooter {
   0% {
-    transform: translateY(7px);
+    transform: translateY(1px);
   }
   50% {
-    transform: translateY(-7px);
+    transform: translateY(-1px);
   }
   100% {
-    transform: translateY(7px);
+    transform: translateY(1px);
   }
 }
-.gradient-gray{
+.gradient-gray {
   background: linear-gradient(87deg, rgb(0, 0, 0) 0px, rgb(34, 34, 34) 100%);
 }
-.glass{
+.glass {
   background: rgba(217, 217, 217, 0.16);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

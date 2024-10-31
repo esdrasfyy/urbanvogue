@@ -20,41 +20,17 @@ const Home: NextPage = () => {
       <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
 
       <span className="my-5"></span>
-      <SlideProducts
-        query="categoria=moda-feminina"
-        category="FITNESS FASHION"
-      />
+      <SlideProducts query="categoria=moda-feminina" category="FITNESS FASHION" />
       <span className="my-5"></span>
       <SlideProducts query="order_by=createdAt:desc" category="NEWS" />
       <section className="w-full mt-14 flex gap-5 flex-col-reverse">
         <div className="flex gap-5 mt-8 max-md:flex-wrap relative">
-          <Image
-            src={adOne}
-            alt="ad"
-            unoptimized
-            className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped"
-          />
-          <Image
-            src={adTwo}
-            alt="ad"
-            unoptimized
-            className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped"
-          />
+          <Image src={adOne} alt="ad" unoptimized className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped" />
+          <Image src={adTwo} alt="ad" unoptimized className="w-1/2 max-md:w-full grayscale rounded-md shadow-snipped" />
         </div>
         <CarrouselBrands />
         <div>
-          <h3 className="font-extralight text-2xl text-custom-textColor mb-4 uppercase">
-            venture into fashion
-          </h3>
-
-          <video
-            src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan.mp4?alt=media&token=f806cf48-9b51-4266-bfaf-ca36ff514ce8"
-            muted
-            playsInline
-            loop
-            autoPlay
-            className="rounded-md shadow-snipped"
-          ></video>
+          <video src="https://firebasestorage.googleapis.com/v0/b/urban-vogue-br.appspot.com/o/images%2Fslogan.mp4?alt=media&token=f806cf48-9b51-4266-bfaf-ca36ff514ce8" muted playsInline loop autoPlay className="rounded-md shadow-md"></video>
         </div>
       </section>
       <span className="my-5"></span>

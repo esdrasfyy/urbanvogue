@@ -2,30 +2,10 @@
 import { Input } from "@chakra-ui/react";
 import React from "react";
 
-function InputUi({
-  type,
-  label,
-  register,
-  name,
-  required,
-  maxLength,
-  minLength,
-  classname,
-  pleaceholder,
-  error,
-  value,
-  autofocus,
-  disabled,
-  change,
-  focus,
-  defaultvalue,
-}: inputProps) {
+function InputUi({ type, label, register, name, required, maxLength, minLength, classname, pleaceholder, error, value, autofocus, disabled, change, focus, defaultvalue }: inputProps) {
   return (
     <>
-      <label
-        className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`}
-        htmlFor={name}
-      >
+      <label className={` mb-2 text-sm text-custom-textColor uppercase max-md:text-[10px] max-md:mb-1`} htmlFor={name}>
         {label}
       </label>
       <Input
@@ -43,9 +23,7 @@ function InputUi({
         onChange={(e: any) => change!(e.target.value)}
         maxLength={maxLength}
         disabled={disabled}
-        className={`${classname} ${
-          error ? "mb-0" : "mb-4"
-        } py-5 shadow-snipped`}
+        className={`${classname} ${error ? "mb-0" : "mb-4"} py-5 shadow-snipped`}
         {...register(`${name}`, {
           required,
           maxLength,
@@ -53,15 +31,7 @@ function InputUi({
           onChange: change,
         })}
       />
-      {error && (
-        <span
-          className={`text-custom-red text-sm italic text-right mr-2 ${
-            error ? "mb-4" : "mb-0"
-          }`}
-        >
-          {error}
-        </span>
-      )}
+      {error && <span className={`text-custom-red text-sm italic text-right mr-2 ${error ? "mb-4" : "mb-0"}`}>{error}</span>}
     </>
   );
 }

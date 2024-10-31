@@ -37,7 +37,7 @@ function CardV({ data }: CardProps) {
       image: data?.images[0]?.url,
       title: data?.title,
       colors: data?.colors,
-      sizes: data?.sizes
+      sizes: data?.sizes,
     };
 
     if (add.id) {
@@ -49,32 +49,15 @@ function CardV({ data }: CardProps) {
 
   const parcelas = parseFloat(data.price) / 6;
   return (
-    <div
-      className="shadow-snipped rounded-md relative max-w-[164px] w-full group transition-transform ease-in-out duration-200 transform"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Link
-        href={`/product/${data.id}/${data.category}/${generateTitle}`}
-        className="object-cover flex justify-center items-center overflow-hidden min-h-[227px]"
-      >
-        <Image
-          width={300}
-          height={200}
-          loading="lazy"
-          blurDataURL={isHovered ? data?.images[1]?.url : data?.images[0]?.url}
-          src={isHovered ? data?.images[1]?.url : data?.images[0]?.url}
-          alt="a"
-          className="rounded-md shadow-snipped border-image h-auto bg-center max-h-[235px]"
-        />
+    <div className="group shadow-snipped rounded-md relative max-w-[164px] w-full group transition-transform ease-in-out duration-200 transform" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Link href={`/product/${data.id}/${data.category}/${generateTitle}`} className="object-cover flex justify-center items-center overflow-hidden min-h-[227px]">
+        <Image width={300} height={200} loading="lazy" blurDataURL={isHovered ? data?.images[1]?.url : data?.images[0]?.url} src={isHovered ? data?.images[1]?.url : data?.images[0]?.url} alt="a" className="rounded-md shadow-snipped border-image h-auto bg-center max-h-[235px]" />
       </Link>
       <div className="py-2 px-1 flex-col flex justify-between min-h-[112px]">
         {" "}
         <Link href={`/product/${data.id}/${data.category}/${generateTitle}`}>
           <div>
-            <h5 className="text-sm tracking-tight text-custom-textColor line-clamp-2 h-10">
-              {data.title}
-            </h5>
+            <h5 className="text-sm tracking-tight text-custom-textColor line-clamp-1 h-10">{data.title}</h5>
           </div>
           <div className="flex flex-col w-full justify-between">
             <div className="flex items-center gap-3 mt-2">
@@ -82,19 +65,13 @@ function CardV({ data }: CardProps) {
               <span className="text-custom-grayThree text-xs">in cash</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-custom-textColor/40">
-                {" "}
-                6x of ${parcelas.toFixed(2)}
-              </span>
+              <span className="text-sm text-custom-textColor/40"> 6x of ${parcelas.toFixed(2)}</span>
             </div>
           </div>
         </Link>
       </div>
       <div className="soft-entry2 absolute z-40 top-2 gap-2 right-1.5  hidden group-hover:flex flex-col text-2xl max-sm:flex">
-        <button
-          className="w-10 h-10 rounded-full shadow-snipped bg-custom-pink/60 flex items-center justify-center text-custom-textColor font-medium  duration-200 transition-all ease-linear hover:bg-custom-pink cursor-pointer"
-          onClick={handleAddItem}
-        >
+        <button className="w-10 h-10 rounded-full shadow-snipped bg-custom-pink/60 flex items-center justify-center text-custom-textColor font-medium  duration-200 transition-all ease-linear hover:bg-custom-pink cursor-pointer" onClick={handleAddItem}>
           <PiShoppingCartSimple />
         </button>
         <button className="w-10 h-10 rounded-full shadow-snipped bg-custom-grayTwo/60 flex items-center justify-center text-custom-textColor font-medium  duration-200 transition-all ease-linear hover:bg-custom-grayTwo cursor-pointer">
